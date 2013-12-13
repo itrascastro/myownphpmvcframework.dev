@@ -11,7 +11,7 @@ namespace library;
 
 class Boostrap 
 {
-    function __construct()
+    public function __construct()
     {
 
     }

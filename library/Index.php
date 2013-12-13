@@ -8,18 +8,20 @@
 
 namespace library;
 
+require_once APPLICATION_PATH . '/library/Application.php';
 
 class Index 
 {
     private $_application;
 
-    function __construct()
+    public function __construct()
     {
-        defined(APPLICATION_PATH) || define(APPLICATION_PATH, realpath(dirname(__FILE__)) . '/..');
-        require_once APPLICATION_PATH . '/library/Application.php';
-
         $this->_application = new Application();
+    }
 
+    public function run()
+    {
+        $this->_application->autoload();
         $this->_application->boostrap();
         $this->_application->run();
     }

@@ -9,6 +9,8 @@
 namespace library;
 
 require_once APPLICATION_PATH . '/library/Autoloader.php';
+require_once APPLICATION_PATH . '/library/Boostrap.php';
+require_once APPLICATION_PATH . '/library/FrontController.php';
 
 class Application 
 {
@@ -16,11 +18,16 @@ class Application
     private $_boostrap;
     private $_frontController;
 
-    function __construct()
+    public function __construct()
     {
         $this->_autoloader = new Autoloader();
         $this->_boostrap = new Boostrap();
         $this->_frontController = new FrontController();
+    }
+
+    public function autoload()
+    {
+        $this->_autoloader->autoload(Autoloader::AUTOLOAD_DEFAULT);
     }
 
     public function boostrap()

@@ -8,12 +8,18 @@
 
 namespace library;
 
+use application\controllers\ErrorController;
+use application\controllers\IndexController;
 
-class FrontController {
+class FrontController
+{
+    const URL_CONTROLLER = 'Controller';
+    const URL_ACTION = 'Action';
+
     private $_url;
     private $_controller;
 
-    function __construct()
+    public function __construct()
     {
         if (isset($_GET['url']))
         {
@@ -26,17 +32,17 @@ class FrontController {
     {
         if (isset($this->_url))
         {
-            $controllerName = $this->getName($this->_url[0], 'Controller');
+            $controllerName = $this->getName($this->_url[0], self::URL_CONTROLLER);
             $file = APPLICATION_PATH . '/application/controllers/' . $controllerName . '.php';
 
             if (file_exists($file)) {
                 $className = 'application\\controllers\\' . $controllerName;
                 $this->_controller = new $className;
-                if (isset($url[1])) {
-                    $action = $this->getName($url[1], 'Action');
+                if (isset($this->_url[1])) {
+                    $action = $this->getName($this->_url[1], self::URL_ACTION);
                     if (method_exists($this->_controller, $action)) {
-                        if (isset($url[2])) {
-                            $this->_controller->setParams($this->getParamsFromUrl($url));
+                        if (isset($this->_url[2])) {
+                            $this->_controller->setParams($this->getParamsFromUrl($this->_url));
                         }
                         return $this->_controller->$action();
                     }
@@ -77,13 +83,13 @@ class FrontController {
 
     private function showIndex()
     {
-        $this->_controller = new Controllers\IndexController();
+        $this->_controller = new IndexController();
         return $this->_controller->indexAction();
     }
 
     private function showError()
     {
-        $this->_controller = new Controllers\ErrorController();
+        $this->_controller = new ErrorController();
         return $this->_controller->indexAction();
     }
 
