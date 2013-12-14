@@ -22,7 +22,7 @@ class Index
     public function run()
     {
         $this->_application->autoload();
-        $this->_application->boostrap();
+        $this->_application->bootstrap();
         $this->_application->run();
     }
 } 

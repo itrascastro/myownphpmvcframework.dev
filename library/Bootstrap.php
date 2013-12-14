@@ -9,14 +9,14 @@
 namespace library;
 
 
-class Boostrap 
+class Bootstrap
 {
     public function __construct()
     {
 
     }
 
-    public function boostrap()
+    public function bootstrap()
     {
 
     }

@@ -18,7 +18,8 @@ class View
     private $_viewVariables;
     private $_viewHelpers;
 
-    function __construct($_title,
+    function __construct(
+        $_title,
         $_description,
         $_layout,
         $_viewScript,
@@ -39,15 +40,12 @@ class View
      */
     public function render()
     {
-        foreach ($this->_viewHelpers as $helper) {
-            require_once $helper;
-        }
-        require_once $this->_layout;
+        require_once APPLICATION_PATH . '/application/layouts/' . $this->_layout . '.phtml';
     }
 
     public function content()
     {
-        require_once $this->_viewScript;
+        require_once APPLICATION_PATH . '/application/views/scripts/' . $this->_viewScript . '.phtml';
     }
 
     public function title()

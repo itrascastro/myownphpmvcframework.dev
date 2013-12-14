@@ -8,6 +8,7 @@
 
 namespace application\controllers;
 
+use application\views\helpers\ShowFormHelper;
 use library\Controller;
 use library\View;
 
@@ -21,10 +22,10 @@ class IndexController extends Controller
     {
         $title = 'MyOwnPhpMVCFramework';
         $description = 'Create your own Php MVC Framework from scratch';
-        $layout = '../application/layouts/default.phtml';
-        $content = '../application/views/scripts/index/index.phtml';
-        $viewVariables = array();
-        $viewHelpers = array();
+        $layout = 'default';
+        $content = 'index/index';
+        $viewVariables = array('msg' => 'PHPMVCFramework');
+        $viewHelpers = array('ShowFormHelper' => new ShowFormHelper('index', 'fr1', 'ok'));
         $this->_view = new View($title, $description, $layout, $content, $viewVariables, $viewHelpers);
         return $this->_view->render();
     }

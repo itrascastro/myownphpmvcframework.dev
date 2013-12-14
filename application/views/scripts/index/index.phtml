@@ -1,1 +1,4 @@
-<h1>MyOwnPHPMVCFramework</h1>
+<h1><?php echo $this->_viewVariables['msg']; ?></h1>
+<div>
+    <?php echo $this->_viewHelpers['ShowFormHelper']->show(); ?>
+</div>

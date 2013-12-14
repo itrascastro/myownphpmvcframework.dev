@@ -41,4 +41,15 @@ abstract class Controller
     {
         return $this->_params;
     }
+
+    public function getParam($key)
+    {
+        foreach ($this->_params as $keyword => $value)
+        {
+            if ($keyword == $key) {
+                return $value;
+            }
+        }
+        return null;
+    }
 }

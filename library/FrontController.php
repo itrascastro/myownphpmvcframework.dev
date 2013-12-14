@@ -45,12 +45,20 @@ class FrontController
                             $this->_controller->setParams($this->getParamsFromUrl($this->_url));
                         }
                         return $this->_controller->$action();
+                    } else {//method does not exists
+                        $params = array(
+                                    'msg' => 'Method ' . $this->_url[1] . ' does not exists',
+                                  );
+                        return $this->showError($params);
                     }
-                    return $this->showError();
                 }
-                return $this->showError();
+                return $this->_controller->indexAction();
+            } else {//controller does not exists
+                $params = array(
+                    'msg' => 'Controller ' . $this->_url[0] . ' does not exists',
+                );
+                return $this->showError($params);
             }
-            return $this->showError();
         }
         return $this->showIndex();
     }
@@ -87,9 +95,10 @@ class FrontController
         return $this->_controller->indexAction();
     }
 
-    private function showError()
+    private function showError($params = array())
     {
         $this->_controller = new ErrorController();
+        $this->_controller->setParams($params);
         return $this->_controller->indexAction();
     }
 

@@ -9,19 +9,19 @@
 namespace library;
 
 require_once APPLICATION_PATH . '/library/Autoloader.php';
-require_once APPLICATION_PATH . '/library/Boostrap.php';
+require_once APPLICATION_PATH . '/library/Bootstrap.php';
 require_once APPLICATION_PATH . '/library/FrontController.php';
 
 class Application 
 {
     private $_autoloader;
-    private $_boostrap;
+    private $_bootstrap;
     private $_frontController;
 
     public function __construct()
     {
         $this->_autoloader = new Autoloader();
-        $this->_boostrap = new Boostrap();
+        $this->_bootstrap = new Bootstrap();
         $this->_frontController = new FrontController();
     }
 
@@ -30,9 +30,9 @@ class Application
         $this->_autoloader->autoload(Autoloader::AUTOLOAD_DEFAULT);
     }
 
-    public function boostrap()
+    public function bootstrap()
     {
-        $this->_boostrap->boostrap();
+        $this->_bootstrap->bootstrap();
     }
 
     public function run()
