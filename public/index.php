@@ -6,7 +6,8 @@
  * Time: 09:38
  */
 
-defined('APPLICATION_PATH') || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/..'));
+defined('APPLICATION_PATH') ||
+define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/..'));
 
 require_once '../library/Index.php';
 

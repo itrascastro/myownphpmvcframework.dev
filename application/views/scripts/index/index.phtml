@@ -1,4 +1,5 @@
 <h1><?php echo $this->_viewVariables['msg']; ?></h1>
 <div>
-    <?php echo $this->_viewHelpers['ShowFormHelper']->show(); ?>
+    <?php echo $this->_viewHelper->getHelper('ShowFormHelper',
+                                             array('action' => '/', 'id' => 'fr1', 'buttonValue' => 'GO'))->show(); ?>
 </div>

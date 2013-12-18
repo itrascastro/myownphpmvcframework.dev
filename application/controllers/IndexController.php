@@ -28,5 +28,6 @@ class IndexController extends Controller
         $viewHelpers = array('ShowFormHelper' => new ShowFormHelper('index', 'fr1', 'ok'));
         $this->_view = new View($title, $description, $layout, $content, $viewVariables, $viewHelpers);
         return $this->_view->render();
+        //$this->_actionHelper->getHelper('CustomRedirector')->redirect('error', 'index');
     }
 } 

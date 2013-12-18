@@ -9,6 +9,8 @@
 namespace library;
 
 
+use library\helpers\Helper;
+
 class View
 {
     private $_title;
@@ -16,22 +18,21 @@ class View
     private $_layout;
     private $_viewScript;
     private $_viewVariables;
-    private $_viewHelpers;
+    private $_viewHelper;
 
     function __construct(
         $_title,
         $_description,
         $_layout,
         $_viewScript,
-        $_viewVariables = array(),
-        $_viewHelpers = array())
+        $_viewVariables = array())
     {
         $this->_title = $_title;
         $this->_description = $_description;
         $this->_layout = $_layout;
         $this->_viewScript = $_viewScript;
-        $this->_viewHelpers = $_viewHelpers;
         $this->_viewVariables = $_viewVariables;
+        $this->_viewHelper = new Helper(Helper::VIEW_HELPER);
     }
 
     /*

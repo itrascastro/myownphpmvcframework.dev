@@ -37,7 +37,7 @@ class FrontController
 
             if (file_exists($file)) {
                 $className = 'application\\controllers\\' . $controllerName;
-                $this->_controller = new $className;
+                $this->_controller = new $className();
                 if (isset($this->_url[1])) {
                     $action = $this->getName($this->_url[1], self::URL_ACTION);
                     if (method_exists($this->_controller, $action)) {
@@ -45,17 +45,17 @@ class FrontController
                             $this->_controller->setParams($this->getParamsFromUrl($this->_url));
                         }
                         return $this->_controller->$action();
-                    } else {//method does not exists
+                    } else {//method does not exist
                         $params = array(
-                                    'msg' => 'Method ' . $this->_url[1] . ' does not exists',
+                                    'msg' => 'Method ' . $this->_url[1] . ' does not exist',
                                   );
                         return $this->showError($params);
                     }
                 }
                 return $this->_controller->indexAction();
-            } else {//controller does not exists
+            } else {//controller does not exist
                 $params = array(
-                    'msg' => 'Controller ' . $this->_url[0] . ' does not exists',
+                    'msg' => 'Controller ' . $this->_url[0] . ' does not exist',
                 );
                 return $this->showError($params);
             }
