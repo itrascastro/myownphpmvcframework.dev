@@ -9,7 +9,7 @@
 namespace library;
 
 
-use library\helpers\Helper;
+use library\helpers\HelperBroker;
 
 class View
 {
@@ -18,7 +18,7 @@ class View
     private $_layout;
     private $_viewScript;
     private $_viewVariables;
-    private $_viewHelper;
+    private $_viewHelperBroker;
 
     function __construct(
         $_title,
@@ -32,7 +32,7 @@ class View
         $this->_layout = $_layout;
         $this->_viewScript = $_viewScript;
         $this->_viewVariables = $_viewVariables;
-        $this->_viewHelper = new Helper(Helper::VIEW_HELPER);
+        $this->_viewHelperBroker = new HelperBroker(HelperBroker::VIEW_HELPER);
     }
 
     /*

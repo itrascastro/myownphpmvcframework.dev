@@ -14,18 +14,18 @@ namespace library;
  */
 
 
-use library\helpers\Helper;
+use library\helpers\HelperBroker;
 
 abstract class Controller
 {
     protected $_view;
     protected $_model;
     protected $_params;
-    protected $_actionHelper;
+    protected $_actionHelperBroker;
 
     public function __construct()
     {
-        $this->_actionHelper = new Helper(Helper::ACTION_HELPER);
+        $this->_actionHelperBroker = new HelperBroker(HelperBroker::ACTION_HELPER);
         $this->_params = array();
         $this->init();
     }

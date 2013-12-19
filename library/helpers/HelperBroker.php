@@ -8,7 +8,7 @@
 
 namespace library\helpers;
 
-class Helper
+class HelperBroker
 {
     const ACTION_HELPER = 0;
     const VIEW_HELPER = 1;
@@ -39,7 +39,7 @@ class Helper
         }
     }
 
-    public function getHelper($helper, $params)
+    public function getHelper($helper, $params=array())
     {
         if ($this->isLibraryHelper($helper)) {
             $className = $this->_libNamespace . $helper;
