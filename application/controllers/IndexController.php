@@ -9,6 +9,7 @@
 namespace application\controllers;
 
 use application\views\helpers\ShowFormHelper;
+use library\Config;
 use library\Controller;
 use library\View;
 
@@ -24,9 +25,9 @@ class IndexController extends Controller
         $description = 'Create your own Php MVC Framework from scratch';
         $layout = 'default';
         $content = 'index/index';
-        $viewVariables = array('msg' => 'PHPMVCFramework');
+        $config = $this->_bootstrap->getResource('Config');
+        $viewVariables = array('config' => $config->database->hostname);
         $this->_view = new View($title, $description, $layout, $content, $viewVariables);
         return $this->_view->render();
-        //$this->_actionHelperBroker->getHelper('CustomRedirector')->redirect('error', 'index');
     }
 } 

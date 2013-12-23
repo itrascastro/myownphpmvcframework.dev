@@ -13,7 +13,7 @@ namespace library;
 
 class Autoloader 
 {
-    const AUTOLOAD_DEFAULT = 'autoloadDefault';
+    const AUTOLOAD_DEFAULT = '_autoloadDefault';
 
     private $_method;
 
@@ -27,7 +27,7 @@ class Autoloader
         spl_autoload_register(array($this, $this->_method));
     }
 
-    private function autoloadDefault($className)
+    private function _autoloadDefault($className)
     {
         require_once APPLICATION_PATH . '/' . str_replace('\\', '/', $className) . '.php';
     }

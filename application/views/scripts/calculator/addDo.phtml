@@ -1,10 +1,10 @@
-<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper', array())->show(); ?>
+<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper')->show(); ?>
 
 <h1>Add Result</h1>
 
 <p>
     <?php echo $this->_viewVariables['op1']; ?> +
-    <?php echo $this->_viewVariables['op1']; ?> =
+    <?php echo $this->_viewVariables['op2']; ?> =
     <strong>
         <?php echo $this->_viewVariables['result']; ?>
     </strong>

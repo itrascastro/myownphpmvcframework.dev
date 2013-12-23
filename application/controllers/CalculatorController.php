@@ -52,8 +52,8 @@ class CalculatorController extends Controller
         $layout = 'default';
         $content = 'calculator/addDo';
         $viewVariables = array(
-            'op1' => $_POST['op1'],
-            'op2' => $_POST['op2'],
+            'op1'    => $_POST['op1'],
+            'op2'    => $_POST['op2'],
             'result' => $this->_model->getResult()
         );
         $this->_view = new View($title, $description, $layout, $content, $viewVariables);

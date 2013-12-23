@@ -13,7 +13,7 @@ abstract class ViewHelper
 {
     protected $_html;
 
-    abstract function __construct($params);
+    abstract function __construct($params=array());
 
     public function show()
     {

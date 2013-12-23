@@ -18,7 +18,7 @@ class CalculatorFormHelper extends ViewHelper
      * $params['id']
      * $params['buttonValue']
      */
-    function __construct($params)
+    function __construct($params=array())
     {
         $this->_html = '
             <form

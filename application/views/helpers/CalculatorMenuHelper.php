@@ -13,7 +13,7 @@ use library\helpers\ViewHelper;
 
 class CalculatorMenuHelper extends ViewHelper
 {
-    public function __construct($params)
+    public function __construct($params=array())
     {
         $this->_html = '
             <ul class="list-inline">

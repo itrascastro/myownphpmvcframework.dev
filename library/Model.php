@@ -11,10 +11,10 @@ namespace library;
 
 class Model 
 {
-    private $_db;
+    protected $_db;
 
-    public function __construct()
+    public function __construct($dbConfig)
     {
-        $this->_db = new Database();
+        $this->_db = new Adapter($dbConfig);
     }
 } 

@@ -18,13 +18,15 @@ use library\helpers\HelperBroker;
 
 abstract class Controller
 {
+    protected $_bootstrap;
     protected $_view;
     protected $_model;
     protected $_params;
     protected $_actionHelperBroker;
 
-    public function __construct()
+    public function __construct($bootstrap)
     {
+        $this->_bootstrap = $bootstrap;
         $this->_actionHelperBroker = new HelperBroker(HelperBroker::ACTION_HELPER);
         $this->_params = array();
         $this->init();
