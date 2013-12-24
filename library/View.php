@@ -41,12 +41,12 @@ class View
      */
     public function render()
     {
-        require_once APPLICATION_PATH . '/application/layouts/' . $this->_layout . '.phtml';
+        require_once 'application/layouts/' . $this->_layout . '.phtml';
     }
 
     public function content()
     {
-        require_once APPLICATION_PATH . '/application/views/scripts/' . $this->_viewScript . '.phtml';
+        require_once 'application/views/scripts/' . $this->_viewScript . '.phtml';
     }
 
     public function title()

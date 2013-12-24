@@ -8,7 +8,7 @@
 
 namespace library;
 
-require_once APPLICATION_PATH . '/library/Application.php';
+require_once 'library/Application.php';
 
 class Index 
 {
@@ -23,6 +23,6 @@ class Index
     {
         $this->_application->autoload();
         $this->_application->bootstrap();
-        $this->_application->run();
+        $this->_application->init();
     }
 } 

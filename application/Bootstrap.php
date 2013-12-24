@@ -23,4 +23,4 @@ class Bootstrap extends \library\Bootstrap
         $view = 'view';
         return $view;
     }
-} 
+}

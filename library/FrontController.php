@@ -36,7 +36,7 @@ class FrontController
         if (isset($this->_url))
         {
             $controllerName = $this->_getName($this->_url[0], self::URL_CONTROLLER);
-            $file = APPLICATION_PATH . '/application/controllers/' . $controllerName . '.php';
+            $file = 'application/controllers/' . $controllerName . '.php';
 
             if (file_exists($file)) {
                 $className = 'application\\controllers\\' . $controllerName;

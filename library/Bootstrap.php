@@ -9,7 +9,7 @@
 /*
  * Bootstrap does two things:
  * 1: Initializes every resource in application/Bootstrap
- * 2: Stores the resources in a container, $this->_resources
+ * 2: Stores the resources as properties
  */
 
 namespace library;
@@ -17,16 +17,13 @@ namespace library;
 
 class Bootstrap
 {
-    protected $_resources;
-
     public function __construct()
     {
-        $this->_resources = array();
     }
 
     /*
      * Here we call every _init method in application/Bootstrap.php
-     * This initializes resources and store them in $resources
+     * This initializes resources and store them in properties
      */
     public function bootstrap()
     {
@@ -35,16 +32,20 @@ class Bootstrap
         forEach($methods as $method)
         {
             if (strlen($method) > 5 && substr($method, 0, 5) === '_init') {
-                $this->_resources[ucfirst(substr($method, 5))] = $this->$method();
+                $this->{ucfirst(substr($method, 5))} = $this->$method();
             }
         }
     }
 
-    public function getResource($resource)
+    protected function _initDatabase()
     {
-        if (isset($this->_resources[$resource])) {
-            return $this->_resources[$resource];
-        }
+        //if (file_exists(APPLICATION))
         return null;
     }
-} 
+
+    public function getResource($resource)
+    {
+        return $this->$resource;
+    }
+
+}

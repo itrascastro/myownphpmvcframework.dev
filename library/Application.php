@@ -21,7 +21,7 @@ namespace library;
 
 use application\Bootstrap;
 
-require_once APPLICATION_PATH . '/library/Autoloader.php';
+require_once 'library/Autoloader.php';
 
 class Application 
 {
@@ -45,7 +45,7 @@ class Application
         $this->_bootstrap->bootstrap();
     }
 
-    public function run()
+    public function init()
     {
         $this->_frontController = new FrontController($this->_bootstrap);
         $this->_frontController->route();

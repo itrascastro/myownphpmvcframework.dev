@@ -26,14 +26,14 @@ class HelperBroker
             $this->type = $type;
             $this->_libNamespace = 'library\\helpers\\actionHelpers';
             $this->_appNamespace = 'application\\controllers\\helpers\\';
-            $this->_libPath      = '/library/helpers/actionHelpers/';
-            $this->_appPath      = '/application/controllers/helpers/';
+            $this->_libPath      = 'library/helpers/actionHelpers/';
+            $this->_appPath      = 'application/controllers/helpers/';
         } else if ($type == self::VIEW_HELPER) {
             $this->type = $type;
             $this->_libNamespace = 'library\\helpers\\viewHelpers';
             $this->_appNamespace = 'application\\views\\helpers\\';
-            $this->_libPath      = '/library/helpers/viewHelpers/';
-            $this->_appPath      = '/application/views/helpers/';
+            $this->_libPath      = 'library/helpers/viewHelpers/';
+            $this->_appPath      = 'application/views/helpers/';
         } else {
             $this->type = null;
         }
@@ -58,11 +58,11 @@ class HelperBroker
 
     public function isLibraryHelper($helper)
     {
-        return file_exists(APPLICATION_PATH . $this->_libPath . $helper . '.php');
+        return file_exists($this->_libPath . $helper . '.php');
     }
 
     public function isApplicationHelper($helper)
     {
-        return file_exists(APPLICATION_PATH . $this->_appPath . $helper . '.php');
+        return file_exists($this->_appPath . $helper . '.php');
     }
 } 

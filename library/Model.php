@@ -13,8 +13,12 @@ class Model
 {
     protected $_db;
 
-    public function __construct($dbConfig)
+    public function __construct($dbConfig=null)
     {
-        $this->_db = new Adapter($dbConfig);
+        if ($dbConfig != null) {
+            $this->_db = new Adapter($this->_dbConfig);
+        } else {
+            $this->_db = null;
+        }
     }
 } 

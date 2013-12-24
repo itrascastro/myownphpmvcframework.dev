@@ -6,10 +6,13 @@
  * Time: 09:38
  */
 
-defined('APPLICATION_PATH') ||
-define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/..'));
+/**
+ * This makes our life easier when dealing with paths. Everything is relative
+ * to the application root now.
+ */
+chdir(dirname(__DIR__));
 
-require_once '../library/Index.php';
+require_once 'library/Index.php';
 
 $index = new \library\Index();
 $index->run();

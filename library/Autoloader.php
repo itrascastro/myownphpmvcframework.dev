@@ -29,6 +29,6 @@ class Autoloader
 
     private function _autoloadDefault($className)
     {
-        require_once APPLICATION_PATH . '/' . str_replace('\\', '/', $className) . '.php';
+        require_once str_replace('\\', '/', $className) . '.php';
     }
 } 
