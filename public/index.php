@@ -12,7 +12,8 @@
  */
 chdir(dirname(__DIR__));
 
-require_once 'library/Index.php';
+require_once 'library/Application.php';
 
-$index = new \library\Index();
-$index->run();
+$app = new \library\Application(\library\Application::DEVELOPMENT);
+$app->bootstrap();
+$app->init();

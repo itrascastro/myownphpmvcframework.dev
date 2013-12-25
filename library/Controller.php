@@ -38,9 +38,9 @@ abstract class Controller
     /**
      * @param mixed $params
      */
-    public function setParams($params)
+    public function setParams($_params)
     {
-        $this->_params = $params;
+        $this->_params = $_params;
     }
 
     /**
@@ -60,6 +60,11 @@ abstract class Controller
             }
         }
         return null;
+    }
+
+    public function setModel($_model)
+    {
+        $this->_model = $_model;
     }
 
 }

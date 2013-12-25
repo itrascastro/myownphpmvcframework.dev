@@ -14,7 +14,7 @@ class Bootstrap extends \library\Bootstrap
 {
     public function _initConfig()
     {
-        $config = new Ini('db.ini', 'production');
+        $config = new Ini('application.ini', 'production');
         return $config;
     }
 

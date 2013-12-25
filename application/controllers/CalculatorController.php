@@ -44,7 +44,8 @@ class CalculatorController extends Controller
 
     public function addDoAction()
     {
-        $this->_model = new CalculatorModel($_POST['op1'], $_POST['op2']);
+        $this->_model->setOp1($_POST['op1']);
+        $this->_model->setOp2($_POST['op2']);
         $this->_model->add();
 
         $title = 'AddDo';

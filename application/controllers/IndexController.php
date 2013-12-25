@@ -25,8 +25,7 @@ class IndexController extends Controller
         $description = 'Create your own Php MVC Framework from scratch';
         $layout = 'default';
         $content = 'index/index';
-        $config = $this->_bootstrap->Config;
-        $viewVariables = array('config' => $config->database->hostname);
+        $viewVariables = array();
         $this->_view = new View($title, $description, $layout, $content, $viewVariables);
         return $this->_view->render();
     }

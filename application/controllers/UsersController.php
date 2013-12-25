@@ -43,6 +43,5 @@ class UsersController extends Controller
 
     public function addDoAction()
     {
-        $this->_model = new UsersModel($this->_bootstrap->getResource('Config')->database);
     }
 }

@@ -15,10 +15,15 @@
 namespace library;
 
 
+use library\Config\Ini;
+
 class Bootstrap
 {
-    public function __construct()
+    protected $appEnv;
+
+    public function __construct($appEnv)
     {
+        $this->appEnv = $appEnv;
     }
 
     /*
@@ -39,7 +44,11 @@ class Bootstrap
 
     protected function _initDatabase()
     {
-        //if (file_exists(APPLICATION))
+        $configDb = new Ini('db.ini', $this->appEnv);
+        if (isset($configDb->driver)) {
+            $database = new Adapter($configDb);
+            return $database;
+        }
         return null;
     }
 

@@ -25,23 +25,25 @@ require_once 'library/Autoloader.php';
 
 class Application 
 {
+    const DEVELOPMENT   = 'development';
+    const TEST          = 'test';
+    const PRODUCTION    = 'production';
+
     private $_autoloader;
     private $_bootstrap;
     private $_frontController;
+    private $_appEnv;
 
-    public function __construct()
+    public function __construct($_appEnv)
     {
+        $this->_appEnv = $_appEnv;
         $this->_autoloader = new Autoloader();
-    }
-
-    public function autoload()
-    {
         $this->_autoloader->autoload(Autoloader::AUTOLOAD_DEFAULT);
     }
 
     public function bootstrap()
     {
-        $this->_bootstrap = new Bootstrap();
+        $this->_bootstrap = new Bootstrap($this->_appEnv);
         $this->_bootstrap->bootstrap();
     }
 

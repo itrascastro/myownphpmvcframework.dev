@@ -9,16 +9,19 @@
 namespace library;
 
 
-class Model 
+abstract class Model
 {
     protected $_db;
 
-    public function __construct($dbConfig=null)
+    public function __construct($database=null)
     {
-        if ($dbConfig != null) {
-            $this->_db = new Adapter($this->_dbConfig);
+        if ($database != null) {
+            $this->_db = $database;
         } else {
             $this->_db = null;
         }
+        $this->init();
     }
+
+    public abstract function init();
 } 

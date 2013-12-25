@@ -36,17 +36,22 @@ class FrontController
         if (isset($this->_url))
         {
             $controllerName = $this->_getName($this->_url[0], self::URL_CONTROLLER);
+            $modelName = $controllerName . 'Model';
+            $controllerName .= 'Controller';
             $file = 'application/controllers/' . $controllerName . '.php';
 
             if (file_exists($file)) {
-                $className = 'application\\controllers\\' . $controllerName;
-                $this->_controller = new $className($this->_bootstrap);
+                $controllerClassName = 'application\\controllers\\' . $controllerName;
+                $this->_controller = new $controllerClassName($this->_bootstrap);
                 if (isset($this->_url[1])) {
-                    $action = $this->_getName($this->_url[1], self::URL_ACTION);
+                    $action = $this->_getName($this->_url[1], self::URL_ACTION) . 'Action';
                     if (method_exists($this->_controller, $action)) {
                         if (isset($this->_url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($this->_url));
                         }
+                        $modelClassName = 'application\\models\\' . $modelName;
+                        $model = new $modelClassName($this->_bootstrap->Database);
+                        $this->_controller->setModel($model);
                         return $this->_controller->$action();
                     } else {//method does not exist
                         $params = array(
@@ -89,7 +94,7 @@ class FrontController
             }
         }
 
-        return $name . $type;
+        return $name;
     }
 
     private function _showIndex()

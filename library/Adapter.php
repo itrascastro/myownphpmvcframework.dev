@@ -19,7 +19,15 @@ class Adapter extends \PDO
                     $dsn .= ';port=' . $dbConfig->port;
                 }
                 $dsn .= ';dbname=' . $dbConfig->dbname;
-                parent::__construct($dsn, $dbConfig->username, $dbConfig->password);
+                if (isset($dbConfig->charset)) {
+                    $dsn .= ';charset=' . $dbConfig->charset;
+                }
+                try {
+                    parent::__construct($dsn, $dbConfig->username, $dbConfig->password);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    die();
+                }
                 break;
             case 'pgsql': //PostgreSQL
                 $dsn = 'pgsql:host=' . $dbConfig->hostname;
@@ -29,7 +37,12 @@ class Adapter extends \PDO
                 $dsn .= ';dbname=' . $dbConfig->dbname;
                 $dsn .= ';user=' . $dbConfig->username;
                 $dsn .= ';password=' . $dbConfig->password;
-                parent::__construct($dsn);
+                try {
+                    parent::__construct($dsn);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    die();
+                }
                 break;
         }
     }
