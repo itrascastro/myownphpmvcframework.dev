@@ -13,9 +13,9 @@ class Ini extends Config
 {
     private $_array;
 
-    public function __construct($configFile, $section)
+    public function __construct($file, $section)
     {
-        $array = parse_ini_file('application/configs/' . $configFile, true);
+        $array = parse_ini_file('application/configs/' . $file, true);
         $array = $this->_recursive_parse($this->_parse_ini_advanced($array));
         if (array_key_exists($section, $array)) {
             $this->_array = $array[$section];

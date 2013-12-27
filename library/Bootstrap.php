@@ -37,7 +37,8 @@ class Bootstrap
         forEach($methods as $method)
         {
             if (strlen($method) > 5 && substr($method, 0, 5) === '_init') {
-                $this->{ucfirst(substr($method, 5))} = $this->$method();
+                $resourceName = ucfirst(substr($method, 5));
+                $this->$resourceName = $this->$method();
             }
         }
     }
