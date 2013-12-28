@@ -6,7 +6,7 @@
  * Time: 09:41
  */
 
-namespace library;
+namespace xen;
 
 /*
  * If the child controller does not define a constructor then it may be inherited from the parent class
@@ -14,7 +14,7 @@ namespace library;
  */
 
 
-use library\helpers\HelperBroker;
+use xen\helpers\HelperBroker;
 
 abstract class Controller
 {

@@ -6,7 +6,7 @@
  * Time: 10:08
  */
 
-namespace library\helpers;
+namespace xen\helpers;
 
 
 abstract class ViewHelper

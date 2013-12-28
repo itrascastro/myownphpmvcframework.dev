@@ -8,8 +8,8 @@
 
 namespace application\controllers;
 
-use library\Controller;
-use library\View;
+use xen\Controller;
+use xen\View;
 
 class ErrorController extends Controller
 {

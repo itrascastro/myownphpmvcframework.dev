@@ -12,18 +12,18 @@
  * 2: Stores the resources as properties
  */
 
-namespace library;
+namespace xen;
 
 
-use library\Config\Ini;
+use xen\Config\Ini;
 
 class Bootstrap
 {
-    protected $appEnv;
+    protected $_appEnv;
 
-    public function __construct($appEnv)
+    public function __construct($_appEnv)
     {
-        $this->appEnv = $appEnv;
+        $this->_appEnv = $_appEnv;
     }
 
     /*
@@ -43,19 +43,23 @@ class Bootstrap
         }
     }
 
+    public function getResource($resource)
+    {
+        return $this->$resource;
+    }
+
+    /*
+     * Default Resources
+     */
+
     protected function _initDatabase()
     {
-        $configDb = new Ini('db.ini', $this->appEnv);
+        $configDb = new Ini('db.ini', $this->_appEnv);
         if (isset($configDb->driver)) {
             $database = new Adapter($configDb);
             return $database;
         }
         return null;
-    }
-
-    public function getResource($resource)
-    {
-        return $this->$resource;
     }
 
 }

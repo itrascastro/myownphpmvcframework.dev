@@ -6,10 +6,10 @@
  * Time: 09:42
  */
 
-namespace library;
+namespace xen;
 
 
-use library\helpers\HelperBroker;
+use xen\helpers\HelperBroker;
 
 class View
 {

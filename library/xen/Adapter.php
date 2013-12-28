@@ -6,7 +6,7 @@
  * Time: 17:44
  */
 
-namespace library;
+namespace xen;
 
 class Adapter extends \PDO
 {

@@ -1,8 +1,21 @@
 <h1>Add</h1>
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
-        'CalculatorFormHelper',
-        array('action' => '/calculator/addDo/',
-              'id' => 'fr1',
-              'buttonValue' => 'Add'))->show(); ?>
+        'FormHelper',
+        array('action'      => '/calculator/addDo/',
+              'id'          => 'fr1',
+              'method'      => 'post',
+              'buttonValue' => 'Add',
+              'controls'    => array(
+                  array(
+                      'field'   => 'op1',
+                      'type'    => 'number'
+                  ),
+                  array(
+                      'field'   => 'op2',
+                      'type'    => 'number'
+                  )
+              )
+
+        ))->show(); ?>
 </div>

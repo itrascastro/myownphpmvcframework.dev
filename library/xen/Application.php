@@ -17,11 +17,11 @@
  * Registry is a global variable
  */
 
-namespace library;
+namespace xen;
 
 use application\Bootstrap;
 
-require_once 'library/Autoloader.php';
+require_once 'library/xen/Autoloader.php';
 
 class Application 
 {

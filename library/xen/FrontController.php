@@ -6,7 +6,7 @@
  * Time: 09:41
  */
 
-namespace library;
+namespace xen;
 
 use application\controllers\ErrorController;
 use application\controllers\IndexController;

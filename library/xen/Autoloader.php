@@ -9,7 +9,7 @@
  * we implement this using the adapter design pattern
  */
 
-namespace library;
+namespace xen;
 
 class Autoloader 
 {
@@ -27,8 +27,15 @@ class Autoloader
         spl_autoload_register(array($this, $this->_method));
     }
 
+    /*
+     * A class can be located at application directory or at library directory
+     */
     private function _autoloadDefault($className)
     {
-        require_once str_replace('\\', '/', $className) . '.php';
+        $file = str_replace('\\', '/', $className) . '.php';
+        if (explode('\\', $className)[0] != 'application') {
+            $file = 'library/' . $file;
+        }
+        require_once $file;
     }
 } 

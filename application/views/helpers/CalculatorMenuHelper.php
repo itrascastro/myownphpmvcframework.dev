@@ -9,7 +9,7 @@
 namespace application\views\helpers;
 
 
-use library\helpers\ViewHelper;
+use xen\helpers\ViewHelper;
 
 class CalculatorMenuHelper extends ViewHelper
 {

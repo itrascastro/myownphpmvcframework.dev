@@ -6,7 +6,7 @@
  * Time: 11:22
  */
 
-namespace library\helpers\actionHelpers;
+namespace xen\helpers\actionHelpers;
 
 class Redirector
 {

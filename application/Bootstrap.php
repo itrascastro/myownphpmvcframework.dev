@@ -8,19 +8,40 @@
 
 namespace application;
 
-use library\Config\Ini;
+use xen\Application;
+use xen\Config\Ini;
+use xen\View;
 
-class Bootstrap extends \library\Bootstrap
+class Bootstrap extends \xen\Bootstrap
 {
-    public function _initConfig()
+    protected function _initConfig()
     {
-        $config = new Ini('application.ini', $this->appEnv);
+        $config = new Ini('application.ini', $this->_appEnv);
+
         return $config;
     }
 
-    public function _initView()
+    /*
+     * This resource is not needed anymore so we do not store it in the Bootstrap container (return null)
+     * In fact this is not a resource, only do actions at the beginning of the new request
+     */
+    protected function _initEnvironment()
     {
-        $view = 'view';
-        return $view;
+        if ($this->_appEnv == Application::DEVELOPMENT) {
+            error_reporting(E_ALL | E_STRICT);
+        }
+        $timeZone = (string) $this->Config->timezone;
+        if (empty($timeZone)) {
+            $timeZone = 'Europe/Madrid';
+        }
+        date_default_timezone_set($timeZone);
+
+        return null;
+    }
+
+    protected function _initView()
+    {
+        //$view = $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        //return $view;
     }
 }

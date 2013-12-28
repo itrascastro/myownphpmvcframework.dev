@@ -12,8 +12,8 @@
  */
 chdir(dirname(__DIR__));
 
-require_once 'library/Application.php';
+require_once 'library/xen/Application.php';
 
-$app = new \library\Application(\library\Application::DEVELOPMENT);
+$app = new \xen\Application(\xen\Application::DEVELOPMENT);
 $app->bootstrap();
 $app->init();

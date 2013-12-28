@@ -9,7 +9,7 @@
 namespace application\models;
 
 
-use library\Model;
+use xen\Model;
 
 class CalculatorModel extends Model
 {
