@@ -6,8 +6,7 @@
  * Time: 12:26
  */
 
-namespace xen\Config;
-
+namespace xen\config;
 
 class Ini extends Config
 {

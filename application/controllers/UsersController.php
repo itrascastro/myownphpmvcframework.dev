@@ -8,7 +8,6 @@
 
 namespace application\controllers;
 
-
 use application\models\UsersModel;
 use xen\Controller;
 use xen\View;

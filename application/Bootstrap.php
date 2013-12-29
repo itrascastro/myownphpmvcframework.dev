@@ -9,8 +9,10 @@
 namespace application;
 
 use xen\Application;
-use xen\Config\Ini;
+use xen\config\Ini;
 use xen\View;
+
+require_once 'library/xen/Bootstrap.php';
 
 class Bootstrap extends \xen\Bootstrap
 {

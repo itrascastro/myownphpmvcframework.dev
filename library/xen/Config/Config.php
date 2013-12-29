@@ -10,7 +10,7 @@
  * Converts an array into an object
  */
 
-namespace xen\Config;
+namespace xen\config;
 
 
 class Config 

@@ -8,7 +8,6 @@
 
 namespace application\views\helpers;
 
-
 use xen\helpers\ViewHelper;
 
 class FormHelper extends ViewHelper
@@ -19,7 +18,7 @@ class FormHelper extends ViewHelper
      * $params['method']
      * $params['buttonValue']
      * $params['controls'] = array(array ('field'  => String
-     *                                    'type'       => [number, email, date, hidden, ...]
+     *                                    'type'   => [number, email, date, hidden, ...]
      * ))
      */
     function __construct($params=array())

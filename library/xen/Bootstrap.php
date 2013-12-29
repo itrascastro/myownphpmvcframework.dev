@@ -14,8 +14,9 @@
 
 namespace xen;
 
-
 use xen\Config\Ini;
+
+require_once 'library/xen/Autoloader.php';
 
 class Bootstrap
 {
@@ -24,6 +25,21 @@ class Bootstrap
     public function __construct($_appEnv)
     {
         $this->_appEnv = $_appEnv;
+        $this->_autoload();
+    }
+
+    /*
+     * Default autoload
+     */
+
+    private function _autoload()
+    {
+        $applicationAutoloader = new Autoloader();
+        $xenAutoloader = new Autoloader('library');
+
+        $applicationAutoloader->register();
+        $xenAutoloader->register();
+
     }
 
     /*

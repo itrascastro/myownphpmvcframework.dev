@@ -21,7 +21,7 @@ namespace xen;
 
 use application\Bootstrap;
 
-require_once 'library/xen/Autoloader.php';
+require_once 'application/Bootstrap.php';
 
 class Application 
 {
@@ -29,7 +29,6 @@ class Application
     const TEST          = 'test';
     const PRODUCTION    = 'production';
 
-    private $_autoloader;
     private $_bootstrap;
     private $_frontController;
     private $_appEnv;
@@ -37,8 +36,6 @@ class Application
     public function __construct($_appEnv)
     {
         $this->_appEnv = $_appEnv;
-        $this->_autoloader = new Autoloader();
-        $this->_autoloader->autoload(Autoloader::AUTOLOAD_DEFAULT);
     }
 
     public function bootstrap()

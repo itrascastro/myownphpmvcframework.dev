@@ -4,38 +4,52 @@
  * User: ismael trascastro
  * Date: 11/12/13
  * Time: 10:28
- *
- * We need this class because if PHP change the autoload function interface
- * we implement this using the adapter design pattern
  */
 
 namespace xen;
 
-class Autoloader 
+/*
+ * TODO
+ * Performance Modification
+ * makes $_basePath an array of path's
+ * faster if there is only one function in spl_autoload stack (var_dump(spl_autoload_functions()))
+ */
+class Autoloader
 {
-    const AUTOLOAD_DEFAULT = '_autoloadDefault';
+    private $_basePath;
 
-    private $_method;
-
-    public function __construct($_method = self::AUTOLOAD_DEFAULT)
+    public function __construct($_basePath = '')
     {
-        $this->_method = $_method;
+        $this->_basePath = $_basePath;
     }
 
-    public function autoload()
+    public function register()
     {
-        spl_autoload_register(array($this, $this->_method));
+        spl_autoload_register(array($this,'_autoload'));
     }
 
     /*
-     * A class can be located at application directory or at library directory
+     * It is mandatory to put the require_once sentence into an if statement
+     * Otherwise php autoload will use this function even if the file does not exist
+     *
+     * We use require instead of require_once because of better performance
+     * require_once looks into a log every time we try to require a file
+     * info: http://gazehawk.com/blog/php-require-performance/
+     *
+     * TODO
+     * file_exists is not good for performance (a file system access every time we instantiate an object)
+     * read: http://stackoverflow.com/questions/1713820/spl-autoloading-best-practices
      */
-    private function _autoloadDefault($className)
+    private function _autoload($className)
     {
-        $file = str_replace('\\', '/', $className) . '.php';
-        if (explode('\\', $className)[0] != 'application') {
-            $file = 'library/' . $file;
+        $file = str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
+        if ($this->_basePath != '') {
+            $file = $this->_basePath . '/' . $file;
         }
-        require_once $file;
+        if (file_exists($file)) {
+            require $file;
+            return true;
+        }
+        return false;
     }
-} 
+}
