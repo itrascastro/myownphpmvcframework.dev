@@ -6,11 +6,13 @@
  * Time: 23:17
  */
 
+namespace bootstrap;
+
 use xen\Application;
 use xen\config\Ini;
 use xen\View;
 
-require_once 'library/xen/Bootstrap.php';
+require 'library/xen/Bootstrap.php';
 
 class Bootstrap extends \xen\Bootstrap
 {
@@ -24,6 +26,8 @@ class Bootstrap extends \xen\Bootstrap
     /*
      * This resource is not needed anymore so we do not store it in the Bootstrap container (return null)
      * In fact this is not a resource, only do actions at the beginning of the new request
+     *
+     * TODO - https://github.com/EllisLab/CodeIgniter/blob/develop/index.php
      */
     protected function _initEnvironment()
     {

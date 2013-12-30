@@ -8,7 +8,6 @@
 
 namespace controllers;
 
-
 use models\CalculatorModel;
 use xen\Controller;
 use xen\View;

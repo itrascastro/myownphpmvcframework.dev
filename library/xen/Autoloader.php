@@ -59,14 +59,12 @@ class Autoloader
     }
 
     /**
-     * It is mandatory to put the require_once sentence into an if statement
+     * It is mandatory to put the require sentence into an if statement
      * Otherwise php autoload will use this function even if the file does not exist
      *
      * We use require instead of require_once because of better performance
      * require_once looks into a log every time we try to require a file
      * info: http://gazehawk.com/blog/php-require-performance/
-     *
-     * Future work: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md
      *
      * @param $className to be autoloaded
      *

@@ -20,22 +20,22 @@ class HelperBroker
     private $_libPath;
     private $_appPath;
 
-    public function __construct($type)
+    public function __construct($_type)
     {
-        if ($type == self::ACTION_HELPER) {
-            $this->type = $type;
+        if ($_type == self::ACTION_HELPER) {
+            $this->_type = $_type;
             $this->_libNamespace = 'xen\\helpers\\actionHelpers';
             $this->_appNamespace = 'controllers\\helpers\\';
-            $this->_libPath      = 'library/xen/helpers/actionHelpers/';
-            $this->_appPath      = 'application/controllers/helpers/';
-        } else if ($type == self::VIEW_HELPER) {
-            $this->type = $type;
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/helpers/actionHelpers/');
+            $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/helpers/');
+        } else if ($_type == self::VIEW_HELPER) {
+            $this->_type = $_type;
             $this->_libNamespace = 'xen\\helpers\\viewHelpers';
             $this->_appNamespace = 'views\\helpers\\';
-            $this->_libPath      = 'library/xen/helpers/viewHelpers/';
-            $this->_appPath      = 'application/views/helpers/';
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/helpers/viewHelpers/');
+            $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/helpers/');
         } else {
-            $this->type = null;
+            $this->_type = null;
         }
     }
 

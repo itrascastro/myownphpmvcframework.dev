@@ -1,14 +1,11 @@
-Use require instead of require*
----
-
-DIRECTORY_SEPARATOR (lear about it)
----
-
-Autoload performance
----
-
 Create View resource in Bootstrap
 ---
 
-application\Bootstrap.php has not namespace. maybe it has to be inside any folder. look for it at zf2
+improve _initEnvironment in bootstrap\Bootstrap.php
+---
+
+reorganize xen directory
+---
+
+contextual help with \PDO p.e.
 ---

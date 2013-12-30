@@ -16,7 +16,7 @@ namespace xen;
 
 use xen\Config\Ini;
 
-require_once 'library/xen/Autoloader.php';
+require 'library/xen/Autoloader.php';
 
 class Bootstrap
 {

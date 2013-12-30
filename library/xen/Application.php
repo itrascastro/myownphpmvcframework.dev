@@ -19,7 +19,7 @@
 
 namespace xen;
 
-require_once 'application/Bootstrap.php';
+require 'application/bootstrap/Bootstrap.php';
 
 class Application 
 {
@@ -42,7 +42,7 @@ class Application
         $this->_bootstrap->bootstrap();
     }
 
-    public function init()
+    public function run()
     {
         $this->_frontController = new FrontController($this->_bootstrap);
         $this->_frontController->route();
