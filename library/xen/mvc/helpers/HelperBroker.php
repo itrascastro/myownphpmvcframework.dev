@@ -6,7 +6,7 @@
  * Time: 11:34
  */
 
-namespace xen\helpers;
+namespace xen\mvc\helpers;
 
 class HelperBroker
 {
@@ -24,15 +24,15 @@ class HelperBroker
     {
         if ($_type == self::ACTION_HELPER) {
             $this->_type = $_type;
-            $this->_libNamespace = 'xen\\helpers\\actionHelpers';
+            $this->_libNamespace = 'xen\\mvc\\helpers\\actionHelpers';
             $this->_appNamespace = 'controllers\\helpers\\';
-            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/helpers/actionHelpers/');
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/mvc/helpers/actionHelpers/');
             $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/helpers/');
         } else if ($_type == self::VIEW_HELPER) {
             $this->_type = $_type;
-            $this->_libNamespace = 'xen\\helpers\\viewHelpers';
+            $this->_libNamespace = 'xen\\mvc\\helpers\\viewHelpers';
             $this->_appNamespace = 'views\\helpers\\';
-            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/helpers/viewHelpers/');
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/mvc/helpers/viewHelpers/');
             $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/helpers/');
         } else {
             $this->_type = null;

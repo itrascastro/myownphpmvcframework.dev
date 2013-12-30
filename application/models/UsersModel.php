@@ -8,11 +8,26 @@
 
 namespace models;
 
-use xen\Adapter;
-use xen\Model;
+use xen\db\Adapter;
 
-class UsersModel extends Model
+/**
+ * Class UsersModel
+ *
+ * @package models
+ * @author  Ismael Trascastro itrascastro@xenframework.com
+ *
+ * @var Adapter $_db Database connection
+ *
+ */
+class UsersModel
 {
+    private $_db;
+
+    public function __construct(Adapter $_db)
+    {
+        $this->_db = $_db;
+    }
+
     public function add($email, $password)
     {
         $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";

@@ -4,8 +4,28 @@ Create View resource in Bootstrap
 improve _initEnvironment in bootstrap\Bootstrap.php
 ---
 
-reorganize xen directory
+contextual help with \PDO p.e.
+this can be achieved with phpdoc
+phpdoc for every class
 ---
 
-contextual help with \PDO p.e.
+
+
+
+
+
+
+
+
+
+
+
+-----------
+Annotations
+-----------
+
+We do not create models in FrontController because models are out of reach. They are part of the application logic and
+we do not know nothing about it.
 ---
+
+

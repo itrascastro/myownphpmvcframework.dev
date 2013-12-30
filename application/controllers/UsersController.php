@@ -9,14 +9,14 @@
 namespace controllers;
 
 use models\UsersModel;
-use xen\Controller;
-use xen\View;
+use xen\mvc\Controller;
+use xen\mvc\View;
 
 class UsersController extends Controller
 {
-
     public function init()
     {
+        $this->_model = new UsersModel($this->_bootstrap->getResource('Database'));
     }
 
     public function indexAction()

@@ -8,8 +8,7 @@
 
 namespace models;
 
-
-class UserModel 
+class UserModel
 {
     private $_id;
     private $_email;

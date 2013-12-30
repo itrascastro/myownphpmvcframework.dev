@@ -7,7 +7,7 @@
  * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
  */
 
-namespace xen;
+namespace xen\application\bootstrap;
 
 /**
  * Class Autoloader
@@ -21,7 +21,7 @@ class Autoloader
     private $_includePaths;
 
     /**
-     * @param string|array  $_includePath one or more include paths to use
+     * @param string|array $_includePath one or more include paths to use
      */
     public function __construct($_includePath)
     {

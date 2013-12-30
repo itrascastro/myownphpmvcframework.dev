@@ -12,19 +12,27 @@
  * 2: Stores the resources as properties
  */
 
-namespace xen;
+namespace xen\application\bootstrap;
 
-use xen\Config\Ini;
+use xen\config\Ini;
+use xen\db\Adapter;
 
-require 'library/xen/Autoloader.php';
+require str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/application/bootstrap/Autoloader.php');
 
 class Bootstrap
 {
     protected $_appEnv;
+    protected $_resources;
 
+    /**
+     * @param $_appEnv
+     *
+     * we call _autoload here instead of as an _init resource because we need it to be the first created resource
+     */
     public function __construct($_appEnv)
     {
         $this->_appEnv = $_appEnv;
+        $this->_resources = array();
         $this->_autoload();
     }
 
@@ -34,10 +42,7 @@ class Bootstrap
 
     private function _autoload()
     {
-        $defaultAutoload = new Autoloader(array(
-                                               'application',
-                                               'library'
-                                          ));
+        $defaultAutoload = new Autoloader(array('application', 'library'));
         $defaultAutoload->register();
     }
 
@@ -51,16 +56,16 @@ class Bootstrap
 
         forEach($methods as $method)
         {
-            if (strlen($method) > 5 && substr($method, 0, 5) === '_init') {
+            if (strlen($method) > 5 && substr($method, 0, 5) == '_init') {
                 $resourceName = ucfirst(substr($method, 5));
-                $this->$resourceName = $this->$method();
+                $this->_resources[$resourceName] = $this->$method();
             }
         }
     }
 
     public function getResource($resource)
     {
-        return $this->$resource;
+        return (array_key_exists($resource, $this->_resources) ? $this->_resources[$resource] : null);
     }
 
     /*

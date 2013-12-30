@@ -9,7 +9,7 @@
 namespace controllers;
 
 
-use xen\Controller;
+use xen\mvc\Controller;
 
 class LoginController extends Controller
 {

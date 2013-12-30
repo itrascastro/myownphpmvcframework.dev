@@ -17,9 +17,9 @@
  * Registry is a global variable
  */
 
-namespace xen;
+namespace xen\application;
 
-require 'application/bootstrap/Bootstrap.php';
+require str_replace('/', DIRECTORY_SEPARATOR, 'application/bootstrap/Bootstrap.php');
 
 class Application 
 {
@@ -38,7 +38,7 @@ class Application
 
     public function bootstrap()
     {
-        $this->_bootstrap = new Bootstrap($this->_appEnv);
+        $this->_bootstrap = new \bootstrap\Bootstrap($this->_appEnv);
         $this->_bootstrap->bootstrap();
     }
 
@@ -47,5 +47,4 @@ class Application
         $this->_frontController = new FrontController($this->_bootstrap);
         $this->_frontController->route();
     }
-
 }

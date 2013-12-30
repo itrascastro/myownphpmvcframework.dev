@@ -8,8 +8,7 @@
 
 namespace views\helpers;
 
-
-use xen\helpers\ViewHelper;
+use xen\mvc\helpers\ViewHelper;
 
 class UsersMenuHelper extends ViewHelper
 {

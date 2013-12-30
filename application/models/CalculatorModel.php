@@ -8,17 +8,17 @@
 
 namespace models;
 
-
-use xen\Model;
-
-class CalculatorModel extends Model
+class CalculatorModel
 {
     private $_op1;
     private $_op2;
     private $_result;
 
-    public function init()
+    public function __construct($_op1=0, $_op2=0)
     {
+        $this->_op1 = $_op1;
+        $this->_op2 = $_op2;
+        $this->_result = 0;
     }
 
     public function add()

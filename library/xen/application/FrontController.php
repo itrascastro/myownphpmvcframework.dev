@@ -6,15 +6,15 @@
  * Time: 09:41
  */
 
-namespace xen;
+namespace xen\application;
 
 use controllers\ErrorController;
 use controllers\IndexController;
 
 class FrontController
 {
-    const URL_CONTROLLER = 'Controller';
-    const URL_ACTION = 'Action';
+    const URL_CONTROLLER    = 'Controller';
+    const URL_ACTION        = 'Action';
 
     private $_url;
     private $_controller;
@@ -36,9 +36,8 @@ class FrontController
         if (isset($this->_url))
         {
             $controllerName = $this->_getName($this->_url[0], self::URL_CONTROLLER);
-            $modelName = $controllerName . 'Model';
             $controllerName .= 'Controller';
-            $file = 'application/controllers/' . $controllerName . '.php';
+            $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controllerName . '.php';
 
             if (file_exists($file)) {
                 $controllerClassName = 'controllers\\' . $controllerName;
@@ -49,9 +48,6 @@ class FrontController
                         if (isset($this->_url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($this->_url));
                         }
-                        $modelClassName = 'models\\' . $modelName;
-                        $model = new $modelClassName($this->_bootstrap->Database);
-                        $this->_controller->setModel($model);
                         return $this->_controller->$action();
                     } else {//method does not exist
                         $params = array(

@@ -6,10 +6,9 @@
  * Time: 09:42
  */
 
-namespace xen;
+namespace xen\mvc;
 
-
-use xen\helpers\HelperBroker;
+use xen\mvc\helpers\HelperBroker;
 
 class View
 {
@@ -41,12 +40,12 @@ class View
      */
     public function render()
     {
-        require 'application/layouts/' . $this->_layout . '.phtml';
+        require str_replace('/', DIRECTORY_SEPARATOR, 'application/layouts/') . $this->_layout . '.phtml';
     }
 
     public function content()
     {
-        require 'application/views/scripts/' . $this->_viewScript . '.phtml';
+        require str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/') . $this->_viewScript . '.phtml';
     }
 
     public function title()

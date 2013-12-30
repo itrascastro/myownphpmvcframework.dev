@@ -9,9 +9,8 @@
 namespace controllers;
 
 use views\helpers\ShowFormHelper;
-use xen\Config;
-use xen\Controller;
-use xen\View;
+use xen\mvc\Controller;
+use xen\mvc\View;
 
 class IndexController extends Controller
 {
@@ -27,6 +26,7 @@ class IndexController extends Controller
         $content = 'index/index';
         $viewVariables = array();
         $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+
         return $this->_view->render();
     }
 } 

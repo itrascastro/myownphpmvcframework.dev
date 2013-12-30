@@ -9,14 +9,14 @@
 namespace controllers;
 
 use models\CalculatorModel;
-use xen\Controller;
-use xen\View;
+use xen\mvc\Controller;
+use xen\mvc\View;
 
 class CalculatorController extends Controller
 {
     public function init()
     {
-
+        $this->_model = new CalculatorModel();
     }
 
     public function indexAction()

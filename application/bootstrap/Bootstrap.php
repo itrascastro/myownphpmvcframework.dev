@@ -8,13 +8,13 @@
 
 namespace bootstrap;
 
-use xen\Application;
+use xen\application\Application;
 use xen\config\Ini;
-use xen\View;
+use xen\mvc\View;
 
-require 'library/xen/Bootstrap.php';
+require str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/application/bootstrap/Bootstrap.php');
 
-class Bootstrap extends \xen\Bootstrap
+class Bootstrap extends \xen\application\bootstrap\Bootstrap
 {
     protected function _initConfig()
     {
@@ -34,7 +34,7 @@ class Bootstrap extends \xen\Bootstrap
         if ($this->_appEnv == Application::DEVELOPMENT) {
             error_reporting(E_ALL | E_STRICT);
         }
-        $timeZone = (string) $this->Config->timezone;
+        $timeZone = (string) $this->getResource('Config')->timezone;
         if (empty($timeZone)) {
             $timeZone = 'Europe/Madrid';
         }
