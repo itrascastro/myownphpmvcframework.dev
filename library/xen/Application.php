@@ -19,8 +19,6 @@
 
 namespace xen;
 
-use application\Bootstrap;
-
 require_once 'application/Bootstrap.php';
 
 class Application 

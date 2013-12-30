@@ -6,8 +6,6 @@
  * Time: 23:17
  */
 
-namespace application;
-
 use xen\Application;
 use xen\config\Ini;
 use xen\View;

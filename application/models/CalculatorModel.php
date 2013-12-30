@@ -6,7 +6,7 @@
  * Time: 11:03
  */
 
-namespace application\models;
+namespace models;
 
 
 use xen\Model;

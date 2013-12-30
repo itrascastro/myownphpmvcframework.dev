@@ -6,7 +6,7 @@
  * Time: 22:47
  */
 
-namespace application\views\helpers;
+namespace views\helpers;
 
 
 use xen\helpers\ViewHelper;

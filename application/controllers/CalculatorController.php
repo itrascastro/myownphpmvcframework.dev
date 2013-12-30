@@ -6,10 +6,10 @@
  * Time: 17:53
  */
 
-namespace application\controllers;
+namespace controllers;
 
 
-use application\models\CalculatorModel;
+use models\CalculatorModel;
 use xen\Controller;
 use xen\View;
 

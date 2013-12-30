@@ -8,8 +8,8 @@
 
 namespace xen;
 
-use application\controllers\ErrorController;
-use application\controllers\IndexController;
+use controllers\ErrorController;
+use controllers\IndexController;
 
 class FrontController
 {
@@ -41,7 +41,7 @@ class FrontController
             $file = 'application/controllers/' . $controllerName . '.php';
 
             if (file_exists($file)) {
-                $controllerClassName = 'application\\controllers\\' . $controllerName;
+                $controllerClassName = 'controllers\\' . $controllerName;
                 $this->_controller = new $controllerClassName($this->_bootstrap);
                 if (isset($this->_url[1])) {
                     $action = $this->_getName($this->_url[1], self::URL_ACTION) . 'Action';
@@ -49,7 +49,7 @@ class FrontController
                         if (isset($this->_url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($this->_url));
                         }
-                        $modelClassName = 'application\\models\\' . $modelName;
+                        $modelClassName = 'models\\' . $modelName;
                         $model = new $modelClassName($this->_bootstrap->Database);
                         $this->_controller->setModel($model);
                         return $this->_controller->$action();

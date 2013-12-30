@@ -6,7 +6,7 @@
  * Time: 12:08
  */
 
-namespace application\controllers\helpers;
+namespace controllers\helpers;
 
 
 class CustomRedirector 

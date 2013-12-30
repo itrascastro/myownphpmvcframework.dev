@@ -6,9 +6,9 @@
  * Time: 22:44
  */
 
-namespace application\controllers;
+namespace controllers;
 
-use application\models\UsersModel;
+use models\UsersModel;
 use xen\Controller;
 use xen\View;
 

@@ -6,7 +6,7 @@
  * Time: 19:03
  */
 
-namespace application\models;
+namespace models;
 
 
 class UserModel 

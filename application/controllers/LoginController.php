@@ -6,7 +6,7 @@
  * Time: 19:01
  */
 
-namespace application\controllers;
+namespace controllers;
 
 
 use xen\Controller;

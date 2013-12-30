@@ -6,9 +6,9 @@
  * Time: 16:45
  */
 
-namespace application\controllers;
+namespace controllers;
 
-use application\views\helpers\ShowFormHelper;
+use views\helpers\ShowFormHelper;
 use xen\Config;
 use xen\Controller;
 use xen\View;

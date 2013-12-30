@@ -34,12 +34,11 @@ class Bootstrap
 
     private function _autoload()
     {
-        $applicationAutoloader = new Autoloader();
-        $xenAutoloader = new Autoloader('library');
-
-        $applicationAutoloader->register();
-        $xenAutoloader->register();
-
+        $defaultAutoload = new Autoloader(array(
+                                               'application',
+                                               'library'
+                                          ));
+        $defaultAutoload->register();
     }
 
     /*
