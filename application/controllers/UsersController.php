@@ -10,7 +10,7 @@ namespace controllers;
 
 use models\UsersModel;
 use xen\mvc\Controller;
-use xen\mvc\View;
+use xen\mvc\view\ViewScript;
 
 class UsersController extends Controller
 {
@@ -21,24 +21,32 @@ class UsersController extends Controller
 
     public function indexAction()
     {
-        $title = 'Users Controller';
-        $description = 'Controller for users management';
-        $layout = 'default';
-        $content = 'users/index';
-        $this->_view = new View($title, $description, $layout, $content);
+        $layout = $this->_view->getLayout();
+        $layoutVariables = array(
+            'title'         => 'Users Controller',
+            'description'   => 'Controller for users management',
+        );
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('users', 'index');
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 
     public function addAction()
     {
+        $layout = $this->_view->getLayout();
         $title = 'Add a new user';
-        $description = 'Insert a new user';
-        $layout = 'default';
-        $content = 'users/add';
-        $viewVariables = array(
-            'title'     => $title
+        $layoutVariables = array(
+            'title'         => $title,
+            'description'   => 'Insert a new user',
         );
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('users', 'add');
+        $viewScriptVariables = array(
+            'title' => $title,
+        );
+        $viewScript->setVariables($viewScriptVariables);
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 
@@ -57,15 +65,21 @@ class UsersController extends Controller
     public function updateAction()
     {
         $user = $this->_model->getUserById($this->_params['id']);
+
+        $layout = $this->_view->getLayout();
         $title = 'Update an user';
-        $description = 'Change user';
-        $layout = 'default';
-        $content = 'users/update';
-        $viewVariables = array(
-            'title'     => $title,
-            'user'      => $user
+        $layoutVariables = array(
+            'title'         => $title,
+            'description'   => 'Change user',
         );
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('users', 'update');
+        $viewScriptVariables = array(
+            'title'     => $title,
+            'user'      => $user,
+        );
+        $viewScript->setVariables($viewScriptVariables);
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 
@@ -78,15 +92,21 @@ class UsersController extends Controller
     public function userListAction()
     {
         $users = $this->_model->all();
+
+        $layout = $this->_view->getLayout();
         $title = 'User List';
-        $description = 'Show all users';
-        $layout = 'default';
-        $content = 'users/list';
-        $viewVariables = array(
-            'title'     => $title,
-            'users'     => $users
+        $layoutVariables = array(
+            'title'         => $title,
+            'description'   => 'Show all users',
         );
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('users', 'list');
+        $viewScriptVariables = array(
+            'title'     => $title,
+            'users'     => $users,
+        );
+        $viewScript->setVariables($viewScriptVariables);
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 }

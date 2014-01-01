@@ -16,8 +16,10 @@ namespace xen\application\bootstrap;
 
 use xen\config\Ini;
 use xen\db\Adapter;
+use xen\mvc\view\Layout;
+use xen\mvc\view\View;
 
-require str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/application/bootstrap/Autoloader.php');
+require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/Autoloader.php');
 
 class Bootstrap
 {
@@ -42,7 +44,7 @@ class Bootstrap
 
     private function _autoload()
     {
-        $defaultAutoload = new Autoloader(array('application', 'library'));
+        $defaultAutoload = new Autoloader(array('application', 'vendor'));
         $defaultAutoload->register();
     }
 
@@ -82,4 +84,19 @@ class Bootstrap
         return null;
     }
 
+    protected function _initLayout()
+    {
+        $config = $this->getResource('Config');
+        $layout = new Layout('default', 'layout');
+
+        return $layout;
+    }
+
+    protected function _initView()
+    {
+        $layout = $this->getResource('Layout');
+        $view = new View($layout);
+
+        return $view;
+    }
 }

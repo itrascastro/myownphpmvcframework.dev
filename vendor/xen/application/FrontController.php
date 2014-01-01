@@ -48,6 +48,7 @@ class FrontController
                         if (isset($this->_url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($this->_url));
                         }
+                        $this->_controller->setView($this->_bootstrap->getResource('View'));
                         return $this->_controller->$action();
                     } else {//method does not exist
                         $params = array(
@@ -96,6 +97,7 @@ class FrontController
     private function _showIndex()
     {
         $this->_controller = new IndexController($this->_bootstrap);
+        $this->_controller->setView($this->_bootstrap->getResource('View'));
         return $this->_controller->indexAction();
     }
 
@@ -103,6 +105,7 @@ class FrontController
     {
         $this->_controller = new ErrorController($this->_bootstrap);
         $this->_controller->setParams($params);
+        $this->_controller->setView($this->_bootstrap->getResource('View'));
         return $this->_controller->indexAction();
     }
 

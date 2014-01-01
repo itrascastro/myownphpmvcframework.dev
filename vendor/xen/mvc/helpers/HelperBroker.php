@@ -26,13 +26,13 @@ class HelperBroker
             $this->_type = $_type;
             $this->_libNamespace = 'xen\\mvc\\helpers\\actionHelpers';
             $this->_appNamespace = 'controllers\\helpers\\';
-            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/mvc/helpers/actionHelpers/');
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/mvc/helpers/actionHelpers/');
             $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/helpers/');
         } else if ($_type == self::VIEW_HELPER) {
             $this->_type = $_type;
             $this->_libNamespace = 'xen\\mvc\\helpers\\viewHelpers';
             $this->_appNamespace = 'views\\helpers\\';
-            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'library/xen/mvc/helpers/viewHelpers/');
+            $this->_libPath      = str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/mvc/helpers/viewHelpers/');
             $this->_appPath      = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/helpers/');
         } else {
             $this->_type = null;

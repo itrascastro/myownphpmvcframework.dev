@@ -10,7 +10,7 @@ namespace controllers;
 
 use models\CalculatorModel;
 use xen\mvc\Controller;
-use xen\mvc\View;
+use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
 {
@@ -21,23 +21,27 @@ class CalculatorController extends Controller
 
     public function indexAction()
     {
-        $title = 'Calculator';
-        $description = 'Add, Subtract, Multiply, Divide';
-        $layout = 'default';
-        $content = 'calculator/index';
-        $viewVariables = array();
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $layout = $this->_view->getLayout();
+        $layoutVariables = array(
+            'title'         => 'Calculator',
+            'description'   => 'Add, Subtract, Multiply, Divide',
+        );
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('calculator', 'index');
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 
     public function addAction()
     {
-        $title = 'Add';
-        $description = 'Add two numbers';
-        $layout = 'default';
-        $content = 'calculator/add';
-        $viewVariables = array();
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $layout = $this->_view->getLayout();
+        $layoutVariables = array(
+            'title'         => 'Add',
+            'description'   => 'Add two numbers',
+        );
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('calculator', 'add');
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 
@@ -47,16 +51,20 @@ class CalculatorController extends Controller
         $this->_model->setOp2($_POST['op2']);
         $this->_model->add();
 
-        $title = 'AddDo';
-        $description = 'Add two numbers';
-        $layout = 'default';
-        $content = 'calculator/addDo';
-        $viewVariables = array(
+        $layout = $this->_view->getLayout();
+        $layoutVariables = array(
+            'title'         => 'AddDo',
+            'description'   => 'Add two numbers',
+        );
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('calculator', 'addDo');
+        $viewScriptVariables = array(
             'op1'    => $_POST['op1'],
             'op2'    => $_POST['op2'],
-            'result' => $this->_model->getResult()
+            'result' => $this->_model->getResult(),
         );
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables);
+        $viewScript->setVariables($viewScriptVariables);
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
 } 

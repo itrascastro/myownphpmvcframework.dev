@@ -67,4 +67,19 @@ abstract class Controller
         $this->_model = $_model;
     }
 
+    /**
+     * @param mixed $view
+     */
+    public function setView($_view)
+    {
+        $this->_view = $_view;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getView()
+    {
+        return $this->_view;
+    }
 }

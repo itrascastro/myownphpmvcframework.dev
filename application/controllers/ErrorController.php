@@ -9,7 +9,8 @@
 namespace controllers;
 
 use xen\mvc\Controller;
-use xen\mvc\View;
+use xen\mvc\view\View;
+use xen\mvc\view\ViewScript;
 
 class ErrorController extends Controller
 {
@@ -20,14 +21,18 @@ class ErrorController extends Controller
 
     public function indexAction()
     {
-        $title = 'MyOwnPhpMVCFramework - Error';
-        $description = 'Error found';
-        $layout = 'default';
-        $content = 'error/index';
-        $viewVariables = array('msg' => $this->getParam('msg'));
-        $viewHelpers = array();
-        $this->_view = new View($title, $description, $layout, $content, $viewVariables, $viewHelpers);
+        $layout = $this->_view->getLayout();
+        $layoutVariables = array(
+            'title' => 'xenFramework - Error',
+            'description'   => 'Error found',
+        );
+        $layout->setVariables($layoutVariables);
+        $viewScript = new ViewScript('error', 'index');
+        $viewScriptVariables = array(
+            'msg' => $this->getParam('msg'),
+        );
+        $viewScript->setVariables($viewScriptVariables);
+        $layout->setViewScript($viewScript);
         return $this->_view->render();
     }
-
-} 
+}
