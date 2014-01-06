@@ -16,55 +16,62 @@ class FrontController
     const URL_CONTROLLER    = 'Controller';
     const URL_ACTION        = 'Action';
 
-    private $_url;
     private $_controller;
     private $_bootstrap;
 
     public function __construct($bootstrap)
     {
         $this->_bootstrap = $bootstrap;
-        if (isset($_GET['url']))
-        {
-            $url = rtrim($_GET['url'], '/'); //remove last /
-            $url = filter_var($url, FILTER_SANITIZE_URL);
-            $this->_url = explode('/', $url);
-        }
     }
 
     public function route()
     {
-        if (isset($this->_url))
+        if (isset($_GET['url']))
         {
-            $controllerName = $this->_getName($this->_url[0], self::URL_CONTROLLER);
+            $url = rtrim($_GET['url'], '/'); //remove last /
+            $url = filter_var($url, FILTER_SANITIZE_URL);
+            $url = explode('/', $url);
+
+            $controllerName = $this->_getName($url[0], self::URL_CONTROLLER);
             $controllerName .= 'Controller';
             $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controllerName . '.php';
 
             if (file_exists($file)) {
                 $controllerClassName = 'controllers\\' . $controllerName;
-                $this->_controller = new $controllerClassName($this->_bootstrap);
-                if (isset($this->_url[1])) {
-                    $action = $this->_getName($this->_url[1], self::URL_ACTION) . 'Action';
+                $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR,
+                    'application/views/scripts/' . strtolower($controllerName));
+                $this->_controller = new $controllerClassName($this->_bootstrap, $defaultViewPath);
+
+                if (isset($url[1])) {
+                    $action = $this->_getName($url[1], self::URL_ACTION) . 'Action';
                     if (method_exists($this->_controller, $action)) {
-                        if (isset($this->_url[2])) {
-                            $this->_controller->setParams($this->_getParamsFromUrl($this->_url));
+                        if (isset($url[2])) {
+                            $this->_controller->setParams($this->_getParamsFromUrl($url));
                         }
                         $this->_controller->setView($this->_bootstrap->getResource('View'));
+
                         return $this->_controller->$action();
+
                     } else {//method does not exist
                         $params = array(
-                                    'msg' => 'Method ' . $this->_url[1] . ' does not exist',
+                                    'msg' => 'Method ' . $url[1] . ' does not exist',
                                   );
+
                         return $this->_showError($params);
                     }
                 }
+
                 return $this->_controller->indexAction();
+
             } else {//controller does not exist
                 $params = array(
-                    'msg' => 'Controller ' . $this->_url[0] . ' does not exist',
+                    'msg' => 'Controller ' . $url[0] . ' does not exist',
                 );
+
                 return $this->_showError($params);
             }
         }
+
         return $this->_showIndex();
     }
 
@@ -96,16 +103,20 @@ class FrontController
 
     private function _showIndex()
     {
-        $this->_controller = new IndexController($this->_bootstrap);
+        $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
+        $this->_controller = new IndexController($this->_bootstrap, $defaultViewPath);
         $this->_controller->setView($this->_bootstrap->getResource('View'));
+
         return $this->_controller->indexAction();
     }
 
     private function _showError($params = array())
     {
-        $this->_controller = new ErrorController($this->_bootstrap);
+        $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
+        $this->_controller = new ErrorController($this->_bootstrap, $defaultViewPath);
         $this->_controller->setParams($params);
         $this->_controller->setView($this->_bootstrap->getResource('View'));
+
         return $this->_controller->indexAction();
     }
 

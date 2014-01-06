@@ -8,6 +8,16 @@
 
 namespace xen\mvc\helpers;
 
+/**
+ * Class HelperBroker
+ *
+ * @package xen\mvc\helpers
+ * @author  Ismael Trascastro itrascastro@xenframework.com
+ *
+ * Used in View Files to create instances of view Helpers and then call them (We do not have to create
+ * instances in View Files. That is the reason to be)
+ *
+ */
 class HelperBroker
 {
     const ACTION_HELPER = 0;

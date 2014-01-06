@@ -10,7 +10,7 @@ namespace bootstrap;
 
 use xen\application\Application;
 use xen\config\Ini;
-use xen\mvc\view\Layout;
+use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
 
 require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/Bootstrap.php');
@@ -19,7 +19,7 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
 {
     protected function _initConfig()
     {
-        $config = new Ini('application.ini', $this->_appEnv);
+        $config = new Ini('config.ini', $this->_appEnv);
 
         return $config;
     }
@@ -46,13 +46,24 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
         return null;
     }
 
+//    protected function _initLayoutPath()
+//    {
+//        return str_replace('/', DIRECTORY_SEPARATOR, 'application/layouts/default');
+//    }
+
     protected function _initLayout()
     {
         $config = $this->getResource('Config');
-        $variables = array(
+        $layoutPath = $this->getResource('LayoutPath');
+        $layoutVariables = array(
             'charset' => (string) $config->charset
         );
-        $layout = new Layout('default', 'layout', $variables);
+        $viewHelperBroker = $this->getResource('ViewHelperBroker');
+        $layoutPartials = array(
+            'header' => new Phtml($layoutPath, 'header', $viewHelperBroker),
+            'footer' => new Phtml($layoutPath, 'footer', $viewHelperBroker),
+        );
+        $layout = new Phtml($layoutPath, 'layout', $viewHelperBroker,$layoutVariables, $layoutPartials);
 
         return $layout;
     }

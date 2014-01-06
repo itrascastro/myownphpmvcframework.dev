@@ -19,15 +19,15 @@ use xen\mvc\helpers\HelperBroker;
 abstract class Controller
 {
     protected $_bootstrap;
+    protected $_viewPath;
     protected $_view;
     protected $_model;
     protected $_params;
-    protected $_actionHelperBroker;
 
-    public function __construct($bootstrap)
+    public function __construct($_bootstrap, $_viewPath)
     {
-        $this->_bootstrap = $bootstrap;
-        $this->_actionHelperBroker = new HelperBroker(HelperBroker::ACTION_HELPER);
+        $this->_bootstrap = $_bootstrap;
+        $this->_viewPath = $_viewPath;
         $this->_params = array();
         $this->init();
     }

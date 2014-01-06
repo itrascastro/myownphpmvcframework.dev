@@ -9,8 +9,9 @@
 namespace controllers;
 
 use views\helpers\ShowFormHelper;
+use xen\config\Ini;
 use xen\mvc\Controller;
-use xen\mvc\view\ViewScript;
+use xen\mvc\view\Phtml;
 
 class IndexController extends Controller
 {
@@ -25,9 +26,14 @@ class IndexController extends Controller
             'title'         => 'xenFramework.com',
             'description'   => 'Create your own Php MVC Framework from scratch',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('index', 'index');
-        $layout->setViewScript($viewScript);
+        $layout->addVariables($layoutVariables);
+        $viewHelperBroker = $this->_bootstrap->getResource('ViewHelperBroker');
+        $content = new Phtml($this->_viewPath, 'index', $viewHelperBroker);
+        $layout->addPartials(
+            array(
+                'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 } 

@@ -1,21 +1,25 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 23/12/13
- * Time: 12:26
+ * xenFramework (http://xenframework.com/)
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
  */
 
 namespace xen\config;
+
 
 class Ini extends Config
 {
     private $_array;
 
+    //TODO folder has to be passed as a parameter
     public function __construct($file, $section)
     {
         $array = parse_ini_file('application/configs/' . $file, true);
-        $array = $this->_recursive_parse($this->_parse_ini_advanced($array));
+        $this->_applyExtends($array);
+        $this->_convertDottedPropertiesToArray($array);
         if (array_key_exists($section, $array)) {
             $this->_array = $array[$section];
         } else {
@@ -24,78 +28,103 @@ class Ini extends Config
         parent::__construct($this->_array);
     }
 
-    private function _parse_ini_advanced($array)
+    private function _applyExtends(&$array)
     {
-        $returnArray = array();
-        if (is_array($array)) {
-            foreach ($array as $key => $value) {
-                $e = explode(':', $key);
-                if (!empty($e[1])) {
-                    $x = array();
-                    foreach ($e as $tk => $tv) {
-                        $x[$tk] = trim($tv);
-                    }
-                    $x = array_reverse($x, true);
-                    foreach ($x as $k => $v) {
-                        $c = $x[0];
-                        if (empty($returnArray[$c])) {
-                            $returnArray[$c] = array();
-                        }
-                        if (isset($returnArray[$x[1]])) {
-                            $returnArray[$c] = array_merge($returnArray[$c], $returnArray[$x[1]]);
-                        }
-                        if ($k === 0) {
-                            $returnArray[$c] = array_merge($returnArray[$c], $array[$key]);
-                        }
-                    }
-                } else {
-                    $returnArray[$key] = $array[$key];
-                }
+        foreach ($array as $section => &$arraySection) {
+            $extends = $this->_getExtends($section);
+            foreach ($extends as $parent) {
+                $parentArray = $this->_getParentArray($parent, $array);
+                $this->_copySection($parentArray, $arraySection);
             }
+            $this->_changeSectionName($array, $section);
         }
-        return $returnArray;
     }
 
-    private function _recursive_parse($array)
+    private function _changeSectionName(&$array, $section)
     {
-        $returnArray = array();
-        if (is_array($array)) {
-            foreach ($array as $key => $value) {
-                if (is_array($value)) {
-                    $array[$key] = $this->_recursive_parse($value);
-                }
-                $x = explode('.', $key);
-                if (!empty($x[1])) {
-                    $x = array_reverse($x, true);
-                    if (isset($returnArray[$key])) {
-                        unset($returnArray[$key]);
-                    }
-                    if (!isset($returnArray[$x[0]])) {
-                        $returnArray[$x[0]] = array();
-                    }
-                    $first = true;
-                    foreach ($x as $k => $v) {
-                        if ($first === true) {
-                            $b = $array[$key];
-                            $first = false;
-                        }
-                        $b = array($v => $b);
-                    }
-                    $returnArray[$x[0]] = array_merge_recursive($returnArray[$x[0]], $b[$x[0]]);
-                } else {
-                    $returnArray[$key] = $array[$key];
-                }
+        $sectionName = explode(':', $section);
+        if (sizeof($sectionName) > 1) { //if 0 we will unset the entire section
+            $newSectionName = trim($sectionName[0]);
+            $array[$newSectionName] = $array[$section];
+            unset($array[$section]);
+        }
+    }
+
+    private function _getParentArray($parent, $array)
+    {
+        foreach ($array as $section => $arraySection) {
+            $sectionName = explode(':', $section);
+            if (trim($sectionName[0]) == $parent) {
+                return $arraySection;
             }
         }
-        return $returnArray;
+    }
+
+    private function _getExtends($section)
+    {
+        $sections = explode(':', $section);
+        $extends = array_slice($sections, 1);
+        $trimExtends = array_map('trim', $extends);
+        return $trimExtends;
     }
 
     /**
-     * @return array
+     * Copies one section into another one
+     *
+     * @param $source
+     * @param $target
      */
-    public function getArray()
+    private function _copySection($source, &$target)
     {
-        return $this->_array;
+        foreach ($source as $key => $value) {
+            if (!array_key_exists($key, $target)) {
+                $target[$key] = $value;
+            }
+        }
     }
 
-}
+    /**
+     * Converts every property into an array and then does a recursive merge
+     *
+     * @param $array
+     */
+    private function _convertDottedPropertiesToArray(&$array)
+    {
+        foreach ($array as $section => $sectionArray) {
+            $merged = array();
+            foreach ($sectionArray as $key => $value) {
+                $property = $this->_dotToArray($key, $value);
+                $merged = array_merge_recursive($merged, $property);
+            }
+            $array[$section] = $merged;
+        }
+    }
+
+    /**
+     * Converts a dotted key into an array
+     *
+     * 'x.y.z' => 3
+     *
+     * array(
+     *      'x' => array(
+     *              'y' => array(
+     *                      'z' => 3
+     *              )
+     *      )
+     * )
+     *
+     * @param $dottedKey
+     * @param $value
+     *
+     * @return array
+     */
+    private function _dotToArray($dottedKey, $value)
+    {
+        $property = explode('.', $dottedKey);
+        if (sizeof($property) == 1) {
+            return array($property[0] => $value);
+        } else {
+            return array($property[0] => $this->_dotToArray(implode('.', array_slice($property, 1)), $value));
+        }
+    }
+} 

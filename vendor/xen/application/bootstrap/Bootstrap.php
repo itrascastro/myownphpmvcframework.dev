@@ -16,11 +16,19 @@ namespace xen\application\bootstrap;
 
 use xen\config\Ini;
 use xen\db\Adapter;
-use xen\mvc\view\Layout;
+use xen\mvc\helpers\HelperBroker;
+use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
 
 require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/Autoloader.php');
 
+/**
+ * Class Bootstrap
+ *
+ * @package xen\application\bootstrap
+ * @author  Ismael Trascastro itrascastro@xenframework.com
+ *
+ */
 class Bootstrap
 {
     protected $_appEnv;
@@ -56,10 +64,22 @@ class Bootstrap
     {
         $methods = get_class_methods($this);
 
+        $this->_defaultBootstrap($methods);
         forEach($methods as $method)
         {
             if (strlen($method) > 5 && substr($method, 0, 5) == '_init') {
                 $resourceName = ucfirst(substr($method, 5));
+                $this->_resources[$resourceName] = $this->$method();
+            }
+        }
+    }
+
+    private function _defaultBootstrap($methods)
+    {
+        forEach($methods as $method)
+        {
+            if (strlen($method) > 12 && substr($method, 0, 12) == '_initDefault') {
+                $resourceName = ucfirst(substr($method, 12));
                 $this->_resources[$resourceName] = $this->$method();
             }
         }
@@ -74,7 +94,12 @@ class Bootstrap
      * Default Resources
      */
 
-    protected function _initDatabase()
+    protected function _initDefaultApplicationConfig()
+    {
+        return new Ini('application.ini', $this->_appEnv);
+    }
+
+    protected function _initDefaultDatabase()
     {
         $configDb = new Ini('db.ini', $this->_appEnv);
         if (isset($configDb->driver)) {
@@ -84,15 +109,35 @@ class Bootstrap
         return null;
     }
 
-    protected function _initLayout()
+    protected function _initDefaultViewHelperBroker()
     {
-        $config = $this->getResource('Config');
-        $layout = new Layout('default', 'layout');
+        return new HelperBroker(HelperBroker::VIEW_HELPER);
+    }
+
+    protected function _initDefaultActionHelperBroker()
+    {
+        return new HelperBroker(HelperBroker::ACTION_HELPER);
+    }
+
+    protected function _initDefaultLayoutPath()
+    {
+        $applicationConfig = $this->getResource('ApplicationConfig');
+        if (isset($applicationConfig->defaultLayoutPath)) {
+            return str_replace('/', DIRECTORY_SEPARATOR, $applicationConfig->defaultLayoutPath);
+        }
+        return null;
+    }
+
+    protected function _initDefaultLayout()
+    {
+        $layoutPath = $this->getResource('LayoutPath');
+        $viewHelperBroker = $this->getResource('ViewHelperBroker');
+        $layout = new Phtml($layoutPath, 'layout', $viewHelperBroker);
 
         return $layout;
     }
 
-    protected function _initView()
+    protected function _initDefaultView()
     {
         $layout = $this->getResource('Layout');
         $view = new View($layout);

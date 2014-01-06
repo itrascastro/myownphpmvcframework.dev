@@ -8,26 +8,15 @@
  */
 
 namespace xen\mvc\view;
-use xen\mvc\helpers\HelperBroker;
 
-/**
- * Class View
- *
- * @package xen\mvc\view
- * @author  Ismael Trascastro itrascastro@xenframework.com
- *
- *          View is a concept. It is composed by a Layout and the layout uses a ViewScript
- */
+
 class View 
 {
     private $_layout;
-    private $_viewHelperBroker;
 
-    public function __construct($_layout)
+    public function __construct($_layout=null)
     {
         $this->_layout = $_layout;
-        $this->_viewHelperBroker = new HelperBroker(HelperBroker::VIEW_HELPER);
-        $this->_layout->setViewHelperBroker($this->_viewHelperBroker);
     }
 
     /**
@@ -48,6 +37,6 @@ class View
 
     public function render()
     {
-        return $this->_layout->render();
+        $this->_layout->render();
     }
 }

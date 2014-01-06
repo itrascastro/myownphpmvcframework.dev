@@ -1,9 +1,35 @@
+
+controllers refactor with new View
+---
+
+phpunit
+http://www.baluart.net/articulo/introduccion-a-las-pruebas-unitarias-en-php-con-phpunit
+https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/
+http://phpunit.de/manual/3.8/en/index.html
+https://www.youtube.com/watch?v=Iq6wvboGU-A
+https://www.youtube.com/watch?v=4BXpi7056RM
+---
+
+custom urls
+a configuration file where you can do
+array(
+    'custom_url.htm'    => array($controller, $method)
+)
+---
+
+
 contextual help with \PDO p.e.
 this can be achieved with phpdoc (using types in: @return, @var, @param)
 phpdoc for every class
 ---
 
 modules
+---
+
+orm integration
+---
+
+http://www.mindmeister.com/es/education
 ---
 
 
@@ -28,3 +54,9 @@ we do not know nothing about it.
 I think ini_set does not work if variables are already setted in php.ini
 ---
 
+xenFramework made by programmers for programmers
+xenFramework is what it was expected for zf to be to a programmer
+easy to learn, easy to use, intuitive, fast, no magic methods, no globals, no singletons, ...
+NO MAGIC => everything is under your control, EXPLICIT
+
+i.e. you can render a view from any controller
