@@ -32,14 +32,14 @@ class FrontController
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
 
-            $controllerName = $this->_getName($url[0], self::URL_CONTROLLER);
-            $controllerName .= 'Controller';
+            $controllerNameWithoutSuffix = $this->_getName($url[0], self::URL_CONTROLLER);
+            $controllerName = $controllerNameWithoutSuffix . 'Controller';
             $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controllerName . '.php';
 
             if (file_exists($file)) {
                 $controllerClassName = 'controllers\\' . $controllerName;
                 $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR,
-                    'application/views/scripts/' . strtolower($controllerName));
+                    'application/views/scripts/' . strtolower($controllerNameWithoutSuffix));
                 $this->_controller = new $controllerClassName($this->_bootstrap, $defaultViewPath);
 
                 if (isset($url[1])) {
@@ -48,7 +48,6 @@ class FrontController
                         if (isset($url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($url));
                         }
-                        $this->_controller->setView($this->_bootstrap->getResource('View'));
 
                         return $this->_controller->$action();
 
@@ -105,7 +104,6 @@ class FrontController
     {
         $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
         $this->_controller = new IndexController($this->_bootstrap, $defaultViewPath);
-        $this->_controller->setView($this->_bootstrap->getResource('View'));
 
         return $this->_controller->indexAction();
     }
@@ -115,7 +113,6 @@ class FrontController
         $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
         $this->_controller = new ErrorController($this->_bootstrap, $defaultViewPath);
         $this->_controller->setParams($params);
-        $this->_controller->setView($this->_bootstrap->getResource('View'));
 
         return $this->_controller->indexAction();
     }

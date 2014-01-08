@@ -15,15 +15,15 @@ namespace xen\mvc\view;
  * @package xen\mvc\view
  * @author  Ismael Trascastro itrascastro@xenframework.com
  *
- *          A phtml file can have partials. A partial is a phtml
+ *          A phtml file can have partials that are also phtml files
  */
 class Phtml
 {
-    public $_basePath;
-    public $_name;
-    public $_variables;
-    public $_partials;
-    public $_viewHelperBroker;
+    private $_basePath;
+    private $_name;
+    private $_variables;
+    private $_partials;
+    private $_viewHelperBroker;
 
     function __construct($_basePath, $_name, $_viewHelperBroker, $_variables=array(), $_partials = array())
     {

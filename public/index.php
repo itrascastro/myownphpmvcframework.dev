@@ -6,9 +6,8 @@
  * Time: 09:38
  */
 
-/**
- * This makes our life easier when dealing with paths. Everything is relative
- * to the application root now.
+/*
+ * All paths will be relative to project directory
  */
 chdir(dirname(__DIR__));
 

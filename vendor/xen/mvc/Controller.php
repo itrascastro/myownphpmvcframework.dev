@@ -27,6 +27,7 @@ abstract class Controller
     public function __construct($_bootstrap, $_viewPath)
     {
         $this->_bootstrap = $_bootstrap;
+        $this->_view = $_bootstrap->getResource('View');
         $this->_viewPath = $_viewPath;
         $this->_params = array();
         $this->init();
