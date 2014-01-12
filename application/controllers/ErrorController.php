@@ -9,30 +9,38 @@
 namespace controllers;
 
 use xen\mvc\Controller;
+use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
 use xen\mvc\view\ViewScript;
 
 class ErrorController extends Controller
 {
+    private $_viewHelperBroker;
+    private $_layout;
+
     public function init()
     {
-
+        $this->_layout = $this->_view->getLayout();
+        $this->_viewHelperBroker = $this->_bootstrap->getResource('ViewHelperBroker');
     }
 
     public function indexAction()
     {
-        $layout = $this->_view->getLayout();
+        $this->_layout = $this->_view->getLayout();
         $layoutVariables = array(
             'title' => 'xenFramework - Error',
             'description'   => 'Error found',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('error', 'index');
-        $viewScriptVariables = array(
+        $this->_layout->addVariables($layoutVariables);
+        $viewVariables = array(
             'msg' => $this->getParam('msg'),
         );
-        $viewScript->setVariables($viewScriptVariables);
-        $layout->setViewScript($viewScript);
+        $content = new Phtml($this->_viewPath, 'index', $this->_viewHelperBroker, $viewVariables);
+        $this->_layout->addPartials(
+            array(
+                 'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 }

@@ -139,4 +139,10 @@ class Phtml
     {
         return $this->_partials[$name];
     }
+
+    public function out($string)
+    {
+        echo htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
+
 }

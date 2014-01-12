@@ -80,4 +80,45 @@ class CalculatorController extends Controller
         );
         $this->_view->render();
     }
+
+    public function subtractAction()
+    {
+        $layoutVariables = array(
+            'title'         => 'Subtract Form',
+            'description'   => 'Subtract 2 numbers',
+        );
+        $this->_layout->setVariables($layoutVariables);
+        $content = new Phtml($this->_viewPath,'subtract', $this->_viewHelperBroker);
+        $this->_layout->addPartials(
+            array(
+                 'content' => $content,
+            )
+        );
+        $this->_view->render();
+    }
+
+    public function subtractDoAction()
+    {
+        $this->_model->setOp1($_POST['op1']);
+        $this->_model->setOp2($_POST['op2']);
+        $this->_model->subtract();
+
+        $layoutVariables = array(
+            'description'   => 'Subtract Result',
+            'title'         => 'Subtract Result',
+        );
+        $this->_layout->setVariables($layoutVariables);
+        $viewVariables = array(
+            'op1'       => $this->_model->getOp1(),
+            'op2'       => $this->_model->getOp2(),
+            'result'    => $this->_model->getResult(),
+        );
+        $content = new Phtml($this->_viewPath, 'subtractDo', $this->_viewHelperBroker, $viewVariables);
+        $this->_layout->addPartials(
+            array(
+                 'content' => $content,
+            )
+        );
+        $this->_view->render();
+    }
 } 

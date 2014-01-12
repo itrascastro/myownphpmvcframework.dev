@@ -3,9 +3,9 @@
 <h1>Add Result</h1>
 
 <p>
-    <?php echo $this->_variables['op1']; ?> +
-    <?php echo $this->_variables['op2']; ?> =
+    <?php $this->out($this->_variables['op1']); ?> +
+    <?php $this->out($this->_variables['op2']); ?> =
     <strong>
-        <?php echo $this->_variables['result']; ?>
+        <?php $this->out($this->_variables['result']); ?>
     </strong>
 </p>

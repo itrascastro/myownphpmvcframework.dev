@@ -1,3 +1,12 @@
+Provide default events a cross life circle
+Bootstrap_Start
+FrontController_Start
+...
+----
+
+open the project to new contributors
+http://www.doctrine-project.org/contribute.html
+---
 
 controllers refactor with new View
 ---
@@ -96,6 +105,7 @@ TODO: Learn about Auryn works and try to implement it in xenFramework
 ---------------
 Design patterns
 ---------------
+https://github.com/domnikl/DesignPatternsPHP
 http://www.michael-pratt.com/blog/13/Patrones-de-Diseno-Inyeccion-de-Dependencias/
 http://www.imaginanet.com/blog/inyeccion-de-dependencias.html
 [*]http://www.davegardner.me.uk/blog/2009/11/23/php-dependency-strategies-dependency-injection-and-service-locator/
@@ -143,6 +153,8 @@ i.e. you can render a view from any controller
 =========
 Design Patterns
 =========
+http://www.dofactory.com/Patterns/Patterns.aspx
+https://github.com/domnikl/DesignPatternsPHP
 http://www.maltblue.com/tutorial/zend-framework-2-event-manager-a-gentle-introduction
 
 Dependency Injection
@@ -152,3 +164,43 @@ IoC
 Service Locator
 Subject/Observer
 Factory
+
+
+http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
+
+======
+Events
+======
+https://github.com/prggmr/XPSPL/tree/master/XPSPL
+********
+in zf2: http://stackoverflow.com/questions/12726134/zend-framework-2-cannot-attach-to-dispatch-event
+in symfony: http://fabien.potencier.org/article/58/create-your-own-framework-on-top-of-the-symfony2-components-part-9
+http://blog.ircmaxell.com/2012/03/handling-plugins-in-php.html
+https://www.youtube.com/watch?v=_UipYmC8foU&feature=youtu.be
+http://youtu.be/4rRa-bB5kTA
+http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
+http://headers-already-sent.com/eventdispatcher/#.UtB4K3lXfeE
+********
+
+
+https://github.com/simme/EventDispatcher
+http://www.cainsvault.com/design-pattern-php-event-dispatcher/
+http://stackoverflow.com/questions/4471183/php-event-listener-best-practice-implementation
+
+=========
+ViewHelpers in zf2
+=========
+
+http://zf2dev.com/2013/03/19/how-to-write-custom-view-helper-in-zend-framework-2/
+
+====
+IoC in zf2
+====
+
+https://juriansluiman.nl/article/120/using-zend-framework-service-managers-in-your-application
+http://headers-already-sent.com/eventdispatcher/#.UtB4K3lXfeE
+
+
+Documentation
+http://xpspl.readthedocs.org/en/latest/
+----

@@ -1,0 +1,11 @@
+<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper')->show(); ?>
+
+<h1>Subtract Result</h1>
+
+<p>
+    <?php echo $this->_variables['op1']; ?> -
+    <?php echo $this->_variables['op2']; ?> =
+    <strong>
+        <?php echo $this->_variables['result']; ?>
+    </strong>
+</p>

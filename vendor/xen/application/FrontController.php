@@ -10,6 +10,7 @@ namespace xen\application;
 
 use controllers\ErrorController;
 use controllers\IndexController;
+use xen\eventSystem\Event;
 
 class FrontController
 {
@@ -22,6 +23,9 @@ class FrontController
     public function __construct($bootstrap)
     {
         $this->_bootstrap = $bootstrap;
+        $eventSystem = $this->_bootstrap->getResource('EventSystem');
+        $event = new Event('FrontController_Load', array('msg' => 'Event Raised from FrontController'));
+        $eventSystem->raiseEvent($event);
     }
 
     public function route()

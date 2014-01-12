@@ -16,6 +16,7 @@ namespace xen\application\bootstrap;
 
 use xen\config\Ini;
 use xen\db\Adapter;
+use xen\eventSystem\EventSystem;
 use xen\mvc\helpers\HelperBroker;
 use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
@@ -143,5 +144,24 @@ class Bootstrap
         $view = new View($layout);
 
         return $view;
+    }
+
+    protected function _initDefaultEventSystem()
+    {
+        return new EventSystem();
+    }
+
+    protected function _initDefaultHandlers()
+    {
+        $handlers = require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/handlers.php');
+
+        $eventSystem = $this->getResource('EventSystem');
+
+        foreach ($handlers as $handler) {
+            $handlerName = 'eventHandlers\\' . $handler['handler'];
+            $handlerInstance = new $handlerName();
+            $handlerInstance->addHandles($handler['events']);
+            $eventSystem->addHandler($handlerInstance);
+        }
     }
 }
