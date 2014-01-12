@@ -15,18 +15,12 @@ use xen\mvc\view\ViewScript;
 
 class ErrorController extends Controller
 {
-    private $_viewHelperBroker;
-    private $_layout;
-
     public function init()
     {
-        $this->_layout = $this->_view->getLayout();
-        $this->_viewHelperBroker = $this->_bootstrap->getResource('ViewHelperBroker');
     }
 
     public function indexAction()
     {
-        $this->_layout = $this->_view->getLayout();
         $layoutVariables = array(
             'title' => 'xenFramework - Error',
             'description'   => 'Error found',
