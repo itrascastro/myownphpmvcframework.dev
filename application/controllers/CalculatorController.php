@@ -15,14 +15,9 @@ use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
 {
-    private $_viewHelperBroker;
-    private $_layout;
-
     public function init()
     {
         $this->_model = new CalculatorModel();
-        $this->_layout = $this->_view->getLayout();
-        $this->_viewHelperBroker = $this->_bootstrap->getResource('ViewHelperBroker');
     }
 
     public function indexAction()

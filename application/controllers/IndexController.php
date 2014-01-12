@@ -29,15 +29,13 @@ class IndexController extends Controller
 
     public function indexAction()
     {
-        $layout = $this->_view->getLayout();
         $layoutVariables = array(
             'title'         => 'xenFramework.com',
             'description'   => 'Create your own Php MVC Framework from scratch',
         );
-        $layout->addVariables($layoutVariables);
-        $viewHelperBroker = $this->_bootstrap->getResource('ViewHelperBroker');
-        $content = new Phtml($this->_viewPath, 'index', $viewHelperBroker);
-        $layout->addPartials(
+        $this->_layout->addVariables($layoutVariables);
+        $content = new Phtml($this->_viewPath, 'index', $this->_viewHelperBroker);
+        $this->_layout->addPartials(
             array(
                 'content' => $content,
             )

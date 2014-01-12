@@ -1,16 +1,35 @@
-Provide default events a cross life circle
+TODO DOCUMENTATION
+contextual help with \PDO p.e.
+this can be achieved with phpdoc (using types in: @return, @var, @param)
+phpdoc for every class
+---
+
+TODO RAISE CORE EVENTS
+Provide default events a cross lifecycle
 Bootstrap_Start
 FrontController_Start
 ...
 ----
 
+TODO ROUTER
+custom urls
+a configuration file where you can do
+array(
+    'custom_url.htm'    => array($controller, $method)
+)
+---
+
+TODO COMMUNITY CONTRIBUTORS
 open the project to new contributors
+pull request
 http://www.doctrine-project.org/contribute.html
 ---
 
+TODO
 controllers refactor with new View
 ---
 
+TODO UNIT TESTING
 phpunit
 http://www.baluart.net/articulo/introduccion-a-las-pruebas-unitarias-en-php-con-phpunit
 https://jtreminio.com/2013/03/unit-testing-tutorial-introduction-to-phpunit/
@@ -19,18 +38,9 @@ https://www.youtube.com/watch?v=Iq6wvboGU-A
 https://www.youtube.com/watch?v=4BXpi7056RM
 ---
 
-custom urls
-a configuration file where you can do
-array(
-    'custom_url.htm'    => array($controller, $method)
-)
----
 
 
-contextual help with \PDO p.e.
-this can be achieved with phpdoc (using types in: @return, @var, @param)
-phpdoc for every class
----
+
 
 =======
 modules
