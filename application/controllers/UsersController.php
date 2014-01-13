@@ -10,7 +10,7 @@ namespace controllers;
 
 use models\UsersModel;
 use xen\mvc\Controller;
-use xen\mvc\view\ViewScript;
+use xen\mvc\view\Phtml;
 
 class UsersController extends Controller
 {
@@ -21,32 +21,37 @@ class UsersController extends Controller
 
     public function indexAction()
     {
-        $layout = $this->_view->getLayout();
         $layoutVariables = array(
             'title'         => 'Users Controller',
             'description'   => 'Controller for users management',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('users', 'index');
-        $layout->setViewScript($viewScript);
+        $this->_layout->setVariables($layoutVariables);
+        $content = new Phtml($this->_viewPath, 'index', $this->_viewHelperBroker);
+        $this->_layout->addPartials(
+            array(
+                'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 
     public function addAction()
     {
-        $layout = $this->_view->getLayout();
         $title = 'Add a new user';
         $layoutVariables = array(
             'title'         => $title,
             'description'   => 'Insert a new user',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('users', 'add');
-        $viewScriptVariables = array(
+        $this->_layout->setVariables($layoutVariables);
+        $viewVariables = array(
             'title' => $title,
         );
-        $viewScript->setVariables($viewScriptVariables);
-        $layout->setViewScript($viewScript);
+        $content = new Phtml($this->_viewPath, 'add', $this->_viewHelperBroker, $viewVariables);
+        $this->_layout->addPartials(
+            array(
+                'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 
@@ -66,20 +71,22 @@ class UsersController extends Controller
     {
         $user = $this->_model->getUserById($this->_params['id']);
 
-        $layout = $this->_view->getLayout();
         $title = 'Update an user';
         $layoutVariables = array(
             'title'         => $title,
             'description'   => 'Change user',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('users', 'update');
-        $viewScriptVariables = array(
+        $this->_layout->setVariables($layoutVariables);
+        $viewVariables = array(
             'title'     => $title,
             'user'      => $user,
         );
-        $viewScript->setVariables($viewScriptVariables);
-        $layout->setViewScript($viewScript);
+        $content = new Phtml($this->_viewPath, 'update', $this->_viewHelperBroker, $viewVariables);
+        $this->_layout->addPartials(
+            array(
+                'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 
@@ -93,20 +100,22 @@ class UsersController extends Controller
     {
         $users = $this->_model->all();
 
-        $layout = $this->_view->getLayout();
         $title = 'User List';
         $layoutVariables = array(
             'title'         => $title,
             'description'   => 'Show all users',
         );
-        $layout->setVariables($layoutVariables);
-        $viewScript = new ViewScript('users', 'list');
-        $viewScriptVariables = array(
+        $this->_layout->setVariables($layoutVariables);
+        $viewVariables = array(
             'title'     => $title,
             'users'     => $users,
         );
-        $viewScript->setVariables($viewScriptVariables);
-        $layout->setViewScript($viewScript);
+        $content = new Phtml($this->_viewPath, 'list', $this->_viewHelperBroker, $viewVariables);
+        $this->_layout->addPartials(
+            array(
+                'content' => $content,
+            )
+        );
         return $this->_view->render();
     }
 }
