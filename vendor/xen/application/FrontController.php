@@ -11,6 +11,7 @@ namespace xen\application;
 use controllers\ErrorController;
 use controllers\IndexController;
 use xen\eventSystem\Event;
+use xen\mvc\view\Phtml;
 
 class FrontController
 {
@@ -23,9 +24,9 @@ class FrontController
     public function __construct($bootstrap)
     {
         $this->_bootstrap = $bootstrap;
-        $eventSystem = $this->_bootstrap->getResource('EventSystem');
-        $event = new Event('FrontController_Load', array('msg' => 'Event Raised from FrontController'));
-        $eventSystem->raiseEvent($event);
+//        $eventSystem = $this->_bootstrap->getResource('EventSystem');
+//        $event = new Event('FrontController_Load', array('msg' => 'Event Raised from FrontController'));
+//        $eventSystem->raiseEvent($event);
     }
 
     public function route()
@@ -44,15 +45,21 @@ class FrontController
                 $controllerClassName = 'controllers\\' . $controllerName;
                 $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR,
                     'application/views/scripts/' . strtolower($controllerNameWithoutSuffix));
-                $this->_controller = new $controllerClassName($this->_bootstrap, $defaultViewPath);
+                $this->_controller = new $controllerClassName($this->_bootstrap);
 
                 if (isset($url[1])) {
-                    $action = $this->_getName($url[1], self::URL_ACTION) . 'Action';
+                    $actionNameWithoutSuffix = $this->_getName($url[1], self::URL_ACTION);
+                    $action = $actionNameWithoutSuffix . 'Action';
                     if (method_exists($this->_controller, $action)) {
                         if (isset($url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($url));
                         }
-
+                        $view = new Phtml(
+                            $defaultViewPath,
+                            $actionNameWithoutSuffix,
+                            $this->_bootstrap->getResource('ViewHelperBroker')
+                        );
+                        $this->_controller->setView($view);
                         return $this->_controller->$action();
 
                     } else {//method does not exist
@@ -107,7 +114,13 @@ class FrontController
     private function _showIndex()
     {
         $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
-        $this->_controller = new IndexController($this->_bootstrap, $defaultViewPath);
+        $this->_controller = new IndexController($this->_bootstrap);
+        $view = new Phtml(
+            $defaultViewPath,
+            'index',
+            $this->_bootstrap->getResource('ViewHelperBroker')
+        );
+        $this->_controller->setView($view);
 
         return $this->_controller->indexAction();
     }
@@ -117,6 +130,12 @@ class FrontController
         $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
         $this->_controller = new ErrorController($this->_bootstrap, $defaultViewPath);
         $this->_controller->setParams($params);
+        $view = new Phtml(
+            $defaultViewPath,
+            'index',
+            $this->_bootstrap->getResource('ViewHelperBroker')
+        );
+        $this->_controller->setView($view);
 
         return $this->_controller->indexAction();
     }

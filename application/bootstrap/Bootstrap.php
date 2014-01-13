@@ -67,12 +67,4 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
 
         return $layout;
     }
-
-    protected function _initView()
-    {
-        $layout = $this->getResource('Layout');
-        $view = new View($layout);
-
-        return $view;
-    }
 }

@@ -96,7 +96,7 @@ class UsersController extends Controller
         $this->userListAction();
     }
 
-    public function userListAction()
+    public function listAction()
     {
         $users = $this->_model->all();
 

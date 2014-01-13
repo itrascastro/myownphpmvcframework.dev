@@ -86,6 +86,13 @@ class Bootstrap
         }
     }
 
+    public function addResources(array $resources)
+    {
+        foreach ($resources as $resource => $value) {
+            $this->_resources[$resource] = $value;
+        }
+    }
+
     public function getResource($resource)
     {
         return (array_key_exists($resource, $this->_resources) ? $this->_resources[$resource] : null);
@@ -136,14 +143,6 @@ class Bootstrap
         $layout = new Phtml($layoutPath, 'layout', $viewHelperBroker);
 
         return $layout;
-    }
-
-    protected function _initDefaultView()
-    {
-        $layout = $this->getResource('Layout');
-        $view = new View($layout);
-
-        return $view;
     }
 
     protected function _initDefaultEventSystem()

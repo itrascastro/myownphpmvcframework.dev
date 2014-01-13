@@ -8,13 +8,9 @@
 
 namespace controllers;
 
-use eventHandlers\Bootstrap_Load;
-use views\helpers\ShowFormHelper;
-use xen\config\Ini;
 use xen\eventSystem\Event;
 use xen\eventSystem\EventSystem;
 use xen\mvc\Controller;
-use xen\mvc\view\Phtml;
 
 class IndexController extends Controller
 {
@@ -29,17 +25,8 @@ class IndexController extends Controller
 
     public function indexAction()
     {
-        $layoutVariables = array(
-            'title'         => 'xenFramework.com',
-            'description'   => 'Create your own Php MVC Framework from scratch',
-        );
-        $this->_layout->addVariables($layoutVariables);
-        $content = new Phtml($this->_viewPath, 'index', $this->_viewHelperBroker);
-        $this->_layout->addPartials(
-            array(
-                'content' => $content,
-            )
-        );
-        return $this->_view->render();
+        $this->_layout->title           = 'xenFramework.com';
+        $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+        return $this->render();
     }
 } 

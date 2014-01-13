@@ -19,9 +19,9 @@ class UsersMenuHelper extends ViewHelper
             <ul class="list-inline">
                 <li><a href="/users/index/">Users</a></li>
                 <li><a href="/users/add/">Add new user</a></li>
-                <li><a href="/users/user-list/">Delete user</a></li>
-                <li><a href="/users/user-list/">Update user</a></li>
-                <li><a href="/users/user-list/">User list</a></li>
+                <li><a href="/users/list/">Delete user</a></li>
+                <li><a href="/users/list/">Update user</a></li>
+                <li><a href="/users/list/">User list</a></li>
             </ul>
         ';
     }

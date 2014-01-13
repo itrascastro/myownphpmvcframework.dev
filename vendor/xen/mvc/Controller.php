@@ -19,20 +19,15 @@ use xen\mvc\helpers\HelperBroker;
 abstract class Controller
 {
     protected $_bootstrap;
-    protected $_viewPath;
     protected $_view;
     protected $_layout;
-    protected $_viewHelperBroker;
     protected $_model;
     protected $_params;
 
-    public function __construct($_bootstrap, $_viewPath)
+    public function __construct($_bootstrap)
     {
         $this->_bootstrap           = $_bootstrap;
-        $this->_view                = $_bootstrap->getResource('View');
-        $this->_layout              = $this->_view->getLayout();
-        $this->_viewPath            = $_viewPath;
-        $this->_viewHelperBroker    = $_bootstrap->getResource('ViewHelperBroker');
+        $this->_layout              = $_bootstrap->getResource('Layout');
         $this->_params              = array();
 
         $this->init();
@@ -79,6 +74,11 @@ abstract class Controller
     public function setView($_view)
     {
         $this->_view = $_view;
+        $this->_layout->addPartials(
+            array(
+                'content' => $this->_view,
+            )
+        );
     }
 
     /**
@@ -87,5 +87,10 @@ abstract class Controller
     public function getView()
     {
         return $this->_view;
+    }
+
+    public function render()
+    {
+        $this->_layout->render();
     }
 }
