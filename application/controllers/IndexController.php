@@ -27,6 +27,7 @@ class IndexController extends Controller
     {
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+
         return $this->render();
     }
 } 

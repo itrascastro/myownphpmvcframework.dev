@@ -25,13 +25,12 @@ class Phtml
     private $_partials;
     private $_viewHelperBroker;
 
-    function __construct($_basePath, $_name, $_viewHelperBroker, $_variables=array(), $_partials = array())
+    function __construct($_basePath, $_name, $_variables=array())
     {
-        $this->_basePath = $_basePath;
-        $this->_name = $_name;
-        $this->_viewHelperBroker = $_viewHelperBroker;
-        $this->_variables = $_variables;
-        $this->_partials = $_partials;
+        $this->_basePath    = $_basePath;
+        $this->_name        = $_name;
+        $this->_variables   = $_variables;
+        $this->_partials    = array();
     }
 
     /**
@@ -103,11 +102,6 @@ class Phtml
         return $this->_viewHelperBroker;
     }
 
-    public function render()
-    {
-        require $this->_basePath . DIRECTORY_SEPARATOR . $this->_name  . '.phtml';
-    }
-
     /**
      * @param mixed $_partials
      */
@@ -125,12 +119,12 @@ class Phtml
     }
 
     /**
+     * We propagate phtml variables to partials and also inject the ViewHelperBroker
      * @param array $_partials Is an associative array ('name' => $partial)
      */
     public function addPartials($_partials)
     {
         foreach ($_partials as $name => $partial) {
-            $partial->setViewHelperBroker($this->_viewHelperBroker);
             $this->_partials[$name] = $partial;
         }
     }
@@ -145,4 +139,24 @@ class Phtml
         echo htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
 
+    /**
+     * In Bootstrap we set ViewHelperBroker to the very first view, the layout
+     * ViewHelperBroker will be passed to the child in the render() method
+     * as the view variables of every Phtml => At this point no more variables can be added to this phtml
+     *
+     */
+    public function render()
+    {
+        $reflect = new \ReflectionObject($this);
+        $properties = $reflect->getProperties(\ReflectionProperty::IS_PUBLIC);
+        foreach ($this->getPartials() as $partial) {
+            foreach ($properties as $property) {
+                $propertyName = $property->getName();
+                $partial->$propertyName = $this->$propertyName;
+            }
+            $partial->setViewHelperBroker($this->_viewHelperBroker);
+        }
+
+        require $this->_basePath . DIRECTORY_SEPARATOR . $this->_name  . '.phtml';
+    }
 }

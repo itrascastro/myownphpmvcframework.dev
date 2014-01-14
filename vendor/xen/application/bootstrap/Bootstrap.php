@@ -130,17 +130,24 @@ class Bootstrap
     protected function _initDefaultLayoutPath()
     {
         $applicationConfig = $this->getResource('ApplicationConfig');
+
         if (isset($applicationConfig->defaultLayoutPath)) {
             return str_replace('/', DIRECTORY_SEPARATOR, $applicationConfig->defaultLayoutPath);
         }
         return null;
     }
 
+    /**
+     * Here we set ViewHelperBroker, then it will be propagated to child phtml in render()
+     *
+     * @return Phtml
+     */
     protected function _initDefaultLayout()
     {
-        $layoutPath = $this->getResource('LayoutPath');
-        $viewHelperBroker = $this->getResource('ViewHelperBroker');
-        $layout = new Phtml($layoutPath, 'layout', $viewHelperBroker);
+        $layoutPath     = $this->getResource('LayoutPath');
+        $layout         = new Phtml($layoutPath, 'layout');
+
+        $layout->setViewHelperBroker($this->getResource('ViewHelperBroker'));
 
         return $layout;
     }

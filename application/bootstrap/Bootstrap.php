@@ -51,19 +51,25 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
 //        return str_replace('/', DIRECTORY_SEPARATOR, 'application/layouts/default');
 //    }
 
+    /**
+     *
+     * @return Phtml
+     *
+     */
     protected function _initLayout()
     {
-        $config = $this->getResource('Config');
         $layoutPath = $this->getResource('LayoutPath');
-        $layoutVariables = array(
-            'charset' => (string) $config->charset
+        $layout = new Phtml($layoutPath, 'layout');
+        $layout->setViewHelperBroker($this->getResource('ViewHelperBroker'));
+
+        $partials = array(
+            'header' => new Phtml($layoutPath, 'header'),
+            'footer' => new Phtml($layoutPath, 'footer'),
         );
-        $viewHelperBroker = $this->getResource('ViewHelperBroker');
-        $layoutPartials = array(
-            'header' => new Phtml($layoutPath, 'header', $viewHelperBroker),
-            'footer' => new Phtml($layoutPath, 'footer', $viewHelperBroker),
-        );
-        $layout = new Phtml($layoutPath, 'layout', $viewHelperBroker,$layoutVariables, $layoutPartials);
+        $layout->addPartials($partials);
+
+        $config = $this->getResource('Config');
+        $layout->charset = (string) $config->charset;
 
         return $layout;
     }

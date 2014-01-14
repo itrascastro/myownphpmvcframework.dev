@@ -37,7 +37,9 @@ abstract class Controller
     public abstract function indexAction();
 
     /**
-     * @param mixed $params
+     * @param $_params
+     *
+     * @internal param mixed $params
      */
     public function setParams($_params)
     {
@@ -89,6 +91,9 @@ abstract class Controller
         return $this->_view;
     }
 
+    /**
+     * We extend layout properties to partials
+     */
     public function render()
     {
         $this->_layout->render();
