@@ -58,13 +58,11 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
      */
     protected function _initLayout()
     {
-        $layoutPath = $this->getResource('LayoutPath');
-        $layout = new Phtml($layoutPath, 'layout');
-        $layout->setViewHelperBroker($this->getResource('ViewHelperBroker'));
+        $layout = $this->getResource('Layout');
 
         $partials = array(
-            'header' => new Phtml($layoutPath, 'header'),
-            'footer' => new Phtml($layoutPath, 'footer'),
+            'header' => new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml'),
+            'footer' => new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'footer.phtml'),
         );
         $layout->addPartials($partials);
 

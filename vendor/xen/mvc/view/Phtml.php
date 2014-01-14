@@ -16,74 +16,35 @@ namespace xen\mvc\view;
  * @author  Ismael Trascastro itrascastro@xenframework.com
  *
  *          A phtml file can have partials that are also phtml files
+ *
+ *          Only one restriction: partial 'content' is mandatory in the layout
  */
 class Phtml
 {
-    private $_basePath;
-    private $_name;
-    private $_variables;
+    private $_file;
     private $_partials;
     private $_viewHelperBroker;
 
-    function __construct($_basePath, $_name, $_variables=array())
+    function __construct($_file)
     {
-        $this->_basePath    = $_basePath;
-        $this->_name        = $_name;
-        $this->_variables   = $_variables;
+        $this->_file        = $_file;
         $this->_partials    = array();
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $_file
      */
-    public function setName($name)
+    public function setFile($_file)
     {
-        $this->_name = $name;
+        $this->_file = $_file;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFile()
     {
-        return $this->_name;
-    }
-
-    public function getVariables()
-    {
-        return $this->_variables;
-    }
-
-    public function setVariables($_variables)
-    {
-        $this->_variables = $_variables;
-    }
-
-    public function addVariables($_variables)
-    {
-        foreach ($_variables as $key => $value) {
-            $this->_variables[$key] = $value;
-        }
-    }
-
-    public function getVariable($key)
-    {
-        if (array_key_exists($key, $this->_variables)) {
-            return $this->_variables[$key];
-        }
-    }
-
-    /**
-     * @param mixed $basePath
-     */
-    public function setBasePath($basePath)
-    {
-        $this->_basePath = $basePath;
-    }
-
-    public function getBasePath()
-    {
-        return $this->_basePath;
+        return $this->_file;
     }
 
     /**
@@ -157,6 +118,6 @@ class Phtml
             $partial->setViewHelperBroker($this->_viewHelperBroker);
         }
 
-        require $this->_basePath . DIRECTORY_SEPARATOR . $this->_name  . '.phtml';
+        require $this->_file;
     }
 }

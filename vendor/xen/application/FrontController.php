@@ -43,7 +43,7 @@ class FrontController
 
             if (file_exists($file)) {
                 $controllerClassName = 'controllers\\' . $controllerName;
-                $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR,
+                $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
                     'application/views/scripts/' . strtolower($controllerNameWithoutSuffix));
                 $this->_controller = new $controllerClassName($this->_bootstrap);
 
@@ -54,11 +54,7 @@ class FrontController
                         if (isset($url[2])) {
                             $this->_controller->setParams($this->_getParamsFromUrl($url));
                         }
-                        $view = new Phtml(
-                            $defaultViewPath,
-                            $actionNameWithoutSuffix,
-                            $this->_bootstrap->getResource('ViewHelperBroker')
-                        );
+                        $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $actionNameWithoutSuffix . '.phtml');
                         $this->_controller->setView($view);
                         return $this->_controller->$action();
 
@@ -70,6 +66,9 @@ class FrontController
                         return $this->_showError($params);
                     }
                 }
+
+                $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
+                $this->_controller->setView($view);
 
                 return $this->_controller->indexAction();
 
@@ -113,13 +112,10 @@ class FrontController
 
     private function _showIndex()
     {
-        $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
-        $this->_controller = new IndexController($this->_bootstrap);
-        $view = new Phtml(
-            $defaultViewPath,
-            'index',
-            $this->_bootstrap->getResource('ViewHelperBroker')
-        );
+        $viewPath           = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
+        $this->_controller  = new IndexController($this->_bootstrap);
+        $view               = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
+
         $this->_controller->setView($view);
 
         return $this->_controller->indexAction();
@@ -127,14 +123,11 @@ class FrontController
 
     private function _showError($params = array())
     {
-        $defaultViewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
-        $this->_controller = new ErrorController($this->_bootstrap, $defaultViewPath);
+        $viewPath           = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
+        $this->_controller  = new ErrorController($this->_bootstrap);
+
         $this->_controller->setParams($params);
-        $view = new Phtml(
-            $defaultViewPath,
-            'index',
-            $this->_bootstrap->getResource('ViewHelperBroker')
-        );
+        $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
         $this->_controller->setView($view);
 
         return $this->_controller->indexAction();

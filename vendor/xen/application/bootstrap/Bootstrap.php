@@ -144,8 +144,7 @@ class Bootstrap
      */
     protected function _initDefaultLayout()
     {
-        $layoutPath     = $this->getResource('LayoutPath');
-        $layout         = new Phtml($layoutPath, 'layout');
+        $layout = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'layout.phtml');
 
         $layout->setViewHelperBroker($this->getResource('ViewHelperBroker'));
 

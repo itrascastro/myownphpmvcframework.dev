@@ -26,9 +26,9 @@ abstract class Controller
 
     public function __construct($_bootstrap)
     {
-        $this->_bootstrap           = $_bootstrap;
-        $this->_layout              = $_bootstrap->getResource('Layout');
-        $this->_params              = array();
+        $this->_bootstrap   = $_bootstrap;
+        $this->_layout      = $_bootstrap->getResource('Layout');
+        $this->_params      = array();
 
         $this->init();
     }
