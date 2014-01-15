@@ -37,13 +37,13 @@ class UsersController extends Controller
     public function addDoAction()
     {
         $this->_model->add($_POST['email'], $_POST['password']);
-        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
+        return $this->_forward('list');
     }
 
     public function removeAction()
     {
         $this->_model->remove($this->_params['id']);
-        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
+        return $this->_redirect('users', 'list');
     }
 
     public function updateAction()
@@ -61,7 +61,7 @@ class UsersController extends Controller
     public function updateDoAction()
     {
         $this->_model->update($_POST['id'], $_POST['email'], $_POST['password']);
-        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
+        return $this->_redirect('users', 'list');
     }
 
     public function listAction()

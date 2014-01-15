@@ -100,4 +100,35 @@ abstract class Controller
     {
         $this->_layout->render();
     }
+
+    protected function _redirect($controller, $action)
+    {
+        header('location:' . '/' . $controller . '/' . $action . '/');
+        exit;
+    }
+
+    protected function _forward($action, $controller = '')
+    {
+        if ($controller == '') {
+            $controllerNameWithoutSuffix = strtolower(
+                basename(str_replace('\\', DIRECTORY_SEPARATOR, get_class($this)), 'Controller')
+            );
+        } else {
+            $controllerNameWithoutSuffix = $controller;
+        }
+
+        $viewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/');
+        $this->_view->setFile($viewPath . $controllerNameWithoutSuffix . DIRECTORY_SEPARATOR . $action . '.phtml');
+
+        $actionName = $action . 'Action';
+
+        if ($controller == '') {
+            return $this->$actionName();
+        } else {
+            $controllerClassName = '\\controllers\\' . $controller . 'Controller';
+            $controllerInstance = new $controllerClassName($this->_bootstrap);
+            return $controllerInstance->$actionName();
+        }
+
+    }
 }
