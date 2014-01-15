@@ -23,12 +23,14 @@ abstract class Controller
     protected $_layout;
     protected $_model;
     protected $_params;
+    protected $_actionHelperBroker;
 
     public function __construct($_bootstrap)
     {
         $this->_bootstrap   = $_bootstrap;
         $this->_layout      = $_bootstrap->getResource('Layout');
         $this->_params      = array();
+        $this->_actionHelperBroker = $_bootstrap->getResource('ActionHelperBroker');
 
         $this->init();
     }

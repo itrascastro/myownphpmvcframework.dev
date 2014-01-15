@@ -1,4 +1,4 @@
-<h1><?php echo $this->_variables['title']; ?></h1>
+<h1><?php $this->out($this->title); ?></h1>
 
 <div>
     <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper')->show(); ?>
@@ -15,23 +15,23 @@
                   array(
                       'field'       => 'id',
                       'type'        => 'number',
-                      'value'       => $this->_variables['user']->getId(),
+                      'value'       => $this->user->getId(),
                       'disabled'    => 'disabled'
                   ),
                   array(
                       'field'       => 'id',
                       'type'        => 'hidden',
-                      'value'       => $this->_variables['user']->getId(),
+                      'value'       => $this->user->getId(),
                   ),
                   array(
                       'field'       => 'email',
                       'type'        => 'email',
-                      'value'       => $this->_variables['user']->getEmail()
+                      'value'       => $this->user->getEmail()
                   ),
                   array(
                       'field'       => 'password',
                       'type'        => 'text',
-                      'value'       => $this->_variables['user']->getPassword()
+                      'value'       => $this->user->getPassword()
                   )
               )
         ))->show(); ?>

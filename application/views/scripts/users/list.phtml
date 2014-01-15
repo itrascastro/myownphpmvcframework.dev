@@ -1,4 +1,4 @@
-<h1><?php echo $this->_variables['title']; ?></h1>
+<h1><?php $this->out($this->title); ?></h1>
 
 <div>
     <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper')->show(); ?>
@@ -12,13 +12,13 @@
             <th>Password</th>
             <th colspan="2"></th>
         </tr>
-    <?php foreach ($this->_variables['users'] as $user): ?>
+    <?php foreach ($this->users as $user): ?>
         <tr>
-            <td><?php echo $user->getId(); ?></td>
-            <td><?php echo $user->getEmail(); ?></td>
-            <td><?php echo $user->getPassword(); ?></td>
-            <td><a href="/users/update/id/<?php echo $user->getId(); ?>/">update</a></td>
-            <td><a href="/users/remove/id/<?php echo $user->getId(); ?>/">remove</a></td>
+            <td><?php $this->out($user->getId()); ?></td>
+            <td><?php $this->out($user->getEmail()); ?></td>
+            <td><?php $this->out($user->getPassword()); ?></td>
+            <td><a href="/users/update/id/<?php $this->out($user->getId()); ?>/">update</a></td>
+            <td><a href="/users/remove/id/<?php $this->out($user->getId()); ?>/">remove</a></td>
         </tr>
     <?php endforeach; ?>
     </table>

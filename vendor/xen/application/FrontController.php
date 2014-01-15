@@ -56,6 +56,7 @@ class FrontController
                         }
                         $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $actionNameWithoutSuffix . '.phtml');
                         $this->_controller->setView($view);
+
                         return $this->_controller->$action();
 
                     } else {//method does not exist

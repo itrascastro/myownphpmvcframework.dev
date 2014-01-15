@@ -45,9 +45,9 @@ class UsersModel
 
         $users = array();
 
-        while ($row = $query->fetch(Adapter::FETCH_ASSOC))
+        while ($row = $query->fetch(Adapter::FETCH_OBJ))
         {
-            $users[] = new UserModel($row['id'], $row['email'], $row['password']);
+            $users[] = new UserModel($row->id, $row->email, $row->password);
         }
 
         return $users;

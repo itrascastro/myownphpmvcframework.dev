@@ -1,11 +1,11 @@
 <?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper')->show(); ?>
 
-<h1>Add Result</h1>
+<h1><?php $this->out($this->title); ?></h1>
 
 <p>
-    <?php $this->out($this->_variables['op1']); ?> +
-    <?php $this->out($this->_variables['op2']); ?> =
+    <?php $this->out($this->op1); ?> +
+    <?php $this->out($this->op2); ?> =
     <strong>
-        <?php $this->out($this->_variables['result']); ?>
+        <?php $this->out($this->result); ?>
     </strong>
 </p>

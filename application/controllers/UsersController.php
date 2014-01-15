@@ -21,101 +21,59 @@ class UsersController extends Controller
 
     public function indexAction()
     {
-        $layoutVariables = array(
-            'title'         => 'Users Controller',
-            'description'   => 'Controller for users management',
-        );
-        $this->_layout->setVariables($layoutVariables);
-        $content = new Phtml($this->_viewPath, 'index', $this->_viewHelperBroker);
-        $this->_layout->addPartials(
-            array(
-                'content' => $content,
-            )
-        );
-        return $this->_view->render();
+        $this->_layout->title           = 'Users Controller';
+        $this->_layout->description     = 'Controller for users management';
+
+        return $this->render();
     }
 
     public function addAction()
     {
-        $title = 'Add a new user';
-        $layoutVariables = array(
-            'title'         => $title,
-            'description'   => 'Insert a new user',
-        );
-        $this->_layout->setVariables($layoutVariables);
-        $viewVariables = array(
-            'title' => $title,
-        );
-        $content = new Phtml($this->_viewPath, 'add', $this->_viewHelperBroker, $viewVariables);
-        $this->_layout->addPartials(
-            array(
-                'content' => $content,
-            )
-        );
-        return $this->_view->render();
+        $this->_layout->title           = 'Add a new user';
+        $this->_layout->description     = 'Insert a new user';
+
+        return $this->render();
     }
 
     public function addDoAction()
     {
         $this->_model->add($_POST['email'], $_POST['password']);
-        $this->userListAction();
+        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
     }
 
     public function removeAction()
     {
         $this->_model->remove($this->_params['id']);
-        $this->userListAction();
+        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
     }
 
     public function updateAction()
     {
         $user = $this->_model->getUserById($this->_params['id']);
 
-        $title = 'Update an user';
-        $layoutVariables = array(
-            'title'         => $title,
-            'description'   => 'Change user',
-        );
-        $this->_layout->setVariables($layoutVariables);
-        $viewVariables = array(
-            'title'     => $title,
-            'user'      => $user,
-        );
-        $content = new Phtml($this->_viewPath, 'update', $this->_viewHelperBroker, $viewVariables);
-        $this->_layout->addPartials(
-            array(
-                'content' => $content,
-            )
-        );
-        return $this->_view->render();
+        $this->_layout->title           = 'Update an user';
+        $this->_layout->description     = 'Change user';
+
+        $this->_view->user              = $user;
+
+        return $this->render();
     }
 
     public function updateDoAction()
     {
         $this->_model->update($_POST['id'], $_POST['email'], $_POST['password']);
-        $this->userListAction();
+        return $this->_actionHelperBroker->getHelper('Redirector')->redirect('users', 'list');
     }
 
     public function listAction()
     {
         $users = $this->_model->all();
 
-        $title = 'User List';
-        $layoutVariables = array(
-            'title'         => $title,
-            'description'   => 'Show all users',
-        );
-        $this->_layout->setVariables($layoutVariables);
-        $viewVariables = array(
-            'title'     => $title,
-            'users'     => $users,
-        );
-        $content = new Phtml($this->_viewPath, 'list', $this->_viewHelperBroker, $viewVariables);
-        $this->_layout->addPartials(
-            array(
-                'content' => $content,
-            )
-        );
-        return $this->_view->render();
+        $this->_layout->title           = 'User List';
+        $this->_layout->description     = 'Show all users';
+
+        $this->_view->users = $users;
+
+        return $this->render();
     }
 }
