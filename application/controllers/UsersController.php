@@ -10,7 +10,6 @@ namespace controllers;
 
 use models\UsersModel;
 use xen\mvc\Controller;
-use xen\mvc\view\Phtml;
 
 class UsersController extends Controller
 {

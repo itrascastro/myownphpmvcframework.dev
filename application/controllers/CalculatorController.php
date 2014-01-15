@@ -10,7 +10,6 @@ namespace controllers;
 
 use models\CalculatorModel;
 use xen\mvc\Controller;
-use xen\mvc\view\Phtml;
 use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
