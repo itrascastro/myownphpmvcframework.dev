@@ -21,9 +21,9 @@ class FrontController
     private $_controller;
     private $_bootstrap;
 
-    public function __construct($bootstrap)
+    public function __construct($_bootstrap)
     {
-        $this->_bootstrap = $bootstrap;
+        $this->_bootstrap = $_bootstrap;
 //        $eventSystem = $this->_bootstrap->getResource('EventSystem');
 //        $event = new Event('FrontController_Load', array('msg' => 'Event Raised from FrontController'));
 //        $eventSystem->raiseEvent($event);
@@ -42,10 +42,15 @@ class FrontController
             $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controllerName . '.php';
 
             if (file_exists($file)) {
+
                 $controllerClassName = 'controllers\\' . $controllerName;
                 $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
                     'application/views/scripts/' . strtolower($controllerNameWithoutSuffix));
-                $this->_controller = new $controllerClassName($this->_bootstrap);
+                $layout = $this->_bootstrap->getResource('Layout');
+                $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
+                $this->_controller = new $controllerClassName($layout, $actionHelperBroker);
+
+                $this->_bootstrap->resolveDependencies($this->_controller);
 
                 if (isset($url[1])) {
                     $actionNameWithoutSuffix = $this->_getName($url[1], self::URL_ACTION);
@@ -56,6 +61,14 @@ class FrontController
                         }
                         $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $actionNameWithoutSuffix . '.phtml');
                         $this->_controller->setView($view);
+
+                        $request = new Request(strtolower($controllerNameWithoutSuffix), $actionNameWithoutSuffix);
+
+                        $this->_controller->setRequest($request);
+
+                        $this->_bootstrap->addResources(array('Request' => $request));
+
+                        var_dump($this->_bootstrap);
 
                         return $this->_controller->$action();
 
@@ -114,10 +127,20 @@ class FrontController
     private function _showIndex()
     {
         $viewPath           = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/index');
-        $this->_controller  = new IndexController($this->_bootstrap);
-        $view               = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
+        $layout = $this->_bootstrap->getResource('Layout');
+        $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
+        $this->_controller  = new IndexController($layout, $actionHelperBroker);
 
+        $this->_bootstrap->resolveDependencies($this->_controller);
+
+        $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
         $this->_controller->setView($view);
+
+        $request = new Request('index', 'index');
+        $this->_controller->setRequest($request);
+        $this->_bootstrap->addResources(array('Request' => $request));
+
+        var_dump($this->_bootstrap);
 
         return $this->_controller->indexAction();
     }
@@ -125,11 +148,21 @@ class FrontController
     private function _showError($params = array())
     {
         $viewPath           = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/error');
-        $this->_controller  = new ErrorController($this->_bootstrap);
+        $layout = $this->_bootstrap->getResource('Layout');
+        $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
+        $this->_controller  = new ErrorController($layout, $actionHelperBroker);
+
+        $this->_bootstrap->resolveDependencies($this->_controller);
 
         $this->_controller->setParams($params);
         $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . 'index.phtml');
         $this->_controller->setView($view);
+
+        $request = new Request('error', 'index');
+        $this->_controller->setRequest($request);
+        $this->_bootstrap->addResources(array('Request' => $request));
+
+        var_dump($this->_bootstrap);
 
         return $this->_controller->indexAction();
     }
@@ -151,4 +184,6 @@ class FrontController
 
         return $params;
     }
+
+
 }

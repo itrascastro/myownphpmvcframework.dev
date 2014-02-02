@@ -9,6 +9,7 @@
 namespace models;
 
 use xen\db\Adapter;
+use xen\mvc\Model;
 
 /**
  * Class UsersModel
@@ -19,15 +20,8 @@ use xen\db\Adapter;
  * @var Adapter $_db Database connection
  *
  */
-class UsersModel
+class UsersModel extends Model
 {
-    private $_db;
-
-    public function __construct(Adapter $_db)
-    {
-        $this->_db = $_db;
-    }
-
     public function add($email, $password)
     {
         $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
@@ -73,6 +67,21 @@ class UsersModel
         $user = new UserModel($row['id'], $row['email'], $row['password']);
 
         return $user;
+    }
+
+    public function login($email, $password)
+    {
+        $sql = "SELECT * FROM users WHERE email = :email AND password = :password";
+        $query = $this->_db->prepare($sql);
+        $query->bindParam(':email', $email);
+        $query->bindParam(':password', $password);
+        $query->execute();
+
+        if ($row = $query->fetch(Adapter::FETCH_ASSOC)) {
+           return new UserModel($row['id'], $row['email'], $row['password']);
+        }
+
+        return null;
     }
 
     public function update($id, $email, $password)

@@ -65,25 +65,29 @@ class Bootstrap
     {
         $methods = get_class_methods($this);
 
-        $this->_defaultBootstrap($methods);
+        $methods = $this->_BootstrapDefaults($methods);
         forEach($methods as $method)
         {
-            if (strlen($method) > 5 && substr($method, 0, 5) == '_init') {
-                $resourceName = ucfirst(substr($method, 5));
-                $this->_resources[$resourceName] = $this->$method();
-            }
+            $resourceName = ucfirst(substr($method, 5));
+            $this->_resources[$resourceName] = $this->$method();
         }
     }
 
-    private function _defaultBootstrap($methods)
+    private function _bootstrapDefaults($methods)
     {
+        $initMethods = array();
+
         forEach($methods as $method)
         {
-            if (strlen($method) > 12 && substr($method, 0, 12) == '_initDefault') {
-                $resourceName = ucfirst(substr($method, 12));
+            if (strlen($method) > 8 && substr($method, 0, 8) == '_default') {
+                $resourceName = ucfirst(substr($method, 8));
                 $this->_resources[$resourceName] = $this->$method();
+            } else if (strlen($method) > 5 && substr($method, 0, 5) == '_init') {
+                $initMethods[] = $method;
             }
         }
+
+        return $initMethods;
     }
 
     public function addResources(array $resources)
@@ -102,32 +106,22 @@ class Bootstrap
      * Default Resources
      */
 
-    protected function _initDefaultApplicationConfig()
+    protected function _defaultApplicationConfig()
     {
         return new Ini('application.ini', $this->_appEnv);
     }
 
-    protected function _initDefaultDatabase()
-    {
-        $configDb = new Ini('db.ini', $this->_appEnv);
-        if (isset($configDb->driver)) {
-            $database = new Adapter($configDb);
-            return $database;
-        }
-        return null;
-    }
-
-    protected function _initDefaultViewHelperBroker()
+    protected function _defaultViewHelperBroker()
     {
         return new HelperBroker(HelperBroker::VIEW_HELPER);
     }
 
-    protected function _initDefaultActionHelperBroker()
+    protected function _defaultActionHelperBroker()
     {
         return new HelperBroker(HelperBroker::ACTION_HELPER);
     }
 
-    protected function _initDefaultLayoutPath()
+    protected function _defaultLayoutPath()
     {
         $applicationConfig = $this->getResource('ApplicationConfig');
 
@@ -142,7 +136,7 @@ class Bootstrap
      *
      * @return Phtml
      */
-    protected function _initDefaultLayout()
+    protected function _defaultLayout()
     {
         $layout = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'layout.phtml');
 
@@ -151,12 +145,12 @@ class Bootstrap
         return $layout;
     }
 
-    protected function _initDefaultEventSystem()
+    protected function _defaultEventSystem()
     {
         return new EventSystem();
     }
 
-    protected function _initDefaultHandlers()
+    protected function _defaultHandlers()
     {
         $handlers = require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/handlers.php');
 
@@ -167,6 +161,67 @@ class Bootstrap
             $handlerInstance = new $handlerName();
             $handlerInstance->addHandles($handler['events']);
             $eventSystem->addHandler($handlerInstance);
+        }
+    }
+
+    protected function _defaultDependencies()
+    {
+        return require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/dependencies.php');
+    }
+
+    /*
+     * Other resources not auto executed
+     */
+
+    protected function _dependencyDatabase()
+    {
+        $configDb = new Ini('db.ini', $this->_appEnv);
+        $database = null;
+
+        if (isset($configDb->driver)) {
+            $database = new Adapter($configDb);
+        }
+
+        $this->_resources['Database'] = $database;
+    }
+
+    /**
+     * Resolve dependencies for a given object
+     *
+     * @param $object
+     *
+     * @return mixed
+     */
+    public function resolveDependencies($object)
+    {
+        $dependencies = $this->_resources['Dependencies'];
+
+        if (is_object($object)) {
+            $className = get_class($object);
+            if (array_key_exists($className, $dependencies)) {
+                foreach ($dependencies[$className] as $dependency => $value) {
+                    $setMethod = 'set' . ucfirst($dependency);
+                    $object->$setMethod($this->resolveDependencies($value));
+                }
+            }
+        } else if (array_key_exists($object, $this->_resources)) {
+            return $this->_resources[$object];
+        } else if (method_exists($this, '_dependency' . $object)) {
+            $resource = '_dependency' . $object;
+            $this->$resource();
+            return $this->_resources[$object];
+        } else if (array_key_exists($object, $dependencies)) {
+            $resource = new $object();
+            foreach ($dependencies[$object] as $dependency => $value) {
+                $arg = $this->resolveDependencies($value);
+                $setMethod = 'set' . ucfirst($dependency);
+                $resource->$setMethod($arg);
+            }
+            $this->_resources[$object] = $resource;
+            return $resource;
+        } else {
+            $this->_resources[$object] = new $object();
+            return $this->_resources[$object];
         }
     }
 }

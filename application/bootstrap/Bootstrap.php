@@ -17,6 +17,11 @@ require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/
 
 class Bootstrap extends \xen\application\bootstrap\Bootstrap
 {
+    protected function _initSession()
+    {
+        session_start();
+    }
+
     protected function _initConfig()
     {
         $config = new Ini('config.ini', $this->_appEnv);
@@ -59,15 +64,23 @@ class Bootstrap extends \xen\application\bootstrap\Bootstrap
     protected function _initLayout()
     {
         $layout     = $this->getResource('Layout');
+        $config     = $this->getResource('Config');
+
+        $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
+        $header->charset = (string) $config->charset;
+
+        if (isset($_SESSION['user'])) {
+            $layout->loggedUser = $_SESSION['user']->getEmail();
+        } else {
+            $layout->loggedUser = 'Login';
+        }
+
         $partials   = array(
-            'header' => new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml'),
+            'header' => $header,
             'footer' => new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'footer.phtml'),
         );
 
         $layout->addPartials($partials);
-
-        $config             = $this->getResource('Config');
-        $layout->charset    = (string) $config->charset;
 
         return $layout;
     }

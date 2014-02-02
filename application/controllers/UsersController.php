@@ -15,7 +15,9 @@ class UsersController extends Controller
 {
     public function init()
     {
-        $this->_model = new UsersModel($this->_bootstrap->getResource('Database'));
+        if (!isset($_SESSION['user'])) {
+            $this->_redirect('login', 'index');
+        }
     }
 
     public function indexAction()

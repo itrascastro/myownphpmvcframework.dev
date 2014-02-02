@@ -16,7 +16,6 @@ class CalculatorController extends Controller
 {
     public function init()
     {
-        $this->_model = new CalculatorModel();
     }
 
     public function indexAction()

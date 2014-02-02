@@ -15,22 +15,23 @@ namespace xen\mvc;
 
 
 use xen\mvc\helpers\HelperBroker;
+use xen\mvc\view\Phtml;
 
 abstract class Controller
 {
-    protected $_bootstrap;
     protected $_view;
     protected $_layout;
     protected $_model;
     protected $_params;
+    protected $_request;
     protected $_actionHelperBroker;
 
-    public function __construct($_bootstrap)
-    {
-        $this->_bootstrap   = $_bootstrap;
-        $this->_layout      = $_bootstrap->getResource('Layout');
-        $this->_params      = array();
-        $this->_actionHelperBroker = $_bootstrap->getResource('ActionHelperBroker');
+    public function __construct(
+        Phtml $_layout,
+        HelperBroker $_actionHelperBroker
+    ) {
+        $this->_layout              = $_layout;
+        $this->_actionHelperBroker  = $_actionHelperBroker;
 
         $this->init();
     }
@@ -94,6 +95,22 @@ abstract class Controller
     }
 
     /**
+     * @param mixed $request
+     */
+    public function setRequest($request)
+    {
+        $this->_request = $request;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+    /**
      * We extend layout properties to partials
      */
     public function render()
@@ -129,6 +146,5 @@ abstract class Controller
             $controllerInstance = new $controllerClassName($this->_bootstrap);
             return $controllerInstance->$actionName();
         }
-
     }
 }
