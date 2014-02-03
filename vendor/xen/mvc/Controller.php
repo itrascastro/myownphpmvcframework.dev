@@ -124,27 +124,15 @@ abstract class Controller
         exit;
     }
 
-    protected function _forward($action, $controller = '')
+    protected function _forward($action)
     {
-        if ($controller == '') {
-            $controllerNameWithoutSuffix = strtolower(
-                basename(str_replace('\\', DIRECTORY_SEPARATOR, get_class($this)), 'Controller')
-            );
-        } else {
-            $controllerNameWithoutSuffix = $controller;
-        }
+        $controller = $this->_request->getController();
 
         $viewPath = str_replace('/', DIRECTORY_SEPARATOR, 'application/views/scripts/');
-        $this->_view->setFile($viewPath . $controllerNameWithoutSuffix . DIRECTORY_SEPARATOR . $action . '.phtml');
+        $this->_view->setFile($viewPath . $controller . DIRECTORY_SEPARATOR . $action . '.phtml');
 
         $actionName = $action . 'Action';
 
-        if ($controller == '') {
-            return $this->$actionName();
-        } else {
-            $controllerClassName = '\\controllers\\' . $controller . 'Controller';
-            $controllerInstance = new $controllerClassName($this->_bootstrap);
-            return $controllerInstance->$actionName();
-        }
+        return $this->$actionName();
     }
 }

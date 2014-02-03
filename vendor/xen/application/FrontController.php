@@ -68,8 +68,6 @@ class FrontController
 
                         $this->_bootstrap->addResources(array('Request' => $request));
 
-                        var_dump($this->_bootstrap);
-
                         return $this->_controller->$action();
 
                     } else {//method does not exist
@@ -140,8 +138,6 @@ class FrontController
         $this->_controller->setRequest($request);
         $this->_bootstrap->addResources(array('Request' => $request));
 
-        var_dump($this->_bootstrap);
-
         return $this->_controller->indexAction();
     }
 
@@ -161,8 +157,6 @@ class FrontController
         $request = new Request('error', 'index');
         $this->_controller->setRequest($request);
         $this->_bootstrap->addResources(array('Request' => $request));
-
-        var_dump($this->_bootstrap);
 
         return $this->_controller->indexAction();
     }
