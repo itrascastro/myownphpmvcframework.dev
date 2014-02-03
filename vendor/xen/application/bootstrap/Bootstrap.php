@@ -188,6 +188,9 @@ class Bootstrap
     /**
      * Resolve dependencies for a given object
      *
+     * We injects dependencies via setters methods, so every resource has to be their setters methods created for their
+     * dependencies.
+     *
      * @param $object
      *
      * @return mixed
@@ -196,6 +199,7 @@ class Bootstrap
     {
         $dependencies = $this->_resources['Dependencies'];
 
+        //it can be an object
         if (is_object($object)) {
             $className = get_class($object);
             if (array_key_exists($className, $dependencies)) {
@@ -204,12 +208,17 @@ class Bootstrap
                     $object->$setMethod($this->resolveDependencies($value));
                 }
             }
+            $this->_resources[$className] = $object;
+        //it can already be a resource
         } else if (array_key_exists($object, $this->_resources)) {
             return $this->_resources[$object];
+        //it can be a resource not already executed in bootstrap
+        //this kind of resources are added to bootstrap by its own like any other bootstrap resource
         } else if (method_exists($this, '_dependency' . $object)) {
             $resource = '_dependency' . $object;
             $this->$resource();
             return $this->_resources[$object];
+        //it is not an object but it has dependencies and we have to resolve them and then instantiate it
         } else if (array_key_exists($object, $dependencies)) {
             $resource = new $object();
             foreach ($dependencies[$object] as $dependency => $value) {
@@ -219,6 +228,8 @@ class Bootstrap
             }
             $this->_resources[$object] = $resource;
             return $resource;
+        //it is not an object and it does not have dependencies but it must be instantiated
+        //because it is needed as a dependency for another resource
         } else {
             $this->_resources[$object] = new $object();
             return $this->_resources[$object];
