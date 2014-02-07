@@ -8,6 +8,7 @@
 
 namespace controllers;
 
+use xen\application\Router;
 use xen\eventSystem\Event;
 use xen\eventSystem\EventSystem;
 use xen\mvc\Controller;

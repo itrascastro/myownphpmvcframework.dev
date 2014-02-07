@@ -45,6 +45,6 @@ class Application
     public function run()
     {
         $this->_frontController = new FrontController($this->_bootstrap);
-        $this->_frontController->route();
+        $this->_frontController->run();
     }
 }

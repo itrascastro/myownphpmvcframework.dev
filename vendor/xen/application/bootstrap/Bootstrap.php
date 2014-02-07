@@ -73,6 +73,11 @@ class Bootstrap
         }
     }
 
+    /**
+     * @param $methods
+     *
+     * @return array $initMethods
+     */
     private function _bootstrapDefaults($methods)
     {
         $initMethods = array();
@@ -95,6 +100,11 @@ class Bootstrap
         foreach ($resources as $resource => $value) {
             $this->_resources[$resource] = $value;
         }
+    }
+
+    public function addResource($resource, $value)
+    {
+        $this->_resources[$resource] = $value;
     }
 
     public function getResource($resource)
