@@ -87,7 +87,7 @@ class Router
             //remove white spaces
             $pattern = preg_replace('/\s+/', '', $route);
 
-            if (array_key_exists('constraints', $routeValue) && !empty($routeValue['constraints'])) {
+            if (isset($routeValue['constraints'])) {
 
                 $constraints = $routeValue['constraints'];
 
