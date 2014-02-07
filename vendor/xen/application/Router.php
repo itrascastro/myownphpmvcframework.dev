@@ -87,29 +87,20 @@ class Router
             //remove white spaces
             $pattern = preg_replace('/\s+/', '', $route);
 
-            if (isset($routeValue['constraints'])) {
-
-                $constraints = $routeValue['constraints'];
-
-            } else {
-
-                $constraints = false;
-            }
-
-            $pos = 0;
+            $paramPosEnd = 0;
             $params = array();
 
+            //we need a copy because we are modifying it in every iteration
             $tmpPattern = $pattern;
 
-            while ($pos = strpos($pattern, '{', $pos + 1)) {
+            while ($pos = strpos($pattern, '{', $paramPosEnd)) {
 
                 $paramPosEnd = strpos($pattern, '}', $pos);
-
                 $paramName = substr($pattern, $pos + 1, $paramPosEnd - $pos - 1);
 
-                if ($constraints && array_key_exists($paramName, $constraints)) {
+                if (isset($routeValue['constraints'][$paramName])) {
 
-                    $constraint = '(?P<' . $paramName . '>' . $constraints[$paramName] . ')';
+                    $constraint = '(?P<' . $paramName . '>' . $routeValue['constraints'][$paramName] . ')';
                     $constraint = preg_replace('/\s+/', '', $constraint);
                     $tmpPattern = str_replace('{' . $paramName . '}', $constraint, $tmpPattern);
 
@@ -122,14 +113,14 @@ class Router
                 $params[] = $paramName;
             }
 
-            $newRouteValue = array(
+            $parsedRoute = array(
                 'controller'    => $routeValue['controller'],
                 'action'        => $routeValue['action'],
                 'params'        => $params,
             );
 
             $pattern = str_replace('!', '\!', $tmpPattern);
-            $routes[$pattern] = $newRouteValue;
+            $routes[$pattern] = $parsedRoute;
         }
 
         $this->_routes = $routes;
