@@ -32,17 +32,22 @@ class FrontController
 
         $this->_bootstrap->addResource('Router', $router);
 
-        $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
-            'application/views/scripts/' . lcfirst($router->getController()));
+        $controller = 'controllers\\' . $router->getController() . 'Controller';
+        $this->_controller = new $controller();
 
         $layout = $this->_bootstrap->getResource('Layout');
-        $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
+        $this->_controller->setLayout($layout);
 
-        $controller = 'controllers\\' . $router->getController() . 'Controller';
-        $this->_controller = new $controller($layout, $actionHelperBroker);
+        $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
+        $this->_controller->setActionHelperBroker($actionHelperBroker);
+
+        $config = $this->_bootstrap->getResource('Config');
+        $this->_controller->setConfig($config);
 
         $this->_controller->setParams($router->getParams());
 
+        $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
+            'application/views/scripts/' . lcfirst($router->getController()));
         $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $router->getAction() . '.phtml');
         $this->_controller->setView($view);
 

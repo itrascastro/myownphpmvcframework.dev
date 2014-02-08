@@ -24,20 +24,64 @@ abstract class Controller
     protected $_model;
     protected $_params;
     protected $_request;
+    protected $_config;
     protected $_actionHelperBroker;
 
-    public function __construct(
-        Phtml $_layout,
-        HelperBroker $_actionHelperBroker
-    ) {
-        $this->_layout              = $_layout;
-        $this->_actionHelperBroker  = $_actionHelperBroker;
-
+    public function __construct()
+    {
         $this->init();
     }
 
     public abstract function init();
     public abstract function indexAction();
+
+    /**
+     * @param \xen\mvc\helpers\HelperBroker $actionHelperBroker
+     */
+    public function setActionHelperBroker($actionHelperBroker)
+    {
+        $this->_actionHelperBroker = $actionHelperBroker;
+    }
+
+    /**
+     * @return \xen\mvc\helpers\HelperBroker
+     */
+    public function getActionHelperBroker()
+    {
+        return $this->_actionHelperBroker;
+    }
+
+    /**
+     * @param mixed $config
+     */
+    public function setConfig($config)
+    {
+        $this->_config = $config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+
+    /**
+     * @param \xen\mvc\view\Phtml $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->_layout = $layout;
+    }
+
+    /**
+     * @return \xen\mvc\view\Phtml
+     */
+    public function getLayout()
+    {
+        return $this->_layout;
+    }
 
     /**
      * @param $_params

@@ -18,9 +18,15 @@ class ErrorController extends Controller
 
     public function indexAction()
     {
-        $this->_layout->title           = 'xenFramework - Error';
-        $this->_layout->description     = 'Error found';
-        $this->_view->msg               = $this->getParam('msg');
+        switch ($this->getParam('errorCode')) {
+
+            case '404':
+                $this->_layout->title           = $this->_config->siteName . ' - Error 404 - Page not found';
+                $this->_layout->description     = 'Page not found';
+                $url = $this->_config->siteUrl . '/' . $this->getParam('url');
+                $this->_view->msg               = 'The url: ' . $url . ' does not exist in this server';
+                break;
+        }
 
         return $this->render();
     }

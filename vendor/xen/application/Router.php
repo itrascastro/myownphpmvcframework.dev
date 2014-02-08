@@ -9,8 +9,7 @@
 
 namespace xen\application;
 
-
-class Router 
+class Router
 {
     const URL_CONTROLLER    = 'Controller';
     const URL_ACTION        = 'Action';
@@ -156,7 +155,8 @@ class Router
                     $this->_controller = 'Error';
                     $this->_action = 'index';
                     $this->_params = array(
-                        'msg' => 'Action ' . $url[1] . ' does not exist',
+                        'errorCode' => '404',
+                        'url' => $this->_url,
                     );
                 }
             } else {
@@ -168,7 +168,8 @@ class Router
             $this->_controller = 'Error';
             $this->_action = 'index';
             $this->_params = array(
-                'msg' => 'Controller ' . $url[0] . ' does not exist',
+                'errorCode' => '404',
+                'url' => $this->_url,
             );
         }
     }

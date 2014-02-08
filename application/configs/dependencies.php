@@ -12,6 +12,13 @@
  *
  * In this array you can put your own dependencies
  *
+ * **********
+ * Important! - Remember to create the properties and the setters methods in your classes to enable dependency injection
+ * By default you have this dependency properties already created:
+ *      'model' in your controllers
+ *      'db' in your models which extends Model
+ * **********
+ *
  * Each entry is a service with his dependencies declared in an array
  *
  * A service has to have one setter method for each dependency

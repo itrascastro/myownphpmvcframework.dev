@@ -9,11 +9,12 @@
 /*
  * Bootstrap does two things:
  * 1: Initializes every resource in application/Bootstrap
- * 2: Stores the resources as properties
+ * 2: Stores the resources as services in a Dependency Injection Container called $_resources
  */
 
 namespace xen\application\bootstrap;
 
+use xen\application\Application;
 use xen\config\Ini;
 use xen\db\Adapter;
 use xen\eventSystem\EventSystem;
@@ -21,7 +22,6 @@ use xen\mvc\helpers\HelperBroker;
 use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
 
-require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/Autoloader.php');
 
 /**
  * Class Bootstrap
@@ -30,7 +30,7 @@ require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/
  * @author  Ismael Trascastro itrascastro@xenframework.com
  *
  */
-class Bootstrap
+class BootstrapBase
 {
     protected $_appEnv;
     protected $_resources;
@@ -44,17 +44,6 @@ class Bootstrap
     {
         $this->_appEnv = $_appEnv;
         $this->_resources = array();
-        $this->_autoload();
-    }
-
-    /*
-     * Default autoload
-     */
-
-    private function _autoload()
-    {
-        $defaultAutoload = new Autoloader(array('application', 'vendor'));
-        $defaultAutoload->register();
     }
 
     /*
@@ -177,6 +166,40 @@ class Bootstrap
     protected function _defaultDependencies()
     {
         return require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/dependencies.php');
+    }
+
+    protected function _defaultSession()
+    {
+        session_start();
+    }
+
+    protected function _defaultConfig()
+    {
+        $config = new Ini('config.ini', $this->_appEnv);
+
+        return $config;
+    }
+
+    /*
+     * This resource is not needed anymore so we do not store it in the Bootstrap container (return null)
+     * In fact this is not a resource, only do actions at the beginning of the new request
+     */
+    protected function _defaultEnvironment()
+    {
+        if ($this->_appEnv == Application::DEVELOPMENT || $this->_appEnv == Application::TEST) {
+            error_reporting(E_ALL | E_STRICT);
+            ini_set('display_errors', 'on');
+        } else if ($this->_appEnv == Application::PRODUCTION) {
+            error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
+            ini_set('display_errors', 'off');
+        }
+        $timeZone = (string) $this->getResource('Config')->timezone;
+        if (empty($timeZone)) {
+            $timeZone = 'Europe/Madrid';
+        }
+        date_default_timezone_set($timeZone);
+
+        return null;
     }
 
     /*

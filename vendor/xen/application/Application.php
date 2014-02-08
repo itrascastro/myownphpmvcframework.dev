@@ -19,7 +19,10 @@
 
 namespace xen\application;
 
-require str_replace('/', DIRECTORY_SEPARATOR, 'application/bootstrap/Bootstrap.php');
+use bootstrap\Bootstrap;
+use xen\application\bootstrap\Autoloader;
+
+require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/bootstrap/Autoloader.php');
 
 class Application 
 {
@@ -38,7 +41,11 @@ class Application
 
     public function bootstrap()
     {
-        $this->_bootstrap = new \bootstrap\Bootstrap($this->_appEnv);
+        $autoLoader = new Autoloader(array('application', 'vendor'));
+        $autoLoader->register();
+
+        $this->_bootstrap = new Bootstrap($this->_appEnv);
+        $this->_bootstrap->addResource('AutoLoader', $autoLoader);
         $this->_bootstrap->bootstrap();
     }
 
