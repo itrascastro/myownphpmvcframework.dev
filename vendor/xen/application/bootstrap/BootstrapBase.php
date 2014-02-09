@@ -14,7 +14,6 @@
 
 namespace xen\application\bootstrap;
 
-use xen\application\Application;
 use xen\config\Ini;
 use xen\db\Adapter;
 use xen\eventSystem\EventSystem;
@@ -178,28 +177,6 @@ class BootstrapBase
         $config = new Ini('config.ini', $this->_appEnv);
 
         return $config;
-    }
-
-    /*
-     * This resource is not needed anymore so we do not store it in the Bootstrap container (return null)
-     * In fact this is not a resource, only do actions at the beginning of the new request
-     */
-    protected function _defaultEnvironment()
-    {
-        if ($this->_appEnv == Application::DEVELOPMENT || $this->_appEnv == Application::TEST) {
-            error_reporting(E_ALL | E_STRICT);
-            ini_set('display_errors', 'on');
-        } else if ($this->_appEnv == Application::PRODUCTION) {
-            error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
-            ini_set('display_errors', 'off');
-        }
-        $timeZone = (string) $this->getResource('Config')->timezone;
-        if (empty($timeZone)) {
-            $timeZone = 'Europe/Madrid';
-        }
-        date_default_timezone_set($timeZone);
-
-        return null;
     }
 
     /*

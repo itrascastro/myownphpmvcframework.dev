@@ -186,17 +186,24 @@ class Router
     {
         $words = explode('-', $url);
         $name = '';
+
         if ($type == 'Action') {
+
             $first = true;
+
         } else {
+
             $first = false;
         }
 
         foreach ($words as $word)
         {
             if (!$first) {
+
                 $name .= ucfirst($word);
+
             } else {
+
                 $name .= $word;
                 $first = false;
             }
@@ -210,13 +217,17 @@ class Router
         $params = array();
         $i = 2;
 
-        while (isset($url[$i]))
-        {
+        while (isset($url[$i])) {
+
             if (isset($url[$i+1])) {
+
                 $params[$url[$i]] = $url[$i+1];
+
             } else {
+
                 $params[$url[$i]] = null;
             }
+
             $i += 2;
         }
 

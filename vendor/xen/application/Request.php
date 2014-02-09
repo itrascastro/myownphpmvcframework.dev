@@ -12,13 +12,29 @@ namespace xen\application;
 
 class Request 
 {
+    private $_url;
     private $_controller;
     private $_action;
 
-    function __construct($_controller, $_action)
+    function __construct()
     {
-        $this->_controller  = $_controller;
-        $this->_action      = $_action;
+        $this->_url = (isset($_GET['url'])) ? $_GET['url'] : '';
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->_url = $url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->_url;
     }
 
     /**
