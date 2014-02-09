@@ -69,5 +69,4 @@ class Request
         return $this->_controller;
     }
 
-
 }
