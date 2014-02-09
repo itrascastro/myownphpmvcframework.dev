@@ -63,6 +63,7 @@ class Router
                 $params = array();
 
                 foreach ($value['params'] as $param) {
+
                     $params[$param] = $results[$param];
                 }
 
