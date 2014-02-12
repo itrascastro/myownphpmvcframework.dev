@@ -9,7 +9,6 @@
 namespace models;
 
 use xen\db\Adapter;
-use xen\mvc\Model;
 
 /**
  * Class UsersModel
@@ -20,8 +19,19 @@ use xen\mvc\Model;
  * @var Adapter $_db Database connection
  *
  */
-class UsersModel extends Model
+class UsersModel
 {
+    private $_db;
+
+    public function __construct()
+    {
+    }
+
+    public function setDb($_db)
+    {
+        $this->_db = $_db;
+    }
+
     public function add($email, $password)
     {
         $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
