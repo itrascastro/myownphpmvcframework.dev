@@ -12,8 +12,6 @@ namespace xen\config;
 
 class Ini extends Config
 {
-    private $_array;
-
     //TODO folder has to be passed as a parameter
     public function __construct($file, $section)
     {
@@ -21,11 +19,11 @@ class Ini extends Config
         $this->_applyExtends($array);
         $this->_convertDottedPropertiesToArray($array);
         if (array_key_exists($section, $array)) {
-            $this->_array = $array[$section];
+            $array = $array[$section];
         } else {
-            $this->_array = array();
+            $array = array();
         }
-        parent::__construct($this->_array);
+        parent::__construct($array);
     }
 
     private function _applyExtends(&$array)
