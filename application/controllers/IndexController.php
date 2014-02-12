@@ -8,6 +8,8 @@
 
 namespace controllers;
 
+use models\UserModel;
+use xen\application\Request;
 use xen\application\Router;
 use xen\eventSystem\Event;
 use xen\eventSystem\EventSystem;
@@ -28,6 +30,8 @@ class IndexController extends Controller
     {
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+
+        //throw new \Exception('Uncaught Exception');
 
         return $this->render();
     }

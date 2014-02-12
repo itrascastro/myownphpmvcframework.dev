@@ -30,4 +30,9 @@ class ErrorController extends Controller
 
         return $this->render();
     }
+
+    public function exceptionHandler($exception)
+    {
+        echo "Uncaught exception: " , $exception->getMessage(), "\n";
+    }
 }

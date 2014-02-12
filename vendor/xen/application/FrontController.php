@@ -8,6 +8,7 @@
 
 namespace xen\application;
 
+use controllers\ErrorController;
 use xen\eventSystem\Event;
 use xen\mvc\view\Phtml;
 
@@ -41,7 +42,12 @@ class FrontController
 
         $this->_resolveDependencies();
 
+        $error = new ErrorController();
+        set_exception_handler(array($error, 'exceptionHandler'));
+
         $action = $this->_router->getAction() . 'Action';
+
+
 
         $this->_response = new Response();
         $this->_response->setHeaders('Content-Type', 'text/html');
