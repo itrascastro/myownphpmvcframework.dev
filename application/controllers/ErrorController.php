@@ -1,38 +1,47 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 12/12/13
- * Time: 16:48
+ * xenFramework (http://xenframework.com/)
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
  */
 
 namespace controllers;
 
+
 use xen\mvc\Controller;
+use xen\mvc\ErrorControllerBase;
 
-class ErrorController extends Controller
+class ErrorController extends ErrorControllerBase
 {
-    public function init()
+    public function pageNotFoundAction()
     {
-    }
+        $this->_layout->title           = 'Error 404 - Page Not Found';
+        $this->_layout->description     = '404';
 
-    public function indexAction()
-    {
-        switch ($this->getParam('errorCode')) {
-
-            case '404':
-                $this->_layout->title           = $this->_config->siteName . ' - Error 404 - Page not found';
-                $this->_layout->description     = 'Page not found';
-                $url = $this->_config->siteUrl . '/' . $this->getParam('url');
-                $this->_view->msg               = 'The url: ' . $url . ' does not exist in this server';
-                break;
-        }
+        $this->_view->url = $this->getParam('url');
 
         return $this->render();
     }
 
-    public function exceptionHandler($exception)
+    function exceptionHandlerAction()
     {
-        echo "Uncaught exception: " , $exception->getMessage(), "\n";
+        $e = $this->getParam('e');
+
+        $this->_layout->title           = 'Error - Exception Raised';
+        $this->_layout->description     = 'Error - ' . $e->getMessage();
+
+        $exceptionValues = array();
+
+        $exceptionValues['Message']     = $e->getMessage();
+        $exceptionValues['Code']        = $e->getCode();
+        $exceptionValues['File']        = $e->getFile();
+        $exceptionValues['Line']        = $e->getLine();
+        $exceptionValues['Trace']       = preg_replace("/\n/", '<br>', $e->getTraceAsString());
+
+        $this->_view->msgs = $exceptionValues;
+
+        return $this->render();
     }
 }

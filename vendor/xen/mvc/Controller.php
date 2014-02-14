@@ -26,6 +26,8 @@ abstract class Controller
     protected $_request;
     protected $_config;
     protected $_actionHelperBroker;
+    protected $_eventSystem;
+    protected $_appEnv;
 
     public function __construct()
     {
@@ -34,6 +36,38 @@ abstract class Controller
 
     public abstract function init();
     public abstract function indexAction();
+
+    /**
+     * @param mixed $appEnv
+     */
+    public function setAppEnv($appEnv)
+    {
+        $this->_appEnv = $appEnv;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppEnv()
+    {
+        return $this->_appEnv;
+    }
+
+    /**
+     * @param mixed $eventSystem
+     */
+    public function setEventSystem($eventSystem)
+    {
+        $this->_eventSystem = $eventSystem;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventSystem()
+    {
+        return $this->_eventSystem;
+    }
 
     /**
      * @param \xen\mvc\helpers\HelperBroker $actionHelperBroker

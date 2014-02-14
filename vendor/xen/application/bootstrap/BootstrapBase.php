@@ -45,6 +45,22 @@ class BootstrapBase
         $this->_resources = array();
     }
 
+    /**
+     * @param mixed $appEnv
+     */
+    public function setAppEnv($appEnv)
+    {
+        $this->_appEnv = $appEnv;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppEnv()
+    {
+        return $this->_appEnv;
+    }
+
     /*
      * Here we call every _init method in application/Bootstrap.php
      * This initializes resources and store them in properties

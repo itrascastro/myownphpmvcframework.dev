@@ -151,28 +151,25 @@ class Router
 
                         $this->_params = $this->_getParamsFromUrl($url);
                     }
-                } else {//method does not exist
+                } else {
 
-                    $this->_controller = 'Error';
-                    $this->_action = 'index';
-                    $this->_params = array(
-                        'errorCode' => '404',
-                        'url' => $this->_url,
-                    );
+                    $this->_404();
                 }
             } else {
 
                 $this->_action = 'index';
             }
-        } else {//controller does not exist
+        } else {
 
-            $this->_controller = 'Error';
-            $this->_action = 'index';
-            $this->_params = array(
-                'errorCode' => '404',
-                'url' => $this->_url,
-            );
+            $this->_404();
         }
+    }
+
+    private function _404()
+    {
+        $this->_controller = 'Error';
+        $this->_action = 'pageNotFound';
+        $this->_params = array('url' => $this->_url);
     }
 
     private function _cleanUrl($url)

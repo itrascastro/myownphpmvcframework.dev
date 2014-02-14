@@ -14,6 +14,7 @@ class Response
 {
     private $_headers;
     private $_content;
+    private $_statusCode;
 
     public function __construct()
     {
@@ -21,6 +22,10 @@ class Response
 
     public function send()
     {
+        http_response_code($this->_statusCode);
+
+
+
         return $this->_content;
     }
 

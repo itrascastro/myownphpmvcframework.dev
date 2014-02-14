@@ -31,7 +31,7 @@ class IndexController extends Controller
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
 
-        //throw new \Exception('Uncaught Exception');
+        //throw new \Exception('E1');
 
         return $this->render();
     }
