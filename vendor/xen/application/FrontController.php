@@ -20,7 +20,7 @@ use xen\mvc\view\Phtml;
 
 class FrontController
 {
-    const ERROR_ACTION = 'exceptionHandler';
+    const EXCEPTION_HANDLER_ACTION = 'exceptionHandler';
 
     private $_bootstrap;
     private $_request;
@@ -38,7 +38,10 @@ class FrontController
     public function run()
     {
         $this->_request = new Request();
+        $this->_bootstrap->addResource('Request', $this->_request);
+
         $this->_router = new Router($this->_request->getUrl());
+        $this->_bootstrap->addResource('Router', $this->_router);
         $this->_router->route();
 
         $statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;
@@ -57,7 +60,7 @@ class FrontController
         } catch (\Exception $e) {
 
             $this->_errorController->setParams(array('e' => $e));
-            $action = FrontController::ERROR_ACTION . 'Action';
+            $action = FrontController::EXCEPTION_HANDLER_ACTION . 'Action';
             $content = $this->_errorController->$action();
             $statusCode = 500;
         }
@@ -71,9 +74,14 @@ class FrontController
     private function _setErrorController()
     {
         $this->_errorController = new ErrorController();
-        $action = FrontController::ERROR_ACTION;
-        $this->_resolveDependencies($this->_errorController, 'error', $action, true);
-        set_exception_handler(array($this->_errorController, FrontController::ERROR_ACTION . 'Action'));
+        $action = FrontController::EXCEPTION_HANDLER_ACTION . 'Action';
+        $this->_bootstrap->resolveController(
+            $this->_errorController,
+            'error',
+            FrontController::EXCEPTION_HANDLER_ACTION,
+            true
+        );
+        set_exception_handler(array($this->_errorController, $action));
     }
 
     private function _setController()
@@ -83,38 +91,10 @@ class FrontController
 
         $this->_controller = new $controller();
 
-        $this->_resolveDependencies($this->_controller, $this->_router->getController(), $this->_router->getAction());
+        $this->_bootstrap->resolveController(
+            $this->_controller,
+            $this->_router->getController(),
+            $this->_router->getAction()
+        );
     }
-
-    private function _resolveDependencies($controller, $controllerName, $action, $error = false)
-    {
-        $eventSystem = $this->_bootstrap->getResource('EventSystem');
-        $controller->setEventSystem($eventSystem);
-
-        $this->_bootstrap->addResource('Router', $this->_router);
-
-        $layout =  ($error) ? clone $this->_bootstrap->getResource('Layout') : $this->_bootstrap->getResource('Layout');
-        $controller->setLayout($layout);
-
-        $actionHelperBroker = $this->_bootstrap->getResource('ActionHelperBroker');
-        $controller->setActionHelperBroker($actionHelperBroker);
-
-        $config = $this->_bootstrap->getResource('Config');
-        $controller->setConfig($config);
-
-        $controller->setParams($this->_router->getParams());
-
-        $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
-            'application/views/scripts/' . lcfirst($controllerName));
-        $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $action . '.phtml');
-        $controller->setView($view);
-
-        $this->_request->setController(lcfirst($controllerName));
-        $this->_request->setAction($action);
-        $controller->setRequest($this->_request);
-        $this->_bootstrap->addResource('Request', $this->_request);
-
-        $this->_bootstrap->resolveDependencies($controller);
-    }
-
 }

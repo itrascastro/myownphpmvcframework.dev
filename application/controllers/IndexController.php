@@ -17,7 +17,7 @@ use xen\mvc\Controller;
 
 class IndexController extends Controller
 {
-    public function init()
+    public function __construct()
     {
 
 //        $event = new Event('Bootstrap_Load', array('msg' => 'event from Bootstrap'));
@@ -30,8 +30,6 @@ class IndexController extends Controller
     {
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
-
-        //throw new \Exception('E1');
 
         return $this->render();
     }

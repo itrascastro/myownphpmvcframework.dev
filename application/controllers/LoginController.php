@@ -13,10 +13,6 @@ use xen\mvc\Controller;
 
 class LoginController extends Controller
 {
-    public function init()
-    {
-    }
-
     public function indexAction()
     {
         $this->_layout->title           = 'Login Form';

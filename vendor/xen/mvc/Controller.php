@@ -31,10 +31,8 @@ abstract class Controller
 
     public function __construct()
     {
-        $this->init();
     }
 
-    public abstract function init();
     public abstract function indexAction();
 
     /**

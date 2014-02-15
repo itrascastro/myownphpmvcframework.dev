@@ -14,10 +14,6 @@ use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
 {
-    public function init()
-    {
-    }
-
     public function indexAction()
     {
         $this->_layout->title           = 'Calculator - 4 basic operations';

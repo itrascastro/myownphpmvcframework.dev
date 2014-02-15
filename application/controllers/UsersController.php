@@ -13,7 +13,7 @@ use xen\mvc\Controller;
 
 class UsersController extends Controller
 {
-    public function init()
+    public function __construct()
     {
         if (!isset($_SESSION['user'])) {
             $this->_redirect('login', 'index');

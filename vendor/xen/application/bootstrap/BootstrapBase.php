@@ -261,4 +261,31 @@ class BootstrapBase
             return $this->_resources[$object];
         }
     }
+
+    public function resolveController($controller, $controllerName, $action, $error = false)
+    {
+        $controller->setAppEnv($this->_appEnv);
+
+        $controller->setEventSystem($this->_resources['EventSystem']);
+
+        $layout =  ($error) ? clone $this->_resources['Layout'] : $this->_resources['Layout'];
+        $controller->setLayout($layout);
+
+        $controller->setActionHelperBroker($this->_resources['ActionHelperBroker']);
+
+        $controller->setConfig($this->_resources['Config']);
+
+        $controller->setParams($this->_resources['Router']->getParams());
+
+        $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
+            'application/views/scripts/' . lcfirst($controllerName));
+        $view = new Phtml($viewPath . DIRECTORY_SEPARATOR . $action . '.phtml');
+        $controller->setView($view);
+
+        $this->_resources['Request']->setController(lcfirst($controllerName));
+        $this->_resources['Request']->setAction($action);
+        $controller->setRequest($this->_resources['Request']);
+
+        $this->resolveDependencies($controller);
+    }
 }
