@@ -53,7 +53,7 @@ return array(
         'model'     => 'models\\CalculatorModel',
     ),
     'models\\UsersModel'                => array(
-        'db'        => 'Database',
+        'db'        => 'Database_db2',
     ),
     'controllers\\UsersController'      => array(
         'model'     => 'models\\UsersModel',

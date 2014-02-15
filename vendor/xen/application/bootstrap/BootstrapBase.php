@@ -14,6 +14,7 @@
 
 namespace xen\application\bootstrap;
 
+use xen\config\Config;
 use xen\config\Ini;
 use xen\db\Adapter;
 use xen\eventSystem\EventSystem;
@@ -199,16 +200,20 @@ class BootstrapBase
      * Other resources not auto executed
      */
 
-    protected function _dependencyDatabase()
+    protected function _dependencyDatabase($db)
     {
-        $configDb = new Ini('db.ini', $this->_appEnv);
-        $database = null;
+        if (!array_key_exists('Databases', $this->_resources)) {
 
-        if (isset($configDb->driver)) {
-            $database = new Adapter($configDb);
+            $this->_resources['Databases'] = require str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'application/configs/databases.php'
+            );
         }
 
-        $this->_resources['Database'] = $database;
+        $dbConfig = new Config($this->_resources['Databases'][$db]);
+
+        $this->_resources['Database_' . $db] = new Adapter($dbConfig);
     }
 
     /**
@@ -240,9 +245,9 @@ class BootstrapBase
             return $this->_resources[$object];
         //it can be a resource not already executed in bootstrap
         //this kind of resources are added to bootstrap by its own like any other bootstrap resource
-        } else if (method_exists($this, '_dependency' . $object)) {
-            $resource = '_dependency' . $object;
-            $this->$resource();
+        } else if (method_exists($this, '_dependency' . current(explode("_", $object)))) {
+            $db = substr($object, 9);
+            $this->_dependencyDatabase($db);
             return $this->_resources[$object];
         //it is not an object but it has dependencies and we have to resolve them and then instantiate it
         } else if (array_key_exists($object, $dependencies)) {
