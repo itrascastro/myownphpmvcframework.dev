@@ -24,7 +24,6 @@ class HelperBroker
     const VIEW_HELPER = 1;
 
     private $_type;
-
     private $_libNamespace;
     private $_appNamespace;
     private $_libPath;
@@ -53,11 +52,12 @@ class HelperBroker
     {
         if ($this->isLibraryHelper($helper)) {
             $className = $this->_libNamespace . $helper;
-            return new $className($params);
         } else if ($this->isApplicationHelper($helper)) {
             $className = $this->_appNamespace . $helper;
-            return new $className($params);
-        }
+        } else $className = null;
+
+        if ($className != null) return new $className($params);
+
         return null;
     }
 
@@ -75,4 +75,4 @@ class HelperBroker
     {
         return file_exists($this->_appPath . $helper . '.php');
     }
-} 
+}

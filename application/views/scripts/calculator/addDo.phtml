@@ -1,4 +1,4 @@
-<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper')->show(); ?>
+<?php echo $this->_viewHelperBroker->getHelper('CalculatorMenuHelper', array('router' => $this->_router))->show(); ?>
 
 <h1><?php $this->out($this->title); ?></h1>
 
