@@ -13,11 +13,15 @@
  * Constraints are optional. You can use RegEx
  */
 return array(
-    '/user-{name}.htm' => array(
+    '/user/add/name/{name}/email/{email}/{age}/' => array(
         'controller'        => 'users',
-        'action'            => 'index',
+        'action'            => 'add',
+        'constraints'       => array(
+            'email' => 'a | b',
+            'age'   => '\d+',
+        ),
     ),
-    '/user-info/id/{id}' => array(
+    '/user-info/id/{id}/' => array(
         'controller'        => 'users',
         'action'            => 'show',
         'constraints'       => array(
@@ -34,14 +38,6 @@ return array(
         'constraints'       => array(
             'op1' => '\d',
             'op2' => '\d',
-        ),
-    ),
-    '/user/add/name/{name}/email/{email}/{age}/' => array(
-        'controller'        => 'users',
-        'action'            => 'add',
-        'constraints'       => array(
-            'email' => 'a | b',
-            'age' => '\d+',
         ),
     ),
     'article-{id}-{year}.php' => array(

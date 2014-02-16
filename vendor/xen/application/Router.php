@@ -51,12 +51,62 @@ class Router
 
     public function toUrl($controller, $action, $params = array())
     {
-        if (false) {
+        if ($route = $this->_getRoute($controller, $action, $params)) {
+
+            return $route;
 
         } else {
 
             return '/' . $controller . '/' . $action . '/' . $this->_paramsToString($params);
         }
+    }
+
+    private function _getRoute($controller, $action, $params = array())
+    {
+        foreach ($this->_routes as $route => $value) {
+
+            if (array_key_exists('constraints', $value)) {
+
+                $constraints = $value['constraints'];
+
+            } else {
+
+                $constraints = array();
+            }
+
+            if ($value['controller'] == $controller &&
+                $value['action'] == $action &&
+                $this->_hasParams($route, $params, $constraints)
+            ) {
+                return $this->_setParamsToRoute($route, $params);
+            }
+        }
+    }
+
+    private function _setParamsToRoute($route, $params)
+    {
+        foreach ($params as $key => $value) {
+
+            $route = preg_replace('/\{' . $key . '\}/', $value, $route);
+        }
+
+        return $route;
+    }
+
+    private function _hasParams($route, $params, $constraints)
+    {
+        foreach ($params as $key => $value) {
+
+            if (strpos(preg_replace('/\s+/', '', $route), '{' . $key . '}') === false ||
+               (
+                   array_key_exists($key, $constraints) &&
+                   preg_match('!' . preg_replace('/\s+/', '', $constraints[$key]) . '!', $value) == 0
+               )
+            )
+                return false;
+        }
+
+        return true;
     }
 
     private function _paramsToString($params)
@@ -90,7 +140,7 @@ class Router
     {
         foreach ($this->_parseRoutes() as $route => $value) {
 
-            if (preg_match('!' . $route . '!', $this->_url, $results)) {
+            if (preg_match('!' . $route . '!', $this->_url, $results) == 1) {
 
                 $params = array();
 

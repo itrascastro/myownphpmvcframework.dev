@@ -24,6 +24,7 @@ class Phtml
     private $_file;
     private $_partials;
     private $_viewHelperBroker;
+    private $_router;
 
     function __construct($_file)
     {
@@ -101,6 +102,22 @@ class Phtml
     }
 
     /**
+     * @param mixed $router
+     */
+    public function setRouter($router)
+    {
+        $this->_router = $router;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRouter()
+    {
+        return $this->_router;
+    }
+
+    /**
      * In Bootstrap we set ViewHelperBroker to the very first view, the layout
      * ViewHelperBroker will be passed to the child in the render() method
      * as the view variables of every Phtml => At this point no more variables can be added to this phtml
@@ -116,6 +133,7 @@ class Phtml
                 $partial->$propertyName = $this->$propertyName;
             }
             $partial->setViewHelperBroker($this->_viewHelperBroker);
+            $partial->setRouter($this->_router);
         }
 
         require $this->_file;

@@ -267,6 +267,7 @@ class BootstrapBase
         }
     }
 
+    //TODO inject router to view for auto url generation
     public function resolveController($controller, $controllerName, $action, $error = false)
     {
         $controller->setAppEnv($this->_appEnv);
@@ -274,6 +275,7 @@ class BootstrapBase
         $controller->setEventSystem($this->_resources['EventSystem']);
 
         $layout =  ($error) ? clone $this->_resources['Layout'] : $this->_resources['Layout'];
+        $layout->setRouter($this->_resources['Router']);
         $controller->setLayout($layout);
 
         $controller->setActionHelperBroker($this->_resources['ActionHelperBroker']);

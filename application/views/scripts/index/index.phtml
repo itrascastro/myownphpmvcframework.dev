@@ -1,6 +1,6 @@
 <h1>Controllers</h1>
 <ul>
-    <li><a href="/calculator/index/">Calculator</a></li>
-    <li><a href="/users/index/">Users</a></li>
-    <li><a href="/login/index/">Login</a></li>
+    <li><a href="<?php echo $this->_router->toUrl('calculator', 'index'); ?>">Calculator</a></li>
+    <li><a href="<?php echo $this->_router->toUrl('users', 'index'); ?>">Users</a></li>
+    <li><a href="<?php echo $this->_router->toUrl('login', 'index'); ?>">Login</a></li>
 </ul>
