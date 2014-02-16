@@ -13,7 +13,7 @@
  * Constraints are optional. You can use RegEx
  */
 return array(
-    'user-{name}.htm' => array(
+    '/user-{name}.htm' => array(
         'controller'        => 'users',
         'action'            => 'index',
     ),

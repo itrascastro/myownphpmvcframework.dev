@@ -27,8 +27,10 @@ class FrontController
     private $_router;
     private $_controller;
     private $_action;
+    private $_content;
     private $_errorController;
     private $_response;
+    private $_statusCode;
 
     public function __construct($_bootstrap)
     {
@@ -44,7 +46,7 @@ class FrontController
         $this->_bootstrap->addResource('Router', $this->_router);
         $this->_router->route();
 
-        $statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;
+        $this->_statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;
 
         $this->_setErrorController();
         $this->_setController();
@@ -55,20 +57,25 @@ class FrontController
         try {
 
             $action = $this->_action;
-            $content = $this->_controller->$action();
+            $this->_content = $this->_controller->$action();
 
         } catch (\Exception $e) {
 
-            $this->_errorController->setParams(array('e' => $e));
-            $action = FrontController::EXCEPTION_HANDLER_ACTION . 'Action';
-            $content = $this->_errorController->$action();
-            $statusCode = 500;
+            $this->_exceptionHandler();
         }
 
-        $this->_response->setStatusCode($statusCode);
-        $this->_response->setContent($content);
+        $this->_response->setStatusCode($this->_statusCode);
+        $this->_response->setContent($this->_content);
 
         return $this->_response->send();
+    }
+
+    private function _exceptionHandler()
+    {
+        $this->_errorController->setParams(array('e' => $e));
+        $action = FrontController::EXCEPTION_HANDLER_ACTION . 'Action';
+        $this->_content = $this->_errorController->$action();
+        $this->_statusCode = 500;
     }
 
     private function _setErrorController()

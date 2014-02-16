@@ -51,12 +51,44 @@ class Router
 
     public function toUrl($controller, $action, $params = array())
     {
-        //TODO
+        if (false) {
+
+        } else {
+
+            return '/' . $controller . '/' . $action . '/' . $this->_paramsToString($params);
+        }
+    }
+
+    private function _paramsToString($params)
+    {
+        $first = true;
+        $str = '';
+
+        foreach ($params as $param => $value)
+        {
+            if (!$first) {
+
+                $str .= '/';
+
+            } else {
+
+                $first = false;
+            }
+
+            $str .= $param . '/' . $value;
+        }
+
+        if ($str != '') {
+
+            $str .= '/';
+        }
+
+        return $str;
     }
 
     private function _customRoute()
     {
-        foreach ($this->_routes as $route => $value) {
+        foreach ($this->_parseRoutes() as $route => $value) {
 
             if (preg_match('!' . $route . '!', $this->_url, $results)) {
 
@@ -119,18 +151,16 @@ class Router
                 'params'        => $params,
             );
 
-            $pattern = str_replace('!', '\!', $tmpPattern);
+            $pattern = ltrim(str_replace('!', '\!', $tmpPattern), '/');
             $routes[$pattern] = $parsedRoute;
         }
 
-        $this->_routes = $routes;
+        return $routes;
     }
 
     private function _defaultRoute()
     {
-
-        $url = rtrim($this->_url, '/');
-        $url = explode('/', $url);
+        $url = explode('/', $this->_url);
 
         $controller = $this->_getName($url[0], self::URL_CONTROLLER);
         $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controller . 'Controller.php';
@@ -174,7 +204,7 @@ class Router
 
     private function _cleanUrl($url)
     {
-        $this->_url = filter_var($url, FILTER_SANITIZE_URL);
+        $this->_url = rtrim(filter_var($url, FILTER_SANITIZE_URL), '/');
     }
 
     /*
