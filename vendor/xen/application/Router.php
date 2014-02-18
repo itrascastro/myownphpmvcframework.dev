@@ -254,7 +254,7 @@ class Router
 
     private function _cleanUrl($url)
     {
-        $this->_url = rtrim(filter_var($url, FILTER_SANITIZE_URL), '/');
+        $this->_url = ($url === null) ? '' : rtrim(filter_var($url, FILTER_SANITIZE_URL), '/');
     }
 
     /*

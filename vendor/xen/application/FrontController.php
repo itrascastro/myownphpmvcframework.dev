@@ -39,10 +39,13 @@ class FrontController
 
     public function run()
     {
-        $this->_request = new Request();
+        $this->_request = Request::createFromGlobals();
         $this->_bootstrap->addResource('Request', $this->_request);
 
-        $this->_router = new Router($this->_request->getUrl());
+        $url = $this->_request->get('url');
+        $this->_request->setUrl($url);
+
+        $this->_router = new Router($url);
         $this->_bootstrap->addResource('Router', $this->_router);
         $this->_router->route();
 

@@ -2,7 +2,7 @@
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
         'FormHelper',
-        array('action'      => '/calculator/addDo/',
+        array('action'      => $this->_router->toUrl('calculator', 'addDo'),
               'id'          => 'fr1',
               'method'      => 'post',
               'buttonValue' => 'Add',
@@ -16,6 +16,5 @@
                       'type'    => 'number'
                   )
               )
-
         ))->show(); ?>
 </div>
