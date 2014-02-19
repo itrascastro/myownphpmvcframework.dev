@@ -45,7 +45,7 @@ class Adapter extends \PDO
                 }
                 break;
             case 'mssql': //MS Sql
-                $dsn = 'mssql:host=' . $dbConfig->hostname;
+                $dsn = 'dblib:host=' . $dbConfig->hostname;
                 if (isset($dbConfig->port)) {
                     $dsn .= ',' . $dbConfig->port;
                 }
