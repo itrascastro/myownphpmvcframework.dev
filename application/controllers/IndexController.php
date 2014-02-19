@@ -14,6 +14,7 @@ use xen\application\Router;
 use xen\eventSystem\Event;
 use xen\eventSystem\EventSystem;
 use xen\mvc\Controller;
+use xen\mvc\view\Phtml;
 
 class IndexController extends Controller
 {
@@ -30,6 +31,9 @@ class IndexController extends Controller
     {
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+
+        $partial = new Phtml('application/views/partials/example.phtml');
+        $this->_view->addPartial('example', $partial);
 
         return $this->render();
     }

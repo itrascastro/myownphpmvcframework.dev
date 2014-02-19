@@ -91,6 +91,11 @@ class Phtml
         }
     }
 
+    public function addPartial($name, $value)
+    {
+        $this->_partials[$name] = $value;
+    }
+
     public function partial($name)
     {
         return $this->_partials[$name];
