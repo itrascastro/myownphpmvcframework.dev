@@ -44,6 +44,21 @@ class Adapter extends \PDO
                     die();
                 }
                 break;
+            case 'mssql': //MS Sql
+                $dsn = 'mssql:host=' . $dbConfig->hostname;
+                if (isset($dbConfig->port)) {
+                    $dsn .= ',' . $dbConfig->port;
+                }
+                $dsn .= ';Database=' . $dbConfig->dbname;
+                $dsn .= ',' . $dbConfig->username;
+                $dsn .= ',' . $dbConfig->password;
+                try {
+                    parent::__construct($dsn);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                    die();
+                }
+                break;
         }
     }
 }

@@ -26,4 +26,13 @@ return array(
         'password'  => 'xGj72fVtsR7DJLmB',
         'charset'   => 'utf8',
     ),
+    'db3' => array(
+        'driver'    => 'mssql',
+        'hostname'  => '127.0.0.1',
+        'port'      => '',
+        'dbname'    => 'mvc',
+        'username'  => 'mvc',
+        'password'  => 'xGj72fVtsR7DJLmB',
+        'charset'   => 'utf8',
+    ),
 );
