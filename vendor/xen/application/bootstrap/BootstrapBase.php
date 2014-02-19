@@ -184,11 +184,6 @@ class BootstrapBase
         return require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/dependencies.php');
     }
 
-    protected function _defaultSession()
-    {
-        session_start();
-    }
-
     protected function _defaultConfig()
     {
         $config = new Ini('config.ini', $this->_appEnv);
@@ -267,7 +262,6 @@ class BootstrapBase
         }
     }
 
-    //TODO inject router to view for auto url generation
     public function resolveController($controller, $controllerName, $action, $error = false)
     {
         $controller->setAppEnv($this->_appEnv);
@@ -291,7 +285,10 @@ class BootstrapBase
 
         $this->_resources['Request']->setController(lcfirst($controllerName));
         $this->_resources['Request']->setAction($action);
+        $this->_resources['Request']->setParams($this->_resources['Router']->getParams());
         $controller->setRequest($this->_resources['Request']);
+
+        $controller->setResponse($this->_resources['Response']);
 
         $this->resolveDependencies($controller);
     }

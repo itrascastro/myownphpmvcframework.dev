@@ -26,16 +26,23 @@ class Bootstrap extends BootstrapBase
     protected function _initEnvironment()
     {
         if ($this->_appEnv == Application::DEVELOPMENT || $this->_appEnv == Application::TEST) {
+
             error_reporting(E_ALL | E_STRICT);
             ini_set('display_errors', 'on');
+
         } else if ($this->_appEnv == Application::PRODUCTION) {
+
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
             ini_set('display_errors', 'off');
         }
+
         $timeZone = (string) $this->getResource('Config')->timezone;
+
         if (empty($timeZone)) {
+
             $timeZone = 'Europe/Madrid';
         }
+
         date_default_timezone_set($timeZone);
 
         return null;
@@ -48,19 +55,24 @@ class Bootstrap extends BootstrapBase
      */
     protected function _initLayout()
     {
-        $layout     = $this->getResource('Layout');
-        $config     = $this->getResource('Config');
+        $layout = $this->getResource('Layout');
+        $config = $this->getResource('Config');
 
         $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
         $header->charset = (string) $config->charset;
 
-        if (isset($_SESSION['user'])) {
-            $layout->loggedUser = $_SESSION['user']->getEmail();
+        if ($this->_resources['Request']->session('user')) {
+
+            $user = $this->_resources['Request']->session('user');
+            $layout->loggedUser = $user->getEmail();
+
         } else {
+
             $layout->loggedUser = 'Login';
         }
 
         $partials   = array(
+
             'header' => $header,
             'footer' => new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'footer.phtml'),
         );

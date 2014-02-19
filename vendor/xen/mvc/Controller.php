@@ -24,6 +24,7 @@ abstract class Controller
     protected $_model;
     protected $_params;
     protected $_request;
+    protected $_response;
     protected $_config;
     protected $_actionHelperBroker;
     protected $_eventSystem;
@@ -33,6 +34,7 @@ abstract class Controller
     {
     }
 
+    public abstract function init();
     public abstract function indexAction();
 
     /**
@@ -184,6 +186,22 @@ abstract class Controller
     public function getRequest()
     {
         return $this->_request;
+    }
+
+    /**
+     * @param mixed $response
+     */
+    public function setResponse($response)
+    {
+        $this->_response = $response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->_response;
     }
 
     /**

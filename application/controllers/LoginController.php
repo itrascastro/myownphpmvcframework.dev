@@ -13,6 +13,11 @@ use xen\mvc\Controller;
 
 class LoginController extends Controller
 {
+    public function init()
+    {
+
+    }
+
     public function indexAction()
     {
         $this->_layout->title           = 'Login Form';
@@ -23,11 +28,12 @@ class LoginController extends Controller
 
     public function doLoginAction()
     {
-        $user = $this->_model->login($_POST['email'], $_POST['password']);
+        $user = $this->_model->login($this->_request->post('email'), $this->_request->post('password'));
 
         if ($user != null) {
 
-            $_SESSION['user'] = $user;
+            $this->_response->setSession('user', $user);
+
             $this->_layout->title       = 'Login success';
             $this->_layout->description = 'Restricted Area';
             $this->_view->msg           = 'Success';

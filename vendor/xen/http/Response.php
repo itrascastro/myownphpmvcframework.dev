@@ -7,7 +7,7 @@
  * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
  */
 
-namespace xen\application;
+namespace xen\http;
 
 
 class Response 
@@ -24,9 +24,34 @@ class Response
     {
         http_response_code($this->_statusCode);
 
-
-
         return $this->_content;
+    }
+
+    public function setCookie(
+        $name,
+        $value,
+        $expire = null,
+        $path = null,
+        $domain = null,
+        $secure = null,
+        $httponly = null
+    ) {
+        $args = array();
+
+        foreach (func_get_args() as $arg => $value) {
+
+            if ($arg !== null) {
+
+                $args[] = $value;
+            }
+        }
+
+        call_user_func_array('setcookie', $args);
+    }
+
+    public function setSession($name, $value)
+    {
+        $_SESSION[$name] = $value;
     }
 
     /**

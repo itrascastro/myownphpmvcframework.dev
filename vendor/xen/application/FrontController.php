@@ -10,7 +10,7 @@ namespace xen\application;
 
 use controllers\ErrorController;
 use xen\eventSystem\Event;
-use xen\mvc\view\Phtml;
+use xen\http\Response;
 
 // ****************************
 //        $eventSystem = $this->_bootstrap->getResource('EventSystem');
@@ -32,16 +32,14 @@ class FrontController
     private $_response;
     private $_statusCode;
 
-    public function __construct($_bootstrap)
+    public function __construct($_bootstrap, $_request)
     {
         $this->_bootstrap = $_bootstrap;
+        $this->_request = $_request;
     }
 
     public function run()
     {
-        $this->_request = Request::createFromGlobals();
-        $this->_bootstrap->addResource('Request', $this->_request);
-
         $url = $this->_request->get('url');
         $this->_request->setUrl($url);
 
@@ -51,11 +49,12 @@ class FrontController
 
         $this->_statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;
 
+        $this->_response = new Response();
+        $this->_bootstrap->addResource('Response', $this->_response);
+        $this->_response->setHeaders('Content-Type', 'text/html');
+
         $this->_setErrorController();
         $this->_setController();
-
-        $this->_response = new Response();
-        $this->_response->setHeaders('Content-Type', 'text/html');
 
         try {
 
@@ -106,5 +105,7 @@ class FrontController
             $this->_router->getController(),
             $this->_router->getAction()
         );
+
+        $this->_controller->init();
     }
 }

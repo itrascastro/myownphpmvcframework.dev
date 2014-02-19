@@ -17,7 +17,7 @@ use xen\mvc\Controller;
 
 class IndexController extends Controller
 {
-    public function __construct()
+    public function init()
     {
 
 //        $event = new Event('Bootstrap_Load', array('msg' => 'event from Bootstrap'));

@@ -14,6 +14,11 @@ use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
 {
+    public function init()
+    {
+
+    }
+
     public function indexAction()
     {
         $this->_layout->title           = 'Calculator - 4 basic operations';
@@ -32,8 +37,8 @@ class CalculatorController extends Controller
 
     public function addDoAction()
     {
-        $this->_model->setOp1($_POST['op1']);
-        $this->_model->setOp2($_POST['op2']);
+        $this->_model->setOp1($this->_request->post('op1'));
+        $this->_model->setOp2($this->_request->post('op2'));
         $this->_model->add();
 
         $this->_layout->title           = 'Add Result';
@@ -55,8 +60,8 @@ class CalculatorController extends Controller
 
     public function subtractDoAction()
     {
-        $this->_model->setOp1($_POST['op1']);
-        $this->_model->setOp2($_POST['op2']);
+        $this->_model->setOp1($this->_request->post('op1'));
+        $this->_model->setOp2($this->_request->post('op2'));
         $this->_model->subtract();
 
         $this->_layout->title           = 'Subtract Result';

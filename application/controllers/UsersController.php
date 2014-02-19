@@ -13,9 +13,9 @@ use xen\mvc\Controller;
 
 class UsersController extends Controller
 {
-    public function __construct()
+    public function init()
     {
-        if (!isset($_SESSION['user'])) {
+        if (!$this->_request->session('user')) {
             $this->_redirect('login', 'index');
         }
     }
@@ -38,7 +38,7 @@ class UsersController extends Controller
 
     public function addDoAction()
     {
-        $this->_model->add($_POST['email'], $_POST['password']);
+        $this->_model->add($this->_request->post('email'), $this->_request->post('password'));
         return $this->_forward('list');
     }
 
@@ -62,7 +62,12 @@ class UsersController extends Controller
 
     public function updateDoAction()
     {
-        $this->_model->update($_POST['id'], $_POST['email'], $_POST['password']);
+        $this->_model->update(
+            $this->_request->post('id'),
+            $this->_request->post('email'),
+            $this->_request->post('password')
+        );
+
         return $this->_redirect('users', 'list');
     }
 

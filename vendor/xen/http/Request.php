@@ -7,26 +7,28 @@
  * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
  */
 
-namespace xen\application;
+namespace xen\http;
 
-
-class Request 
+class Request
 {
     private $_url;
     private $_controller;
     private $_action;
+    private $_params;
     private $_get;
     private $_post;
     private $_cookie;
+    private $_session;
     private $_files;
     private $_server;
     private $_env;
 
-    function __construct($_get, $_post, $_cookie, $_files, $_server, $_env)
+    function __construct($_get, $_post, $_cookie, $_session, $_files, $_server, $_env)
     {
         $this->_get     = $_get;
         $this->_post    = $_post;
         $this->_cookie  = $_cookie;
+        $this->_session = $_session;
         $this->_files   = $_files;
         $this->_server  = $_server;
         $this->_env     = $_env;
@@ -34,7 +36,8 @@ class Request
 
     public static function createFromGlobals()
     {
-        return new static($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER, $_ENV);
+        session_start();
+        return new static($_GET, $_POST, $_COOKIE, $_SESSION, $_FILES, $_SERVER, $_ENV);
     }
 
     public function get($name)
@@ -52,24 +55,14 @@ class Request
         return (isset($_COOKIE[$name])) ? $_COOKIE[$name] : null;
     }
 
+    public function session($name)
+    {
+        return (isset($_SESSION[$name])) ? $_SESSION[$name] : null;
+    }
+
     public function getHeaders()
     {
-        if (!function_exists('getallheaders')) {
-
-            foreach ($_SERVER as $name => $value) {
-
-                if (strtolower(substr($name, 0, 5)) == 'http_') {
-
-                    $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-                }
-            }
-
-            return $headers;
-
-        } else {
-
-            return getallheaders();
-        }
+        return getallheaders();
     }
 
     public function getMethod()
@@ -179,6 +172,22 @@ class Request
     public function getController()
     {
         return $this->_controller;
+    }
+
+    /**
+     * @param mixed $params
+     */
+    public function setParams($params)
+    {
+        $this->_params = $params;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParams()
+    {
+        return $this->_params;
     }
 
 }
