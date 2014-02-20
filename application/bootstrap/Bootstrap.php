@@ -61,9 +61,8 @@ class Bootstrap extends BootstrapBase
         $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
         $header->charset = (string) $config->charset;
 
-        if ($this->_resources['Request']->session('user')) {
+        if ($user = $this->_resources['Session']->get('user')) {
 
-            $user = $this->_resources['Request']->session('user');
             $layout->loggedUser = $user->getEmail();
 
         } else {

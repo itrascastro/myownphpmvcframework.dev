@@ -25,6 +25,7 @@ abstract class Controller
     protected $_params;
     protected $_request;
     protected $_response;
+    protected $_session;
     protected $_config;
     protected $_actionHelperBroker;
     protected $_eventSystem;
@@ -202,6 +203,22 @@ abstract class Controller
     public function getResponse()
     {
         return $this->_response;
+    }
+
+    /**
+     * @param mixed $session
+     */
+    public function setSession($session)
+    {
+        $this->_session = $session;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSession()
+    {
+        return $this->_session;
     }
 
     /**

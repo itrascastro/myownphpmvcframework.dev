@@ -32,7 +32,7 @@ class LoginController extends Controller
 
         if ($user != null) {
 
-            $this->_response->setSession('user', $user);
+            $this->_session->set('user', $user);
 
             $this->_layout->title       = 'Login success';
             $this->_layout->description = 'Restricted Area';

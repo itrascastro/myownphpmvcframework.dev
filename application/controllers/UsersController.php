@@ -15,7 +15,8 @@ class UsersController extends Controller
 {
     public function init()
     {
-        if (!$this->_request->session('user')) {
+        if (!$this->_session->get('user')) {
+
             $this->_redirect('login', 'index');
         }
     }

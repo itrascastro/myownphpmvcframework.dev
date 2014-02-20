@@ -18,6 +18,7 @@ use xen\config\Config;
 use xen\config\Ini;
 use xen\db\Adapter;
 use xen\eventSystem\EventSystem;
+use xen\http\Session;
 use xen\mvc\helpers\HelperBroker;
 use xen\mvc\view\Phtml;
 use xen\mvc\view\View;
@@ -120,6 +121,15 @@ class BootstrapBase
     /*
      * Default Resources
      */
+
+    protected function _defaultSession()
+    {
+        $session = new Session();
+
+        $session->start();
+
+        return $session;
+    }
 
     protected function _defaultApplicationConfig()
     {
@@ -287,6 +297,8 @@ class BootstrapBase
         $this->_resources['Request']->setAction($action);
         $this->_resources['Request']->setParams($this->_resources['Router']->getParams());
         $controller->setRequest($this->_resources['Request']);
+
+        $controller->setSession($this->_resources['Session']);
 
         $controller->setResponse($this->_resources['Response']);
 

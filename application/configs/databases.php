@@ -27,7 +27,7 @@ return array(
         'charset'   => 'utf8',
     ),
     'db3' => array(
-        'driver'    => 'mssql',
+        'driver'    => 'dblib',
         'hostname'  => '127.0.0.1',
         'port'      => '',
         'dbname'    => 'mvc',

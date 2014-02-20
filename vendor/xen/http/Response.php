@@ -49,11 +49,6 @@ class Response
         call_user_func_array('setcookie', $args);
     }
 
-    public function setSession($name, $value)
-    {
-        $_SESSION[$name] = $value;
-    }
-
     /**
      * @param mixed $content
      */

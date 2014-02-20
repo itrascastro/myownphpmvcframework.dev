@@ -17,18 +17,14 @@ class Request
     private $_params;
     private $_get;
     private $_post;
-    private $_cookie;
-    private $_session;
     private $_files;
     private $_server;
     private $_env;
 
-    function __construct($_get, $_post, $_cookie, $_session, $_files, $_server, $_env)
+    function __construct($_get, $_post, $_files, $_server, $_env)
     {
         $this->_get     = $_get;
         $this->_post    = $_post;
-        $this->_cookie  = $_cookie;
-        $this->_session = $_session;
         $this->_files   = $_files;
         $this->_server  = $_server;
         $this->_env     = $_env;
@@ -36,8 +32,7 @@ class Request
 
     public static function createFromGlobals()
     {
-        session_start();
-        return new static($_GET, $_POST, $_COOKIE, $_SESSION, $_FILES, $_SERVER, $_ENV);
+        return new static($_GET, $_POST, $_FILES, $_SERVER, $_ENV);
     }
 
     public function get($name)
@@ -48,16 +43,6 @@ class Request
     public function post($name)
     {
         return (isset($_POST[$name])) ? $_POST[$name] : null;
-    }
-
-    public function cookie($name)
-    {
-        return (isset($_COOKIE[$name])) ? $_COOKIE[$name] : null;
-    }
-
-    public function session($name)
-    {
-        return (isset($_SESSION[$name])) ? $_SESSION[$name] : null;
     }
 
     public function getHeaders()
