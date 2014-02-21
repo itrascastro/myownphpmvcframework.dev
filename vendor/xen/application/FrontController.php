@@ -63,7 +63,7 @@ class FrontController
 
         } catch (\Exception $e) {
 
-            $this->_exceptionHandler();
+            $this->_exceptionHandler($e);
         }
 
         $this->_response->setStatusCode($this->_statusCode);
@@ -72,7 +72,7 @@ class FrontController
         return $this->_response->send();
     }
 
-    private function _exceptionHandler()
+    private function _exceptionHandler($e)
     {
         $this->_errorController->setParams(array('e' => $e));
         $action = FrontController::EXCEPTION_HANDLER_ACTION . 'Action';
