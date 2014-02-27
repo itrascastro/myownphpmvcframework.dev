@@ -9,7 +9,7 @@
 
 return array(
     array(
-        'handler'   => 'GenericHandler',
-        'events'    => array('Bootstrap_Load', 'FrontController_Load'),
+        'handler'   => 'Bootstrap_Load',
+        'events'    => array('EVENT_NAME'),
     ),
 );

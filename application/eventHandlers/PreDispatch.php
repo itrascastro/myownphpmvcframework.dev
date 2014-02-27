@@ -12,11 +12,12 @@ namespace eventHandlers;
 
 use xen\eventSystem\Handler;
 
-class GenericHandler extends Handler
+class PreDispatch extends Handler
 {
 
     public function handle($params)
     {
-        echo $params['msg'] . ' ***Generic Handler' . '<br>';
+        $layout = $params['controller']->getLayout();
+        $layout->text = 'hi from preDispatch';
     }
 }

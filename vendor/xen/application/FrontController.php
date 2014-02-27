@@ -31,11 +31,13 @@ class FrontController
     private $_errorController;
     private $_response;
     private $_statusCode;
+    private $_eventSystem;
 
     public function __construct($_bootstrap, $_request)
     {
         $this->_bootstrap = $_bootstrap;
         $this->_request = $_request;
+        $this->_eventSystem = $_bootstrap->getResource('EventSystem');
     }
 
     public function run()
@@ -58,6 +60,8 @@ class FrontController
 
         try {
 
+            $event = new Event('preDispatch', array('controller' => $this->_controller));
+            $this->_eventSystem->raiseEvent($event);
             $action = $this->_action;
             $this->_content = $this->_controller->$action();
 
