@@ -60,10 +60,12 @@ class FrontController
 
         try {
 
-            $event = new Event('preDispatch', array('controller' => $this->_controller));
-            $this->_eventSystem->raiseEvent($event);
+            $this->_raiseEvent('preDispatch');
+
             $action = $this->_action;
             $this->_content = $this->_controller->$action();
+
+            $this->_raiseEvent('postDispatch');
 
         } catch (\Exception $e) {
 
@@ -74,6 +76,12 @@ class FrontController
         $this->_response->setContent($this->_content);
 
         return $this->_response->send();
+    }
+
+    private function _raiseEvent($name)
+    {
+        $event = new Event($name, array('controller' => $this->_controller));
+        $this->_eventSystem->raiseEvent($event);
     }
 
     private function _exceptionHandler($e)

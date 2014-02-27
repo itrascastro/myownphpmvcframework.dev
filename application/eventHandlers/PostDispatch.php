@@ -12,12 +12,11 @@ namespace eventHandlers;
 
 use xen\eventSystem\Handler;
 
-class PreDispatch extends Handler
+class PostDispatch extends Handler
 {
 
     public function handle($params)
     {
-        $layout = $params['controller']->getLayout();
-        $layout->text = 'Hi from preDispatch';
+        echo 'Hi from PostDispath';
     }
 }
