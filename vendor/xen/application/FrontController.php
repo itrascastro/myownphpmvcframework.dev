@@ -60,12 +60,12 @@ class FrontController
 
         try {
 
-            $this->_raiseEvent('preDispatch');
+            $this->_raiseEvent('PreDispatch');
 
             $action = $this->_action;
             $this->_content = $this->_controller->$action();
 
-            $this->_raiseEvent('postDispatch');
+            $this->_raiseEvent('PostDispatch');
 
         } catch (\Exception $e) {
 

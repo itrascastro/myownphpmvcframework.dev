@@ -9,12 +9,10 @@
 
 namespace eventHandlers;
 
-
 use xen\eventSystem\Handler;
 
 class PostDispatch extends Handler
 {
-
     public function handle($params)
     {
         echo 'Hi from PostDispath';
