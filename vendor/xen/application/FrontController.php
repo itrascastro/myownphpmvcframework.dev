@@ -71,7 +71,11 @@ class FrontController
             $this->_exceptionHandler($e);
         }
 
-        $this->_response->setStatusCode($this->_statusCode);
+        if (!$this->_response->getStatusCode()) {
+
+            $this->_response->setStatusCode($this->_statusCode);
+        }
+
         $this->_response->setContent($this->_content);
 
         return $this->_response->send();

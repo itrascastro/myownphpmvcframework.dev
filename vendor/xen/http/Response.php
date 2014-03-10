@@ -19,6 +19,7 @@ class Response
     public function __construct()
     {
         $this->setHeaders('Content-Type', 'text/html');
+        $this->_statusCode = false;
     }
 
     public function send()
