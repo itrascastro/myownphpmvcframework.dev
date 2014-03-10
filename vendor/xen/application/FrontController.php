@@ -53,7 +53,6 @@ class FrontController
 
         $this->_response = new Response();
         $this->_bootstrap->addResource('Response', $this->_response);
-        $this->_response->setHeaders('Content-Type', 'text/html');
 
         $this->_setErrorController();
         $this->_setController();
