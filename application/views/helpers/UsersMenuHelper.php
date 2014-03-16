@@ -15,13 +15,15 @@ class UsersMenuHelper extends ViewHelper
 
     function __construct($params = array())
     {
+        $router = $params['router'];
+
         $this->_html = '
             <ul class="list-inline">
-                <li><a href="/users/index/">Users</a></li>
-                <li><a href="/users/add/">Add new user</a></li>
-                <li><a href="/users/list/">Delete user</a></li>
-                <li><a href="/users/list/">Update user</a></li>
-                <li><a href="/users/list/">User list</a></li>
+                <li><a href="' . $router->toUrl('users', 'index') . '">Users</a></li>
+                <li><a href="' . $router->toUrl('users', 'add') . '">Add new user</a></li>
+                <li><a href="' . $router->toUrl('users', 'list') . '">Delete user</a></li>
+                <li><a href="' . $router->toUrl('users', 'list') . '">Update user</a></li>
+                <li><a href="' . $router->toUrl('users', 'list') . '">User list</a></li>
             </ul>
         ';
     }

@@ -13,35 +13,85 @@
  * Constraints are optional. You can use RegEx
  */
 return array(
-    '/user/add/name/{name}/email/{email}/{age}/' => array(
-        'controller'        => 'users',
-        'action'            => 'add',
-        'constraints'       => array(
-            'email' => 'a | b',
-            'age'   => '\d+',
-        ),
+    '/' => array(
+        'controller'        => 'index',
+        'action'            => 'index',
+        'allow'             => array('guest', 'user', 'admin'),
     ),
-    '/user-info/id/{id}/' => array(
-        'controller'        => 'users',
-        'action'            => 'show',
-        'constraints'       => array(
-            'id' => '\d{2}+',
-        ),
+    '/calculator/' => array(
+        'controller'        => 'calculator',
+        'action'            => 'index',
+        'allow'             => array('guest', 'user', 'admin'),
     ),
     '/calculator/add/' => array(
         'controller'        => 'calculator',
         'action'            => 'add',
+        'allow'             => array('user', 'admin'),
     ),
-    '/calculatorSum/op1.{op1}.op2.{op2}' => array(
+    '/calculator/addDo/' => array(
         'controller'        => 'calculator',
-        'action'            => 'add',
-        'constraints'       => array(
-            'op1' => '\d',
-            'op2' => '\d',
-        ),
+        'action'            => 'addDo',
+        'allow'             => array('user', 'admin'),
     ),
-    'article-{id}-{year}.php' => array(
-        'controller'        => 'blog',
-        'action'            => 'show',
+    '/calculator/subtract/' => array(
+        'controller'        => 'calculator',
+        'action'            => 'subtract',
+        'allow'             => array('admin'),
+    ),
+    '/calculator/subtractDo/' => array(
+        'controller'        => 'calculator',
+        'action'            => 'subtractDo',
+        'allow'             => array('admin'),
+    ),
+    '/users/' => array(
+        'controller'        => 'users',
+        'action'            => 'index',
+        'allow'             => array('user', 'admin'),
+    ),
+    '/users/add/' => array(
+        'controller'        => 'users',
+        'action'            => 'add',
+        'allow'             => array('admin'),
+    ),
+    '/users/addDo/' => array(
+        'controller'        => 'users',
+        'action'            => 'addDo',
+        'allow'             => array('admin'),
+    ),
+    '/users/remove/id/{id}/' => array(
+        'controller'        => 'users',
+        'action'            => 'remove',
+        'constraints'       => array(
+            'id'    => '\d+',
+        ),
+        'allow'             => array('admin'),
+    ),
+    '/users/update/id/{id}/' => array(
+        'controller'        => 'users',
+        'action'            => 'update',
+        'constraints'       => array(
+            'id'    => '\d+',
+        ),
+        'allow'             => array('admin'),
+    ),
+    '/users/updateDo/' => array(
+        'controller'        => 'users',
+        'action'            => 'updateDo',
+        'allow'             => array('admin'),
+    ),
+    '/users/list/' => array(
+        'controller'        => 'users',
+        'action'            => 'list',
+        'allow'             => array('user', 'admin'),
+    ),
+    '/login/' => array(
+        'controller'        => 'login',
+        'action'            => 'index',
+        'allow'             => array('guest', 'user', 'admin'),
+    ),
+    '/login/doLogin/' => array(
+        'controller'        => 'login',
+        'action'            => 'doLogin',
+        'allow'             => array('guest', 'user', 'admin'),
     ),
 );

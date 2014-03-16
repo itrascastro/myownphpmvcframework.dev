@@ -3,7 +3,7 @@
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
         'FormHelper',
-        array('action'      => '/login/doLogin/',
+        array('action'      => $this->_router->toUrl('login', 'doLogin'),
               'id'          => 'fr1',
               'method'      => 'post',
               'buttonValue' => 'login',

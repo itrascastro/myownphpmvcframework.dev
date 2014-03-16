@@ -1,13 +1,13 @@
 <h1><?php echo $this->title ?></h1>
 
 <div>
-    <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper')->show(); ?>
+    <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper', array('router' => $this->_router))->show(); ?>
 </div>
 
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
         'FormHelper',
-        array('action'      => '/users/addDo/',
+        array('action'      => $this->_router->toUrl('users', 'addDo'),
               'id'          => 'fr1',
               'method'      => 'post',
               'buttonValue' => 'New User',

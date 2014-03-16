@@ -44,4 +44,17 @@ class ErrorController extends ErrorControllerBase
 
         return $this->render();
     }
+
+    function forbiddenAction()
+    {
+        $this->_layout->title           = 'Error 403 - Forbidden';
+        $this->_layout->description     = 'You do not have permission to access';
+
+        $this->_view->controller = $this->getParam('controller');
+        $this->_view->action = $this->getParam('action');
+
+        $this->_response->setStatusCode(403);
+
+        return $this->render();
+    }
 }

@@ -47,7 +47,7 @@ class FrontController
 
         $this->_router = new Router($url);
         $this->_bootstrap->addResource('Router', $this->_router);
-        $this->_router->route();
+        $this->_router->route($this->_bootstrap->getResource('Role'));
 
         $this->_statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;
 

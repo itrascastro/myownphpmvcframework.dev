@@ -13,12 +13,14 @@ class UserModel
     private $_id;
     private $_email;
     private $_password;
+    private $role;
 
-    public function __construct($_id, $_email, $_password)
+    public function __construct($_id, $_email, $_password, $role)
     {
-        $this->_id = $_id;
-        $this->_email = $_email;
-        $this->_password = $_password;
+        $this->_id          = $_id;
+        $this->_email       = $_email;
+        $this->_password    = $_password;
+        $this->role         = $role;
     }
 
     /**
@@ -68,4 +70,21 @@ class UserModel
     {
         return $this->_id;
     }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
 }

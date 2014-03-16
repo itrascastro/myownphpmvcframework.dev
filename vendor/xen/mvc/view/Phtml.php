@@ -103,7 +103,7 @@ class Phtml
 
     public function out($string)
     {
-        echo htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
 
     /**

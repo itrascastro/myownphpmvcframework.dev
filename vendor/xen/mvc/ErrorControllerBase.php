@@ -25,5 +25,6 @@ abstract class ErrorControllerBase extends Controller
 
     abstract function exceptionHandlerAction();
     abstract function pageNotFoundAction();
+    abstract function forbiddenAction();
 
 }

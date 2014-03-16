@@ -28,37 +28,54 @@ class Router
         $this->_params = array();
     }
 
-    public function route()
+    public function route($role)
     {
-        if ($this->_url != '') {
+        $found = false;
 
-            if ($customRoute = $this->_customRoute()) {
+        foreach ($this->_parseRoutes() as $route => $value) {
 
-                $this->_controller  = ucfirst($customRoute['controller']);
-                $this->_action      = $customRoute['action'];
-                $this->_params      = $customRoute['params'];
+            if (preg_match('!^' . $route . '$!', $this->_url, $results) == 1) {
 
-            } else {
+                $found = true;
 
-                $this->_defaultRoute();
+                if (in_array($role, $value['allow'])) {
+
+                    $params = array();
+
+                    foreach ($value['params'] as $param) {
+
+                        $params[$param] = $results[$param];
+                    }
+
+                    $this->_controller  = ucfirst($value['controller']);
+                    $this->_action      = $value['action'];
+                    $this->_params      = $params;
+
+                } else {
+
+                    $this->_controller  = 'Error';
+                    $this->_action      = 'forbidden';
+                    $this->_params      = array(
+                        'controller'    => $value['controller'],
+                        'action'        => $value['action'],
+                    );
+                }
+
+                break;
             }
-        } else {
+        }
 
-            $this->_controller  = 'Index';
-            $this->_action      = 'index';
+        if (!$found) {
+
+            $this->_controller  = 'Error';
+            $this->_action      = 'pageNotFound';
+            $this->_params      = array('url' => $this->_url);
         }
     }
 
     public function toUrl($controller, $action, $params = array())
     {
-        if ($route = $this->_getRoute($controller, $action, $params)) {
-
-            return $route;
-
-        } else {
-
-            return '/' . $controller . '/' . $action . '/' . $this->_paramsToString($params);
-        }
+        return $this->_getRoute($controller, $action, $params);
     }
 
     private function _getRoute($controller, $action, $params = array())
@@ -81,6 +98,8 @@ class Router
                 return $this->_setParamsToRoute($route, $params);
             }
         }
+
+        return false;
     }
 
     private function _setParamsToRoute($route, $params)
@@ -107,57 +126,6 @@ class Router
         }
 
         return true;
-    }
-
-    private function _paramsToString($params)
-    {
-        $first = true;
-        $str = '';
-
-        foreach ($params as $param => $value)
-        {
-            if (!$first) {
-
-                $str .= '/';
-
-            } else {
-
-                $first = false;
-            }
-
-            $str .= $param . '/' . $value;
-        }
-
-        if ($str != '') {
-
-            $str .= '/';
-        }
-
-        return $str;
-    }
-
-    private function _customRoute()
-    {
-        foreach ($this->_parseRoutes() as $route => $value) {
-
-            if (preg_match('!' . $route . '!', $this->_url, $results) == 1) {
-
-                $params = array();
-
-                foreach ($value['params'] as $param) {
-
-                    $params[$param] = $results[$param];
-                }
-
-                return array(
-                    'controller'    => $value['controller'],
-                    'action'        => $value['action'],
-                    'params'        => $params,
-                );
-            }
-        }
-
-        return false;
     }
 
     private function _parseRoutes()
@@ -199,117 +167,19 @@ class Router
                 'controller'    => $routeValue['controller'],
                 'action'        => $routeValue['action'],
                 'params'        => $params,
+                'allow'         => $routeValue['allow'],
             );
 
-            $pattern = ltrim(str_replace('!', '\!', $tmpPattern), '/');
+            $pattern = str_replace('!', '\!', $tmpPattern);
             $routes[$pattern] = $parsedRoute;
         }
 
         return $routes;
     }
 
-    private function _defaultRoute()
-    {
-        $url = explode('/', $this->_url);
-
-        $controller = $this->_getName($url[0], self::URL_CONTROLLER);
-        $file = str_replace('/', DIRECTORY_SEPARATOR, 'application/controllers/') . $controller . 'Controller.php';
-
-        if (file_exists($file)) {
-
-            $this->_controller = $controller;
-
-            if (isset($url[1])) {
-
-                $action = $this->_getName($url[1], self::URL_ACTION);
-
-                if (method_exists('controllers\\' . $this->_controller . 'Controller', $action . 'Action')) {
-
-                    $this->_action = $action;
-
-                    if (isset($url[2])) {
-
-                        $this->_params = $this->_getParamsFromUrl($url);
-                    }
-                } else {
-
-                    $this->_404();
-                }
-            } else {
-
-                $this->_action = 'index';
-            }
-        } else {
-
-            $this->_404();
-        }
-    }
-
-    private function _404()
-    {
-        $this->_controller = 'Error';
-        $this->_action = 'pageNotFound';
-        $this->_params = array('url' => $this->_url);
-    }
-
     private function _cleanUrl($url)
     {
-        $this->_url = ($url === null) ? '' : rtrim(filter_var($url, FILTER_SANITIZE_URL), '/');
-    }
-
-    /*
-     * $type = {'Controller' | 'Action'}
-     */
-    private function _getName($url, $type)
-    {
-        $words = explode('-', $url);
-        $name = '';
-
-        if ($type == 'Action') {
-
-            $first = true;
-
-        } else {
-
-            $first = false;
-        }
-
-        foreach ($words as $word)
-        {
-            if (!$first) {
-
-                $name .= ucfirst($word);
-
-            } else {
-
-                $name .= $word;
-                $first = false;
-            }
-        }
-
-        return $name;
-    }
-
-    private function _getParamsFromUrl($url)
-    {
-        $params = array();
-        $i = 2;
-
-        while (isset($url[$i])) {
-
-            if (isset($url[$i+1])) {
-
-                $params[$url[$i]] = $url[$i+1];
-
-            } else {
-
-                $params[$url[$i]] = null;
-            }
-
-            $i += 2;
-        }
-
-        return $params;
+        $this->_url = ($url === null) ? '/' : '/' . filter_var($url, FILTER_SANITIZE_URL);
     }
 
     /**

@@ -15,10 +15,6 @@ class UsersController extends Controller
 {
     public function init()
     {
-        if (!$this->_session->get('user')) {
-
-            $this->_redirect('login', 'index');
-        }
     }
 
     public function indexAction()
@@ -66,7 +62,8 @@ class UsersController extends Controller
         $this->_model->update(
             $this->_request->post('id'),
             $this->_request->post('email'),
-            $this->_request->post('password')
+            $this->_request->post('password'),
+            $this->_request->post('role')
         );
 
         return $this->_redirect('users', 'list');

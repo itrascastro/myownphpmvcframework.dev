@@ -51,7 +51,7 @@ class UsersModel
 
         while ($row = $query->fetch(Adapter::FETCH_OBJ))
         {
-            $users[] = new UserModel($row->id, $row->email, $row->password);
+            $users[] = new UserModel($row->id, $row->email, $row->password, $row->role);
         }
 
         return $users;
@@ -74,7 +74,7 @@ class UsersModel
 
         $row = $query->fetch(Adapter::FETCH_ASSOC);
 
-        $user = new UserModel($row['id'], $row['email'], $row['password']);
+        $user = new UserModel($row['id'], $row['email'], $row['password'], $row['role']);
 
         return $user;
     }
@@ -88,19 +88,20 @@ class UsersModel
         $query->execute();
 
         if ($row = $query->fetch(Adapter::FETCH_ASSOC)) {
-           return new UserModel($row['id'], $row['email'], $row['password']);
+           return new UserModel($row['id'], $row['email'], $row['password'], $row['role']);
         }
 
         return null;
     }
 
-    public function update($id, $email, $password)
+    public function update($id, $email, $password, $role)
     {
-        $sql = "UPDATE users SET email = :email, password = :password WHERE id = :id";
+        $sql = "UPDATE users SET email = :email, password = :password, role = :role WHERE id = :id";
         $query = $this->_db->prepare($sql);
         $query->bindParam(':id', $id);
         $query->bindParam(':email', $email);
         $query->bindParam(':password', $password);
+        $query->bindParam(':role', $role);
         $query->execute();
     }
 }

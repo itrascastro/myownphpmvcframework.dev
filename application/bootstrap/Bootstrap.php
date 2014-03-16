@@ -48,6 +48,20 @@ class Bootstrap extends BootstrapBase
         return null;
     }
 
+    protected function _initRole()
+    {
+        if ($user = $this->_resources['Session']->get('user')) {
+
+            $role = $user->getRole();
+
+        } else {
+
+            $role = 'guest';
+        }
+
+        return $role;
+    }
+
     /**
      *
      * @return Phtml

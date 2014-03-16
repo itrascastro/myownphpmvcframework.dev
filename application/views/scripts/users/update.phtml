@@ -1,13 +1,13 @@
-<h1><?php $this->out($this->title); ?></h1>
+<h1><?php echo $this->out($this->title); ?></h1>
 
 <div>
-    <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper')->show(); ?>
+    <?php echo $this->_viewHelperBroker->getHelper('UsersMenuHelper', array('router' => $this->_router))->show(); ?>
 </div>
 
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
         'FormHelper',
-        array('action'      => '/users/updateDo/',
+        array('action'      => $this->_router->toUrl('users', 'updateDo'),
               'id'          => 'fr1',
               'method'      => 'post',
               'buttonValue' => 'Update',
@@ -32,6 +32,11 @@
                       'field'       => 'password',
                       'type'        => 'text',
                       'value'       => $this->user->getPassword()
+                  ),
+                  array(
+                      'field'       => 'role',
+                      'type'        => 'text',
+                      'value'       => $this->user->getRole()
                   )
               )
         ))->show(); ?>
