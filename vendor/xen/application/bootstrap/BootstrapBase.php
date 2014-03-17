@@ -1,15 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 11/12/13
- * Time: 09:41
- */
-
-/*
- * Bootstrap does two things:
- * 1: Initializes every resource in application/Bootstrap
- * 2: Stores the resources as services in a Dependency Injection Container called $_resources
+ * xenFramework (http://xenframework.com/)
+ *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace xen\application\bootstrap;

@@ -1,27 +1,25 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 11/12/13
- * Time: 09:41
+ * xenFramework (http://xenframework.com/)
+ *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace xen\mvc;
-
-/*
- * If the child controller does not define a constructor then it may be inherited from the parent class
- * just like a normal class method
- */
-
-
-use xen\mvc\helpers\HelperBroker;
-use xen\mvc\view\Phtml;
 
 abstract class Controller
 {
     protected $_view;
     protected $_layout;
-    protected $_model;
     protected $_params;
     protected $_request;
     protected $_response;
@@ -145,11 +143,6 @@ abstract class Controller
             }
         }
         return null;
-    }
-
-    public function setModel($_model)
-    {
-        $this->_model = $_model;
     }
 
     /**

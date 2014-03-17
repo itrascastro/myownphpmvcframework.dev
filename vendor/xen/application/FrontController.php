@@ -1,9 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 11/12/13
- * Time: 09:41
+ * xenFramework (http://xenframework.com/)
+ *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace xen\application;
@@ -11,12 +19,6 @@ namespace xen\application;
 use controllers\ErrorController;
 use xen\eventSystem\Event;
 use xen\http\Response;
-
-// ****************************
-//        $eventSystem = $this->_bootstrap->getResource('EventSystem');
-//        $event = new Event('FrontController_Load', array('msg' => 'Event Raised from FrontController'));
-//        $eventSystem->raiseEvent($event);
-//*****************************
 
 class FrontController
 {

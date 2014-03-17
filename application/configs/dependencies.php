@@ -2,9 +2,16 @@
 /**
  * xenFramework (http://xenframework.com/)
  *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
  * @link        http://github.com/xenframework for the canonical source repository
  * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
- * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -14,8 +21,6 @@
  *
  * **********
  * Important! - Remember to create the properties and the setters methods in your classes to enable dependency injection
- * By default you have this dependency properties already created:
- *      'model' in your controllers
  * **********
  *
  * Each entry is a service with his dependencies declared in an array

@@ -1,19 +1,32 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 16/12/13
- * Time: 17:53
+ * xenFramework (http://xenframework.com/)
+ *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace controllers;
 
-use models\CalculatorModel;
 use xen\mvc\Controller;
-use xen\mvc\view\ViewScript;
 
 class CalculatorController extends Controller
 {
+    private $_model;
+
+    public function setModel($_model)
+    {
+        $this->_model = $_model;
+    }
+
     public function init()
     {
 

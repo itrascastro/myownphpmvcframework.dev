@@ -1,20 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 11/12/13
- * Time: 09:41
- */
-
-/*
- * We injects Bootstrap into FrontController, then the FC will injects it into Controller
- * This allow controllers actions to have access to the resources available in the Bootstrap container
+ * xenFramework (http://xenframework.com/)
  *
- * Dependency injection: http://net.tutsplus.com/tutorials/php/dependency-injection-in-php/
- * http://richardmiller.co.uk/2011/07/07/dependency-injection-moving-from-basics-to-container/
+ * This file is part of the xenframework package.
  *
- * DI vs Registry
- * Registry is a global variable
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace xen\application;

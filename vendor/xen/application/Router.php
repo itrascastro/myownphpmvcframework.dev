@@ -2,18 +2,22 @@
 /**
  * xenFramework (http://xenframework.com/)
  *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
  * @link        http://github.com/xenframework for the canonical source repository
  * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
- * @license     Affero GNU Public License - http://en.wikipedia.org/wiki/Affero_General_Public_License
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace xen\application;
 
 class Router
 {
-    const URL_CONTROLLER    = 'Controller';
-    const URL_ACTION        = 'Action';
-
     private $_url;
     private $_routes;
     private $_controller;
@@ -26,6 +30,11 @@ class Router
         $this->_routes = require str_replace('/', DIRECTORY_SEPARATOR, 'application/configs/routes.php');
         $this->_parseRoutes();
         $this->_params = array();
+    }
+
+    private function _cleanUrl($url)
+    {
+        $this->_url = ($url === null) ? '/' : '/' . filter_var($url, FILTER_SANITIZE_URL);
     }
 
     public function route($role)
@@ -74,11 +83,6 @@ class Router
     }
 
     public function toUrl($controller, $action, $params = array())
-    {
-        return $this->_getRoute($controller, $action, $params);
-    }
-
-    private function _getRoute($controller, $action, $params = array())
     {
         foreach ($this->_routes as $route => $value) {
 
@@ -175,11 +179,6 @@ class Router
         }
 
         return $routes;
-    }
-
-    private function _cleanUrl($url)
-    {
-        $this->_url = ($url === null) ? '/' : '/' . filter_var($url, FILTER_SANITIZE_URL);
     }
 
     /**

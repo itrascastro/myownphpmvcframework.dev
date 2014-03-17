@@ -1,18 +1,21 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ismael trascastro
- * Date: 12/12/13
- * Time: 16:45
+ * xenFramework (http://xenframework.com/)
+ *
+ * This file is part of the xenframework package.
+ *
+ * (c) Ismael Trascastro <itrascastro@xenframework.com>
+ *
+ * @link        http://github.com/xenframework for the canonical source repository
+ * @copyright   Copyright (c) xenFramework. (http://xenframework.com)
+ * @license     MIT License - http://en.wikipedia.org/wiki/MIT_License
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace controllers;
 
-use models\UserModel;
-use xen\application\Request;
-use xen\application\Router;
-use xen\eventSystem\Event;
-use xen\eventSystem\EventSystem;
 use xen\mvc\Controller;
 use xen\mvc\view\Phtml;
 
@@ -20,11 +23,6 @@ class IndexController extends Controller
 {
     public function init()
     {
-
-//        $event = new Event('Bootstrap_Load', array('msg' => 'event from Bootstrap'));
-//        $eventSystem = $this->_bootstrap->getResource('EventSystem');
-//        $eventSystem->raiseEvent($event);
-
     }
 
     public function indexAction()
