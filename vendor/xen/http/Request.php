@@ -16,6 +16,19 @@
 
 namespace xen\http;
 
+/**
+ * Class Request
+ *
+ * Description
+ *
+ * @package    xenframework
+ * @subpackage xen\http
+ * @author     Ismael Trascastro <itrascastro@xenframework.com>
+ * @copyright  Copyright (c) xenFramework. (http://xenframework.com)
+ * @license    MIT License - http://en.wikipedia.org/wiki/MIT_License
+ * @link       https://github.com/xenframework/xen
+ * @since      Class available since Release 1.0.0
+ */
 class Request
 {
     private $_url;
@@ -42,13 +55,23 @@ class Request
         return new static($_GET, $_POST, $_FILES, $_SERVER, $_ENV);
     }
 
-    public function get($name)
+    public function get($name = '')
     {
+        if ($name == '') {
+
+            return $this->_get;
+        }
+
         return (isset($_GET[$name])) ? $_GET[$name] : null;
     }
 
-    public function post($name)
+    public function post($name = '')
     {
+        if ($name == '') {
+
+            return $this->_post;
+        }
+
         return (isset($_POST[$name])) ? $_POST[$name] : null;
     }
 

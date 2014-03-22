@@ -33,6 +33,18 @@ class IndexController extends Controller
         $partial = new Phtml('application/views/partials/example.phtml');
         $this->_view->addPartial('example', $partial);
 
+        $route = '/user/{name}/age/{age}/';
+
+        $regex = str_replace('{', '{(', $route);
+        $regex = str_replace('}', ')}', $regex);
+
+        preg_match('!^' . $regex . '$!', $route, $results);
+
+        unset($results[0]);
+        $results = array_values($results);
+
+        var_dump($results);
+
         return $this->render();
     }
 } 

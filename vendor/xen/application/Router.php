@@ -51,7 +51,7 @@ class Router
     private $_parsedRoutes;
 
     /**
-     * @var Controller The controller for manage the Request
+     * @var mixed The controller for manage the Request
      */
     private $_controller;
 
@@ -65,6 +65,15 @@ class Router
      */
     private $_params;
 
+    /**
+     * __construct
+     *
+     * Filters the url
+     * Load the routes from 'application/configs/routes.php'
+     * Parse the routes
+     *
+     * @param string $_url The url of the current Request
+     */
     public function __construct($_url)
     {
         $this->_cleanUrl($_url);
@@ -74,11 +83,30 @@ class Router
         $this->_params          = array();
     }
 
+    /**
+     * _cleanUrl
+     *
+     * Filters the url and add a start slash to the url
+     *
+     * @param string $url A route must start with a slash
+     */
     private function _cleanUrl($url)
     {
         $this->_url = ($url === null) ? '/' : '/' . filter_var($url, FILTER_SANITIZE_URL);
     }
 
+    /**
+     * route
+     *
+     * Try to match the url with one of the routes
+     *
+     *      if match        => check if it is allowed for the current role
+     *                          if not allowed  => Error controller , forbidden Action
+     *                          if allowed      => returns the controller and the action of the matched route
+     *      if not match    => Error controller, pageNotFound Action
+     *
+     * @param string $role The role to be used in ACL
+     */
     public function route($role)
     {
         $found = false;
@@ -124,6 +152,22 @@ class Router
         }
     }
 
+    /**
+     * toUrl
+     *
+     * Generates an url using the routes
+     *
+     * Checks all routes against $controller, $action, $params to find one that has
+     * the same controller, same action and matches the constraints
+     *
+     * If a route is found then the params are set to that route
+     *
+     * @param string    $controller
+     * @param string    $action
+     * @param array     $params
+     *
+     * @return bool|string The url associated to that controller, action and params. False if not route is found
+     */
     public function toUrl($controller, $action, $params = array())
     {
         foreach ($this->_routes as $route => $value) {
@@ -148,6 +192,17 @@ class Router
         return false;
     }
 
+    /**
+     * _setParamsToRoute
+     *
+     * Sets the params in a route
+     * searches for {$paramName} and replaces it by the value stored in $params for that key
+     *
+     * @param $route The matched route
+     * @param $params The params to be set in that route
+     *
+     * @return string
+     */
     private function _setParamsToRoute($route, $params)
     {
         foreach ($params as $key => $value) {
@@ -158,6 +213,17 @@ class Router
         return $route;
     }
 
+    /**
+     * _hasParams
+     *
+     * Checks if a param exists in a route and if this param matches the constraints defined in that route
+     *
+     * @param $route
+     * @param $params
+     * @param $constraints
+     *
+     * @return bool
+     */
     private function _hasParams($route, $params, $constraints)
     {
         foreach ($params as $key => $value) {
@@ -174,53 +240,85 @@ class Router
         return true;
     }
 
+    /**
+     * _parseRoutes
+     *
+     * Replaces the routes params by the regular expression defined in the constraints in that route
+     *
+     * To do that, for each route:
+     *
+     *      - removes white spaces from the route
+     *      - gets route param names
+     *      - for each param name, replaces it by its constraints
+     *      - sets the param names in the parsed route
+     *      - escapes '!' in the parsed route
+     *
+     *
+     * @return array The parsed routes
+     */
     private function _parseRoutes()
     {
-        $routes = array();
+        $parsedRoutes = array();
 
         foreach ($this->_routes as $route => $routeValue) {
 
-            //remove white spaces
             $pattern = preg_replace('/\s+/', '', $route);
 
-            $paramPosEnd = 0;
-            $params = array();
+            $paramNames = $this->_getParamNamesFromRoute($route);
 
-            //we need a copy because we are modifying it in every iteration
-            $tmpPattern = $pattern;
-
-            while ($pos = strpos($pattern, '{', $paramPosEnd)) {
-
-                $paramPosEnd = strpos($pattern, '}', $pos);
-                $paramName = substr($pattern, $pos + 1, $paramPosEnd - $pos - 1);
+            foreach ($paramNames as $paramName) {
 
                 if (isset($routeValue['constraints'][$paramName])) {
 
                     $constraint = '(?P<' . $paramName . '>' . $routeValue['constraints'][$paramName] . ')';
                     $constraint = preg_replace('/\s+/', '', $constraint);
-                    $tmpPattern = str_replace('{' . $paramName . '}', $constraint, $tmpPattern);
+                    $pattern = str_replace('{' . $paramName . '}', $constraint, $pattern);
 
                 } else {
 
                     $constraint = '(?P<' . $paramName . '>\S+)';
-                    $tmpPattern = str_replace('{' . $paramName . '}', $constraint, $tmpPattern);
+                    $pattern = str_replace('{' . $paramName . '}', $constraint, $pattern);
                 }
 
-                $params[] = $paramName;
             }
 
             $parsedRoute = array(
                 'controller'    => $routeValue['controller'],
                 'action'        => $routeValue['action'],
-                'params'        => $params,
+                'params'        => $paramNames,
                 'allow'         => $routeValue['allow'],
             );
 
-            $pattern = str_replace('!', '\!', $tmpPattern);
-            $routes[$pattern] = $parsedRoute;
+            $pattern = str_replace('!', '\!', $pattern);
+            $parsedRoutes[$pattern] = $parsedRoute;
         }
 
-        return $routes;
+        return $parsedRoutes;
+    }
+
+    /**
+     * _getParamNamesFromRoute
+     *
+     * Returns the param names in a route
+     *
+     * Creates groups in the route for each param name
+     *
+     * Finally removes the first entry in the results array (it is the matched route, but not a param name)
+     *
+     * @param string $route To extract from the param names
+     *
+     * @return array The param names
+     */
+    private function _getParamNamesFromRoute($route)
+    {
+        $regex = str_replace('{', '{(', $route);
+        $regex = str_replace('}', ')}', $regex);
+
+        preg_match('!^' . $regex . '$!', $route, $results);
+
+        unset($results[0]);
+
+        return array_values($results);
     }
 
     /**
