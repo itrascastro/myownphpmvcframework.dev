@@ -36,7 +36,7 @@ class ErrorController extends ErrorControllerBase
         $layout = new Phtml('application/layouts/default/exception.phtml');
         $this->setLayout($layout);
 
-        $this->setView($this->_view);
+        $layout->addPartial('content', $this->_view);
 
         $e = $this->getParam('e');
 

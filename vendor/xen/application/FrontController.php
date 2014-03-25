@@ -136,8 +136,8 @@ class FrontController
         $this->_response = new Response();
         $this->_bootstrap->addResource('Response', $this->_response);
 
-        $this->_setErrorController();
         $this->_setController();
+        $this->_setErrorController();
 
         try {
 
