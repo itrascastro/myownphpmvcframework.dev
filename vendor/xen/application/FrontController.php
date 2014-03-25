@@ -195,6 +195,7 @@ class FrontController
      * _setErrorController
      *
      * Creates and prepares (calling the Bootstrap resolveController) the ErrorController injecting their dependencies
+     * Also set the new Exception Handler for manage all uncaught exceptions in the user application
      */
     private function _setErrorController()
     {
