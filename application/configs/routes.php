@@ -20,19 +20,17 @@
  * A route must start with a slash
  *
  * Constraints are optional. You can use RegEx
- *
- * If allow is empty then it is allowed for all
  */
 return array(
     '/' => array(
         'controller'        => 'index',
         'action'            => 'index',
-        'allow'             => array(),
+        'allow'             => array('guest', 'user', 'admin'),
     ),
     '/calculator/' => array(
         'controller'        => 'calculator',
         'action'            => 'index',
-        'allow'             => array(),
+        'allow'             => array('guest', 'user', 'admin'),
     ),
     '/calculator/add/' => array(
         'controller'        => 'calculator',

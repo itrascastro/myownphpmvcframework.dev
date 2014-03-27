@@ -25,6 +25,10 @@ namespace xen\mvc\view;
  *          A phtml file can have partials that are also phtml files
  *
  *          Only one restriction: partial 'content' is mandatory in the layout
+ *
+ * We have to remove viewHelperBroker and router from views
+ *          1. They can trow exceptions when the view has already start to render
+ *          2. It is also a bad practice because we are repeating code
  */
 class Phtml
 {
@@ -149,5 +153,6 @@ class Phtml
         }
 
         require $this->_file;
+
     }
 }
