@@ -510,7 +510,6 @@ class BootstrapBase
      *      - Layout
      *      - Router (in the Layout)
      *      - ActionHelperBroker
-     *      - ViewHelperBroker
      *      - Config
      *      - Params (Controller params from the Router)
      *      - View

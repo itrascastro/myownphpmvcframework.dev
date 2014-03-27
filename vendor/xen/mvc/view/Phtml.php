@@ -26,9 +26,6 @@ namespace xen\mvc\view;
  *
  *          Only one restriction: partial 'content' is mandatory in the layout
  *
- * We have to remove viewHelperBroker and router from views
- *          1. They can trow exceptions when the view has already start to render
- *          2. It is also a bad practice because we are repeating code
  */
 class Phtml
 {
@@ -137,7 +134,6 @@ class Phtml
      * In Bootstrap we set ViewHelperBroker to the very first view, the layout
      * ViewHelperBroker will be passed to the child in the render() method
      * as the view variables of every Phtml => At this point no more variables can be added to this phtml
-     *
      */
     public function render()
     {
@@ -153,6 +149,5 @@ class Phtml
         }
 
         require $this->_file;
-
     }
 }
