@@ -86,11 +86,11 @@ class Bootstrap extends BootstrapBase
 
         if ($user = $this->_resources['Session']->get('user')) {
 
-            $layout->loggedUser = $user->getEmail();
+            $header->loggedUser = $user->getEmail();
 
         } else {
 
-            $layout->loggedUser = 'Login';
+            $header->loggedUser = 'Login';
         }
 
         $partials   = array(

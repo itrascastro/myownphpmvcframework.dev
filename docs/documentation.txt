@@ -1,0 +1,63 @@
+Notes for documentation
+-----------------------
+
+1. New Layout
+
+        - you have to set the router and the viewHelperBroker to it
+
+2. Default Layout Path (defaultLayoutPath) can be defined either:
+
+        - application.ini
+
+            defaultLayoutPath   = 'application/layouts/default'
+
+        - Bootstrap
+
+            protected function _initDefaultLayoutPath()
+            {
+                return 'application/layouts/default';
+            }
+
+3. Partials
+
+        - They are Phtml objects and their files (.phtml) must be stored in application/views/partials
+        - Then you have to assign that partial to another one or to the layout (indeed is also a partial)
+
+                $partial = new Phtml('application/views/partials/example.phtml');
+                $this->_view->addPartial('example', $partial);
+
+        - Now in the parent view or layout:
+
+                $this->partial('example')->render();
+
+4. View
+
+        - All variables defined in a partial are propagated to its child
+        - Create the action view is:
+
+                - create a new partial
+
+                    $view = new Phtml($pathToThePhtmlFile);
+
+                - set it to the layout with the name 'content'
+
+                    $layout->addPartial('content', $view);
+
+        - View variables
+
+                - In the action
+
+                    $view->variableName = $value;
+
+                - In the view
+
+                    echo $this->variableName;
+
+5. Bootstrap
+
+        - Add new resource
+
+                protected function _initResource()
+                {
+                    return new Resource();
+                }
