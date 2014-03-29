@@ -15,9 +15,14 @@
  */
 
 /**
- * array('HandlerName' => array('Event1', 'Event2', ... 'EventN'))
+ * array(
+ *      'Handler1' => array('Event1', 'Event2', ... 'EventN'),
+ *      'Handler2' => array('Event1', 'Event2', ... 'EventN'),
+ *      ...
+ *      'HandlerN' => array('Event1', 'Event2', ... 'EventN'),
+ * )
  *
- * HandlerName must be a class name located in 'application/eventHandlers'
+ * HandlerN must be a class name located in 'application/eventHandlers'
  */
 return array(
 
