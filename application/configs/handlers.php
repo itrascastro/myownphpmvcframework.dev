@@ -14,9 +14,12 @@
  * file that was distributed with this source code.
  */
 
+/**
+ * array('HandlerName' => array('Event1', 'Event2', ... 'EventN'))
+ *
+ * HandlerName must be a class name located in 'application/eventHandlers'
+ */
 return array(
-    array(
-        'handler'   => 'Bootstrap_Load',
-        'events'    => array('EVENT_NAME'),
-    ),
+
+    'Bootstrap_Load' => array('PreDispatch2'),
 );

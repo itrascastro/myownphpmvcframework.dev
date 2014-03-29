@@ -22,6 +22,6 @@ class Bootstrap_Load extends Handler
 {
     public function handle($params)
     {
-        echo $params['msg'];
+        var_dump($params);
     }
 }

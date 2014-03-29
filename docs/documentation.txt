@@ -57,7 +57,15 @@ Notes for documentation
 
         - Add new resource
 
-                protected function _initResource()
+                protected function _initResourceName()
                 {
-                    return new Resource();
+                    return new ResourceName();
                 }
+
+6. Events
+
+7. Databases
+
+8. Dependencies
+
+9. Routes

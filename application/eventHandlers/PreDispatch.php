@@ -16,12 +16,10 @@
 
 namespace eventHandlers;
 
-
 use xen\eventSystem\Handler;
 
 class PreDispatch extends Handler
 {
-
     public function handle($params)
     {
         $layout = $params['controller']->getLayout();
