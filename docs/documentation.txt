@@ -7,15 +7,17 @@ Notes for documentation
 
 2. Default Layout Path (defaultLayoutPath) can be defined either:
 
+        Default layout path is 'application/layouts/default', if you want to use a different default layout path,
+
         - application.ini
 
-            defaultLayoutPath   = 'application/layouts/default'
+            defaultLayoutPath   = 'application/layouts/yourFolder'
 
         - Bootstrap
 
             protected function _initDefaultLayoutPath()
             {
-                return 'application/layouts/default';
+                return 'application/layouts/yourFolder';
             }
 
 3. Partials
