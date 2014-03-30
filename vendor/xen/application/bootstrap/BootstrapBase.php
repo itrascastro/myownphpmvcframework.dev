@@ -297,12 +297,9 @@ class BootstrapBase
     {
         $applicationConfig = $this->getResource('ApplicationConfig');
 
-        if (isset($applicationConfig->defaultLayoutPath)) {
-
-            return str_replace('/', DIRECTORY_SEPARATOR, $applicationConfig->defaultLayoutPath);
-        }
-
-        return null;
+        return (isset($applicationConfig->defaultLayoutPath)) ?
+            str_replace('/', DIRECTORY_SEPARATOR, $applicationConfig->defaultLayoutPath) :
+            str_replace('/', DIRECTORY_SEPARATOR, 'application/layouts/default');
     }
 
     /**

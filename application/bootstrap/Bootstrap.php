@@ -22,11 +22,6 @@ use xen\mvc\view\Phtml;
 
 class Bootstrap extends BootstrapBase
 {
-//    protected function _initLayoutPath()
-//    {
-//        return str_replace('/', DIRECTORY_SEPARATOR, 'application/layouts/default');
-//    }
-
     /*
      * This resource is not needed anymore so we do not store it in the Bootstrap container (return null)
      * In fact this is not a resource, only do actions at the beginning of the new request
@@ -75,14 +70,7 @@ class Bootstrap extends BootstrapBase
         $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
         $header->charset = (string) $config->charset;
 
-        if ($user = $this->_resources['Session']->get('user')) {
-
-            $header->loggedUser = $user->getEmail();
-
-        } else {
-
-            $header->loggedUser = 'Login';
-        }
+        $header->loggedUser = ($user = $this->_resources['Session']->get('user')) ? $user->getEmail() : 'Login';
 
         $partials   = array(
 
