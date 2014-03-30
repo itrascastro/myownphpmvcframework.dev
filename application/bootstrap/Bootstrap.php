@@ -59,16 +59,7 @@ class Bootstrap extends BootstrapBase
 
     protected function _initRole()
     {
-        if ($user = $this->_resources['Session']->get('user')) {
-
-            $role = $user->getRole();
-
-        } else {
-
-            $role = 'guest';
-        }
-
-        return $role;
+        return ($user = $this->_resources['Session']->get('user')) ? $user->getRole() : 'guest';
     }
 
     /**

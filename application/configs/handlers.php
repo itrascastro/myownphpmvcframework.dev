@@ -25,6 +25,5 @@
  * HandlerN must be a class name located in 'application/eventHandlers'
  */
 return array(
-
     'Bootstrap_Load' => array('PreDispatch2'),
 );
