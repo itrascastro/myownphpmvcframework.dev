@@ -21,10 +21,6 @@ use xen\mvc\view\Phtml;
 
 class IndexController extends Controller
 {
-    public function init()
-    {
-    }
-
     public function indexAction()
     {
         $this->_layout->title           = 'xenFramework.com';

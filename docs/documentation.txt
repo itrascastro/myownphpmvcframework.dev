@@ -1,6 +1,10 @@
 Notes for documentation
 -----------------------
 
+0. Controllers
+
+        - init(), indexAction() methods are not mandatory
+
 1. New Layout
 
         - you have to set the router and the viewHelperBroker to it
