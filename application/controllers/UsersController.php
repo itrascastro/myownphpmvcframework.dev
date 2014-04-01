@@ -80,7 +80,7 @@ class UsersController extends Controller
             $this->_request->post('role')
         );
 
-        return $this->_redirect('users', 'list');
+        return $this->_forward('list');
     }
 
     public function listAction()
