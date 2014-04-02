@@ -61,7 +61,7 @@ class UsersController extends Controller
 
     public function updateAction()
     {
-        $user = $this->_model->getUserById($this->_params['id']);
+        $user = $this->_model->getUserById($this->getParam('id'));
 
         $this->_layout->title           = 'Update an user';
         $this->_layout->description     = 'Change user';
