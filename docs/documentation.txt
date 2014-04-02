@@ -75,3 +75,12 @@ Notes for documentation
 8. Dependencies
 
 9. Routes
+
+10. Models
+
+        - db property to see contextual help:
+
+                /**
+                 * @var Adapter
+                 */
+                private $_db;

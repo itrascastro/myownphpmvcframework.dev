@@ -29,13 +29,23 @@ use xen\db\Adapter;
  */
 class UsersModel
 {
+    /**
+     * @var Adapter
+     */
     private $_db;
 
     public function __construct()
     {
     }
 
-    public function setDb($_db)
+    /**
+     * setDb
+     *
+     * Description
+     *
+     * @param Adapter $_db
+     */
+    public function setDb(Adapter $_db)
     {
         $this->_db = $_db;
     }
