@@ -28,8 +28,8 @@ class Bootstrap extends BootstrapBase
      */
     protected function _initEnvironment()
     {
-        if ($this->_resources['AppEnv'] == Application::DEVELOPMENT ||
-            $this->_resources['AppEnv'] == Application::TEST
+        if ($this->getResource('AppStage') == Application::DEVELOPMENT ||
+            $this->getResource('AppStage') == Application::TEST
         ) {
             error_reporting(E_ALL | E_STRICT);
             ini_set('display_errors', 'on');
@@ -54,7 +54,7 @@ class Bootstrap extends BootstrapBase
 
     protected function _initRole()
     {
-        return ($user = $this->_resources['Session']->get('user')) ? $user->getRole() : 'guest';
+        return ($user = $this->getResource('Session')->get('user')) ? $user->getRole() : 'guest';
     }
 
     /**
@@ -70,7 +70,7 @@ class Bootstrap extends BootstrapBase
         $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
         $header->charset = (string) $config->charset;
 
-        $header->loggedUser = ($user = $this->_resources['Session']->get('user')) ? $user->getEmail() : 'Login';
+        $header->loggedUser = ($user = $this->getResource('Session')->get('user')) ? $user->getEmail() : 'Login';
 
         $partials   = array(
 

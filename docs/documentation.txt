@@ -84,3 +84,15 @@ Notes for documentation
                  * @var Adapter
                  */
                 private $_db;
+
+11. Exceptions
+
+        - 'xen\mvc\helpers\exception\HelperNotFoundException'
+        - 'xen\mvc\exception\ControllerParamNotFoundException'
+
+----------------------------------------
+
+Last changes:
+
+        - AppEnv        => AppStage
+        - _resources    => getResource()

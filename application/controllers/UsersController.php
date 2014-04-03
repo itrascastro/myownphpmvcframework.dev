@@ -55,7 +55,7 @@ class UsersController extends Controller
 
     public function removeAction()
     {
-        $this->_model->remove($this->_params['id']);
+        $this->_model->remove($this->getParam('id'));
         return $this->_redirect('users', 'list');
     }
 
