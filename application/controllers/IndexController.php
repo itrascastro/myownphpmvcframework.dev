@@ -29,6 +29,6 @@ class IndexController extends Controller
         $partial = new Phtml('application/views/partials/example.phtml');
         $this->_view->addPartial('example', $partial);
 
-        return $this->render();
+        $this->render();
     }
 } 

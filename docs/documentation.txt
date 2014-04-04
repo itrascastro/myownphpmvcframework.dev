@@ -96,11 +96,7 @@ Notes for documentation
         - Router available in $this->_router
         - Params from view available in $this->_params
 
-----------------------------------------
+13. Ajax response
 
-Last changes:
-
-        - AppEnv        => AppStage
-        - _resources    => getResource()
-        - ViewHelpers   => remove construct and add _html()
-                Router not needed any more
+        //$this->render();
+        return $json;

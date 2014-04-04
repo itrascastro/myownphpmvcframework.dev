@@ -34,7 +34,7 @@ class Bootstrap extends BootstrapBase
             error_reporting(E_ALL | E_STRICT);
             ini_set('display_errors', 'on');
 
-        } else if ($this->_appEnv == Application::PRODUCTION) {
+        } else if ($this->getResource('AppStage') == Application::PRODUCTION) {
 
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
             ini_set('display_errors', 'off');

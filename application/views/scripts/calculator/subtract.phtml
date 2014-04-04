@@ -2,7 +2,7 @@
 <div>
     <?php echo $this->_viewHelperBroker->getHelper(
         'FormHelper',
-        array('action'      => '/calculator/subtractDo/',
+        array('action'      => $this->_router->toUrl('calculator', 'subtractDo'),
               'id'          => 'fr1',
               'method'      => 'post',
               'buttonValue' => 'Subtract',
