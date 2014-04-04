@@ -29,17 +29,17 @@ class FormHelper extends ViewHelper
      *                                    'type'   => [number, email, date, hidden, ...]
      * ))
      */
-    function __construct($params=array())
+    protected function _html()
     {
         $this->_html = '
             <form
                 class="form-horizontal"
                 role="form"
-                action="'   . $params['action'] . '"
-                id="'       . $params['id'] . '"
-                method="'   . $params['method'] . '"
+                action="'   . $this->_params['action'] . '"
+                id="'       . $this->_params['id'] . '"
+                method="'   . $this->_params['method'] . '"
             >';
-        foreach ($params['controls'] as $control) {
+        foreach ($this->_params['controls'] as $control) {
             $this->_html .= '
             <div class="form-group">';
             if ($control['type'] != 'hidden') {
@@ -69,7 +69,7 @@ class FormHelper extends ViewHelper
         $this->_html .= '
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-default">' . $params['buttonValue'] . '</button>
+                  <button type="submit" class="btn btn-default">' . $this->_params['buttonValue'] . '</button>
                 </div>
             </div>
         </form>

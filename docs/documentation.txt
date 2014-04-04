@@ -90,9 +90,17 @@ Notes for documentation
         - 'xen\mvc\helpers\exception\HelperNotFoundException'
         - 'xen\mvc\exception\ControllerParamNotFoundException'
 
+12. View Helpers
+
+        - implement protected _html() method
+        - Router available in $this->_router
+        - Params from view available in $this->_params
+
 ----------------------------------------
 
 Last changes:
 
         - AppEnv        => AppStage
         - _resources    => getResource()
+        - ViewHelpers   => remove construct and add _html()
+                Router not needed any more

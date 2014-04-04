@@ -20,14 +20,12 @@ use xen\mvc\helpers\ViewHelper;
 
 class CalculatorMenuHelper extends ViewHelper
 {
-    public function __construct($params=array())
+    protected function _html()
     {
-        $router = $params['router'];
-
         $this->_html = '
             <ul class="list-inline">
-                <li><a href="' . $router->toUrl('calculator', 'add') . '">Add</a></li>
-                <li><a href="' . $router->toUrl('calculator', 'subtract') . '">Subtract</a></li>
+                <li><a href="' . $this->_router->toUrl('calculator', 'add') . '">Add</a></li>
+                <li><a href="' . $this->_router->toUrl('calculator', 'subtract') . '">Subtract</a></li>
                 <li><a href="#">Multiply</a></li>
                 <li><a href="#">Divide</a></li>
             </ul>
