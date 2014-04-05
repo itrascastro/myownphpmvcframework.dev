@@ -54,7 +54,8 @@ class Bootstrap extends BootstrapBase
 
     protected function _initRole()
     {
-        return ($user = $this->getResource('Session')->get('user')) ? $user->getRole() : 'guest';
+        return ($this->getResource('Session')->exists('user')) ?
+            $this->getResource('Session')->get('user')->getRole() : 'guest';
     }
 
     /**
@@ -70,7 +71,8 @@ class Bootstrap extends BootstrapBase
         $header = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'header.phtml');
         $header->charset = (string) $config->charset;
 
-        $header->loggedUser = ($user = $this->getResource('Session')->get('user')) ? $user->getEmail() : 'Login';
+        $header->loggedUser = ($this->getResource('Session')->exists('user')) ?
+            $this->getResource('Session')->get('user')->getEmail() : 'Login';
 
         $partials   = array(
 

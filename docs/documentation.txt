@@ -100,3 +100,12 @@ Notes for documentation
 
         //$this->render();
         return $json;
+
+------------
+
+Last changes:
+
+        bootstrap
+
+                return ($this->getResource('Session')->exists('user')) ?
+                            $this->getResource('Session')->get('user')->getRole() : 'guest';

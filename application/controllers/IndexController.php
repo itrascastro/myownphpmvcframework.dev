@@ -16,6 +16,7 @@
 
 namespace controllers;
 
+use xen\http\exception\SessionKeyNotFoundException;
 use xen\mvc\Controller;
 use xen\mvc\view\Phtml;
 
