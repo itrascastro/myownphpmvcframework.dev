@@ -22,5 +22,4 @@ chdir(dirname(__DIR__));
 require str_replace('/', DIRECTORY_SEPARATOR, 'vendor/xen/application/Application.php');
 
 $app = new \xen\application\Application(\xen\application\Application::DEVELOPMENT);
-$app->bootstrap();
 $app->run();

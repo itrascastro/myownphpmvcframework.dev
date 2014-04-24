@@ -85,6 +85,11 @@ class Application
     private $_error;
 
     /**
+     * @var boolean
+     */
+    private $_cache;
+
+    /**
      * __construct
      *
      * Creates the Uncaught Exception handler to manage all the exceptions in the core
@@ -139,7 +144,21 @@ class Application
      */
     public function run()
     {
-        $this->_frontController = new FrontController($this->_bootstrap);
-        $this->_frontController->run();
+        $url = ($this->_request->getExists('url')) ? $this->_request->get('url') : '';
+        $this->_request->setUrl($url);
+
+        $this->_cache = true;
+
+        if ($this->_cache)
+        {
+            echo 'cached content';
+        }
+        else
+        {
+            $this->bootstrap();
+
+            $this->_frontController = new FrontController($this->_bootstrap);
+            $this->_frontController->run();
+        }
     }
 }

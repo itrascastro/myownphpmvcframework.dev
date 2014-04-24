@@ -26,6 +26,7 @@ return array(
         'controller'        => 'index',
         'action'            => 'index',
         'allow'             => array('guest', 'user', 'admin'),
+        'expires'           => 0,
     ),
     '/calculator/' => array(
         'controller'        => 'calculator',

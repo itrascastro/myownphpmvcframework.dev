@@ -101,11 +101,27 @@ Notes for documentation
         //$this->render();
         return $json;
 
-------------
+14. Use of ZendPdf in xenframework
 
-Last changes:
+        http://stackoverflow.com/questions/14717024/where-to-get-and-how-to-use-zend-pdf-standalone
 
-        bootstrap
+        - copy to vendor:
 
-                return ($this->getResource('Session')->exists('user')) ?
-                            $this->getResource('Session')->get('user')->getRole() : 'guest';
+            - Zend\Memory
+            - ZendPdf
+
+        - In a controller:
+
+                use ZendPdf\PdfDocument;
+                use ZendPdf\Page;
+                use ZendPdf\Font;
+
+                $pdf = new PdfDocument();
+
+                        $pdf->pages[0] = new Page( Page::SIZE_A4 );
+                        $pdf->pages[0]->setFont( Font::fontWithName( Font::FONT_HELVETICA ), 24 );
+                        $pdf->pages[0]->drawText( 'Hello world!', 240, 400 );
+
+                        $pdf->save( $absolutePathTo . 'example.pdf' );
+
+        - Be sure www user has write permissions in that directory

@@ -124,10 +124,7 @@ class FrontController
      */
     public function run()
     {
-        $url = ($this->_request->getExists('url')) ? $this->_request->get('url') : '';
-        $this->_request->setUrl($url);
-
-        $this->_router->setUrl($url);
+        $this->_router->setUrl($this->_request->getUrl());
         $this->_router->route($this->_bootstrap->getResource('Role'));
 
         $this->_statusCode = ($this->_router->getAction() != 'PageNotFound') ? 200 : 404;

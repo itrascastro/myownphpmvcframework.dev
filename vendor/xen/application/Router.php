@@ -82,18 +82,6 @@ class Router
     }
 
     /**
-     * _cleanUrl
-     *
-     * Filters the url and add a start slash to the url
-     *
-     * @param string $url A route must start with a slash
-     */
-    private function _cleanUrl($url)
-    {
-        $this->_url = ($url === '') ? '/' : '/' . filter_var($url, FILTER_SANITIZE_URL);
-    }
-
-    /**
      * @param mixed $action
      */
     public function setAction($action)
@@ -146,7 +134,7 @@ class Router
      */
     public function setUrl($url)
     {
-        $this->_cleanUrl($url);
+        $this->_url = $url;
     }
 
     /**
