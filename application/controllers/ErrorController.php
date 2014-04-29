@@ -28,7 +28,7 @@ class ErrorController extends ErrorControllerBase
 
         $this->_view->url = $this->getParam('url');
 
-        return $this->render();
+        $this->render();
     }
 
     function exceptionHandlerAction()
@@ -53,7 +53,7 @@ class ErrorController extends ErrorControllerBase
 
         $this->_view->msgs = $exceptionValues;
 
-        return $this->render();
+        $this->render();
     }
 
     function forbiddenAction()
@@ -64,8 +64,6 @@ class ErrorController extends ErrorControllerBase
         $this->_view->controller = $this->getParam('controller');
         $this->_view->action = $this->getParam('action');
 
-        $this->_response->setStatusCode(403);
-
-        return $this->render();
+        $this->render();
     }
 }

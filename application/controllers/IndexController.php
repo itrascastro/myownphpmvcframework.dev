@@ -26,7 +26,25 @@ class IndexController extends Controller
         $this->_layout->title           = 'xenFramework.com';
         $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
 
-        $partial = new Phtml('application/views/partials/example.phtml');
+        $partial = new Phtml('application/views/partials/example.phtml', 10);
+
+        if ($content = $this->_cache->get('application/views/partials/example.phtml', 10))
+        {
+            $partial->setCachedContent($content);
+        }
+        else
+        {
+            // ...
+            // more complex code
+            // ...
+
+            $partial->complexQuery = 'complex3';
+
+            // ...
+            // more complex code
+            // ...
+        }
+
         $this->_view->addPartial('example', $partial);
 
         $this->render();

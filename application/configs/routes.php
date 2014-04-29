@@ -20,6 +20,8 @@
  * A route must start with a slash
  *
  * Constraints are optional. You can use RegEx
+ *
+ * if expires is set, then it will be cached [0 | empty ==> not cached]
  */
 return array(
     '/' => array(
@@ -32,11 +34,13 @@ return array(
         'controller'        => 'calculator',
         'action'            => 'index',
         'allow'             => array('guest', 'user', 'admin'),
+        'expires'           => 60,
     ),
     '/calculator/add/' => array(
         'controller'        => 'calculator',
         'action'            => 'add',
         'allow'             => array('user', 'admin'),
+        'expires'           => 60,
     ),
     '/calculator/addDo/' => array(
         'controller'        => 'calculator',
@@ -93,11 +97,13 @@ return array(
         'controller'        => 'users',
         'action'            => 'list',
         'allow'             => array('user', 'admin'),
+        'expires'           => '3600',
     ),
     '/login.html' => array(
         'controller'        => 'login',
         'action'            => 'index',
         'allow'             => array('guest', 'user', 'admin'),
+        'expires'           => 60,
     ),
     '/login/doLogin/' => array(
         'controller'        => 'login',

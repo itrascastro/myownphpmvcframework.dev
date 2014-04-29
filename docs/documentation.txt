@@ -125,3 +125,34 @@ Notes for documentation
                         $pdf->save( $absolutePathTo . 'example.pdf' );
 
         - Be sure www user has write permissions in that directory
+
+15. Partial Cache
+
+            public function indexAction()
+            {
+                $this->_layout->title           = 'xenFramework.com';
+                $this->_layout->description     = 'Create your own Php MVC Framework from scratch';
+
+                $partial = new Phtml('application/views/partials/example.phtml', 10);
+
+                if ($content = $this->_cache->get('application/views/partials/example.phtml', 10))
+                {
+                    $partial->setCachedContent($content);
+                }
+                else
+                {
+                    // ...
+                    // more complex code
+                    // ...
+
+                    $partial->complexQuery = 'complex1';
+
+                    // ...
+                    // more complex code
+                    // ...
+                }
+
+                $this->_view->addPartial('example', $partial);
+
+                $this->render();
+            }

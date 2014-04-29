@@ -147,18 +147,9 @@ class Application
         $url = ($this->_request->getExists('url')) ? $this->_request->get('url') : '';
         $this->_request->setUrl($url);
 
-        $this->_cache = true;
+        $this->bootstrap();
 
-        if ($this->_cache)
-        {
-            echo 'cached content';
-        }
-        else
-        {
-            $this->bootstrap();
-
-            $this->_frontController = new FrontController($this->_bootstrap);
-            $this->_frontController->run();
-        }
+        $this->_frontController = new FrontController($this->_bootstrap);
+        $this->_frontController->run();
     }
 }

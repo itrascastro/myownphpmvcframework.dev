@@ -18,6 +18,7 @@ namespace xen\application\bootstrap;
 
 use xen\application\bootstrap\exception\BootstrapDependencyDatabaseNotFoundException;
 use xen\application\bootstrap\exception\BootstrapResourceNotFoundException;
+use xen\application\Cache;
 use xen\application\Router;
 use xen\config\Config;
 use xen\config\Ini;
@@ -208,6 +209,11 @@ class BootstrapBase
         return array_key_exists($resource, $this->_resources);
     }
 
+    protected function _defaultCache()
+    {
+        return new Cache('application/cache');
+    }
+
     /**
      * _initRole
      *
@@ -334,9 +340,11 @@ class BootstrapBase
      */
     protected function _defaultLayout()
     {
-        $layout = new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'layout.phtml');
+        $layout =  new Phtml($this->getResource('LayoutPath') . DIRECTORY_SEPARATOR . 'layout.phtml');
 
+        $layout->setRouter($this->getResource('Router'));
         $layout->setViewHelperBroker($this->getResource('ViewHelperBroker'));
+        $layout->setCache($this->getResource('Cache'));
 
         return $layout;
     }
@@ -533,6 +541,7 @@ class BootstrapBase
      *      - Request
      *      - Session
      *      - Response
+     *      - Cache
      *
      * @param object    $controller         The controller to be resolved
      * @param string    $controllerName     The controller name
@@ -544,14 +553,13 @@ class BootstrapBase
         $controller->setAppStage($this->getResource('AppStage'));
         $controller->setEventSystem($this->getResource('EventSystem'));
         $controller->setRouter($this->getResource('Router'));
+        $controller->setCache($this->getResource('Cache'));
 
-        $layout =  ($error) ? clone $this->getResource('Layout') : $this->getResource('Layout');
-        $layout->setRouter($this->getResource('Router'));
+        $layout = ($error) ? clone $this->getResource('Layout') : $this->getResource('Layout');
         $controller->setLayout($layout);
 
         $controller->setActionHelperBroker($this->getResource('ActionHelperBroker'));
         $controller->setConfig($this->getResource('Config'));
-        $controller->setParams($this->getResource('Router')->getParams());
 
         $viewPath = str_replace('/', DIRECTORY_SEPARATOR,
             'application/views/scripts/' . lcfirst($controllerName));

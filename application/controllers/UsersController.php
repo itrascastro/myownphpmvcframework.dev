@@ -36,7 +36,7 @@ class UsersController extends Controller
         $this->_layout->title           = 'Users Controller';
         $this->_layout->description     = 'Controller for users management';
 
-        return $this->render();
+        $this->render();
     }
 
     public function addAction()
@@ -44,13 +44,13 @@ class UsersController extends Controller
         $this->_layout->title           = 'Add a new user';
         $this->_layout->description     = 'Insert a new user';
 
-        return $this->render();
+        $this->render();
     }
 
     public function addDoAction()
     {
         $this->_model->add($this->_request->post('email'), $this->_request->post('password'));
-        return $this->_forward('list');
+        $this->_forward('list');
     }
 
     public function removeAction()
@@ -68,7 +68,7 @@ class UsersController extends Controller
 
         $this->_view->user              = $user;
 
-        return $this->render();
+        $this->render();
     }
 
     public function updateDoAction()
@@ -80,7 +80,7 @@ class UsersController extends Controller
             $this->_request->post('role')
         );
 
-        return $this->_forward('list');
+        $this->_forward('list');
     }
 
     public function listAction()
@@ -92,6 +92,6 @@ class UsersController extends Controller
 
         $this->_view->users = $users;
 
-        return $this->render();
+        $this->render();
     }
 }
