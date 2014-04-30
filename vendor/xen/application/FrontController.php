@@ -99,7 +99,7 @@ class FrontController
         $this->_bootstrap   = $_bootstrap;
         $this->_request     = $_bootstrap->getResource('Request');
         $this->_router      = $_bootstrap->getResource('Router');
-        $this->_eventSystem = $_bootstrap->getResource('EventSystem');
+
     }
 
     /**
@@ -209,6 +209,10 @@ class FrontController
     private function _executeTheAction($controller, $controllerName, $action, $actionName, $controllerParams)
     {
         $controller->setParams($controllerParams);
+
+        $this->_bootstrap->bootstrap();
+
+        $this->_eventSystem = $this->_bootstrap->getResource('EventSystem');
 
         $this->_bootstrap->resolveController(
             $controller,

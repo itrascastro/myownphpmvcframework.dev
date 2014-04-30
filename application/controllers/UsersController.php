@@ -50,12 +50,18 @@ class UsersController extends Controller
     public function addDoAction()
     {
         $this->_model->add($this->_request->post('email'), $this->_request->post('password'));
+
+        $this->_cache->remove($this->_router->toUrl('users', 'list'));
+
         $this->_forward('list');
     }
 
     public function removeAction()
     {
         $this->_model->remove($this->getParam('id'));
+
+        $this->_cache->remove($this->_router->toUrl('users', 'list'));
+
         return $this->_redirect('users', 'list');
     }
 
@@ -79,6 +85,8 @@ class UsersController extends Controller
             $this->_request->post('password'),
             $this->_request->post('role')
         );
+
+        $this->_cache->remove($this->_router->toUrl('users', 'list'));
 
         $this->_forward('list');
     }

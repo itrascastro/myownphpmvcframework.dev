@@ -133,7 +133,7 @@ class Application
         $this->_bootstrap->addResource('AutoLoader', $this->_autoLoader);
         $this->_bootstrap->addResource('Request', $this->_request);
         $this->_bootstrap->addResource('Error', $this->_error);
-        $this->_bootstrap->bootstrap();
+        $this->_bootstrap->minimalBootstrap();
     }
 
     /**
