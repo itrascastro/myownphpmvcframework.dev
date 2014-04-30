@@ -28,8 +28,7 @@ return array(
         'namespace'         => 'controllers\\frontend',
         'controller'        => 'index',
         'action'            => 'index',
-        'allow'             => array('guest', 'user', 'admin'),
-        'expires'           => 0,
+        'expires'           => 10,
     ),
     '/calculator/' => array(
         'controller'        => 'calculator',
