@@ -25,10 +25,11 @@
  */
 return array(
     '/' => array(
+        'namespace'         => 'controllers\\frontend',
         'controller'        => 'index',
         'action'            => 'index',
         'allow'             => array('guest', 'user', 'admin'),
-        'expires'           => 3660,
+        'expires'           => 0,
     ),
     '/calculator/' => array(
         'controller'        => 'calculator',
